@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Révise à voix haute</title>
+<meta name="description" content="Prototype de tuteur vocal en français pour réviser le brevet : histoire-géographie, mathématiques, français.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+/* Layout: pick a teacher, pick a way of working, then talk. The widget floats bottom-right once started. */
+.prof { text-align: left; cursor: pointer; border: 2px solid var(--rule); border-radius: 16px; background: var(--card); padding: 18px; display: grid; gap: 8px; align-content: start; }
+.prof[aria-pressed="true"] { border-color: var(--c); background: var(--c-soft); }
+.prof .who { display: flex; align-items: center; gap: 12px; }
+.avatar { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 22px; color: #fff; background: var(--c); flex: none; }
+.prof .subj { font-size: 14px; color: var(--ink-3); }
+.prof .name { font-family: var(--display); font-weight: 700; font-size: 20px; }
+.badge { justify-self: start; font-size: 12px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; background: var(--c); color: #fff; }
+.p-histoire { --c: var(--hist); --c-soft: var(--hist-soft); }
+.p-maths { --c: var(--math); --c-soft: var(--math-soft); }
+.p-francais { --c: var(--fr); --c-soft: var(--fr-soft); }
+.start { border: 2px solid var(--accent); }
+.modes .chip { padding: 10px 16px; }
+.status { font-size: 15px; color: var(--ink-2); }
+.voice-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.voice-row input { flex: 1 1 240px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="tag">Préparer l'avenir · prototype · octobre 2026</div>
+    <h1>Révise à voix haute avec ton prof</h1>
+    <p class="lead">Un tuteur vocal pour préparer le brevet. Il t'interroge, t'explique ce que tu n'as pas compris, ou révise avec toi comme un ami d'étude. Il ne fait jamais tes devoirs à ta place.</p>
+    <p class="small">Prototype pour une proposition de politique éducative. Le tuteur peut se tromper : vérifie avec ton manuel et ton professeur. Ne donne ni ton nom de famille, ni ton adresse, ni ton collège.</p>
+  </header>
+
+  <section aria-labelledby="h-prof" style="display:grid;gap:14px">
+    <h2 id="h-prof">1. Choisis ton professeur</h2>
+    <div class="grid3" id="profs">
+      <button type="button" class="prof p-histoire" data-k="histoire" aria-pressed="true">
+        <span class="badge">Le plus utile à l'oral</span>
+        <span class="who"><span class="avatar" aria-hidden="true">L</span><span><span class="name">Madame Lambert</span><br><span class="subj">Histoire-géographie-EMC</span></span></span>
+        <span>Les repères du brevet, les grandes notions depuis 1914, la méthode du développement construit. Elle raconte pour que tu retiennes.</span>
+      </button>
+      <button type="button" class="prof p-maths" data-k="maths" aria-pressed="false">
+        <span class="who"><span class="avatar" aria-hidden="true">D</span><span><span class="name">Monsieur Diallo</span><br><span class="subj">Mathématiques</span></span></span>
+        <span>Calcul mental et automatismes, Pythagore, Thalès, fonctions, probabilités. Il te fait avancer pas à pas : c'est toi qui calcules.</span>
+      </button>
+      <button type="button" class="prof p-francais" data-k="francais" aria-pressed="false">
+        <span class="who"><span class="avatar" aria-hidden="true">M</span><span><span class="name">Madame Morel</span><br><span class="subj">Français</span></span></span>
+        <span>Grammaire à l'oral, figures de style, récitation, et la répétition de ton oral du brevet, chronomètre en main.</span>
+      </button>
+    </div>
+  </section>
+
+  <section aria-labelledby="h-mode" class="card start">
+    <h2 id="h-mode">2. Comment veux-tu travailler ?</h2>
+    <div class="chips modes" id="modes" role="group" aria-label="Façon de travailler">
+      <button type="button" class="chip" data-m="interroger" aria-pressed="true">Interroge-moi</button>
+      <button type="button" class="chip" data-m="expliquer" aria-pressed="false">Explique-moi</button>
+      <button type="button" class="chip" data-m="binome" aria-pressed="false">Révisons ensemble</button>
+    </div>
+    <div class="field">
+      <label for="sujet">Sur quel sujet ? (facultatif)</label>
+      <input id="sujet" type="text" autocomplete="off" placeholder="Par exemple : la guerre froide">
+      <div class="chips" id="idees" aria-label="Idées de sujets"></div>
+    </div>
+    <div><button class="btn" id="go" type="button">Commencer à parler</button></div>
+    <p class="status" id="status" aria-live="polite"></p>
+  </section>
+
+  <section aria-labelledby="h-gf" class="grid2">
+    <div class="card">
+      <h2 id="h-gf">Ce que ton tuteur fait</h2>
+      <ul class="yes">
+        <li>Il t'interroge, une question à la fois, et t'aide avec des indices.</li>
+        <li>Il t'explique une notion avec un exemple, puis vérifie que tu as compris.</li>
+        <li>Il corrige ce que tu as écrit toi-même et te dit comment l'améliorer.</li>
+        <li>Il t'aide à faire un plan et à trouver tes idées.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h2>Ce qu'il refuse</h2>
+      <ul class="no">
+        <li>Écrire ta rédaction, ton développement ou ton exposé, même « juste le début ».</li>
+        <li>Te donner la réponse d'un exercice de devoir : il le fait avec toi, étape par étape.</li>
+        <li>Parler d'autre chose que l'école, ou te demander des informations personnelles.</li>
+      </ul>
+      <p class="small">Si tu ne vas pas bien ou si tu es harcelé, parles-en à un adulte. Numéros gratuits : 3020 (harcèlement), 3018 (cyberharcèlement), 119 (enfant en danger), 3114 (prévention du suicide).</p>
+    </div>
+  </section>
+
+  <details id="voix-prof">
+    <summary>Professeurs : faites parler le tuteur avec votre propre voix</summary>
+    <p>Un élève écoute mieux une voix qu'il connaît. Avec ElevenLabs, un professeur peut créer un clone de sa propre voix, puis l'utiliser ici à la place de la voix par défaut. Le tuteur garde le même contenu et les mêmes garde-fous. Seule la voix change.</p>
+    <ol>
+      <li><strong>Consentement.</strong> Seul le professeur peut cloner sa propre voix, avec son accord écrit et celui de l'établissement. La voix est une donnée personnelle (RGPD) : le professeur peut retirer le clone à tout moment.</li>
+      <li><strong>Enregistrer.</strong> Dans ElevenLabs (Voices, puis Add a new voice, puis Instant Voice Clone), enregistrer une à deux minutes de parole claire, au calme, sur le ton de la classe. Pour une qualité supérieure, le clonage professionnel demande au moins 30 minutes d'audio et une vérification que la voix appartient bien à la personne.</li>
+      <li><strong>Copier l'identifiant</strong> de la voix (Voice ID) et le coller ci-dessous. Le lien produit peut être donné aux élèves de la classe.</li>
+    </ol>
+    <div class="voice-row">
+      <label for="voiceid" hidden>Identifiant de voix ElevenLabs</label>
+      <input id="voiceid" type="text" autocomplete="off" placeholder="Identifiant de voix (Voice ID)">
+      <button class="btn ghost" id="voicelink" type="button">Créer le lien de classe</button>
+    </div>
+    <p class="small" id="voicemsg" aria-live="polite"></p>
+  </details>
+
+  <details>
+    <summary>Pourquoi l'histoire-géographie de 3e d'abord</summary>
+    <p>Le brevet demande de connaître par cœur des repères (dates, lieux, acteurs) et de savoir les relier dans un récit. Or la façon la plus efficace de retenir est de se faire interroger : se tester sur une notion la fixe mieux que la relire (Roediger et Karpicke, 2006). Un tuteur vocal fait exactement cela, à la maison, sans écran à lire, au rythme de l'élève. La voix aide aussi les élèves qui lisent mal, pour qui une fiche de révision est un obstacle.</p>
+    <p>Les mathématiques (calcul mental, automatismes) et le français (récitation, grammaire, oral du brevet) profitent aussi de la voix : c'est pourquoi le prototype propose trois professeurs.</p>
+  </details>
+
+  <footer>
+    <p>Prototype construit pour la note « Un tuteur IA pour l'Éducation nationale » (Préparer l'avenir, octobre 2026). Voix et conversation : ElevenLabs. Contenu : programmes officiels de 3e.</p>
+    <p><a href="../">Accueil</a> · <a href="../orientation/">La Boussole d'orientation</a> · <a href="../tests.html">Liens de test</a></p>
+  </footer>
+</div>
+<div id="voice-slot"></div>
+
+<script src="../assets/voix.js"></script>
+<script>
+const $ = (id) => document.getElementById(id);
+const IDEES = {
+  histoire: ["La Première Guerre mondiale", "Les régimes totalitaires", "La guerre froide", "La décolonisation", "La Ve République", "Les aires urbaines en France"],
+  maths: ["Calcul mental et pourcentages", "Le théorème de Pythagore", "Les fonctions affines", "Les probabilités", "Les équations"],
+  francais: ["Les figures de style", "Les propositions subordonnées", "Le passé simple", "Réciter un poème", "Préparer l'oral du brevet"],
+};
+const PROF_NOM = { histoire: "Madame Lambert", maths: "Monsieur Diallo", francais: "Madame Morel" };
+const MODE_TXT = {
+  interroger: (s) => `On commence l'interrogation${s ? " sur " + s : ""} ? Dis-moi quand tu es prêt, et je te pose la première question.`,
+  expliquer: (s) => s ? `Tu veux que je t'explique ${s}. Qu'est-ce qui te pose le plus de problème là-dessus ?` : "Qu'est-ce que tu aimerais que je t'explique ?",
+  binome: (s) => `On révise ensemble${s ? " " + s : ""} ? Je te propose un petit programme de vingt minutes, d'accord ?`,
+};
+const P = paramsURL();
+let prof = IDEES[P.prof] ? P.prof : "histoire";
+let mode = MODE_TXT[P.mode] ? P.mode : "interroger";
+if (P.sujet) $("sujet").value = P.sujet;
+if (P.voix) $("voiceid").value = P.voix;
+
+function paint() {
+  document.querySelectorAll(".prof").forEach((b) => b.setAttribute("aria-pressed", b.dataset.k === prof));
+  document.querySelectorAll("#modes .chip").forEach((b) => b.setAttribute("aria-pressed", b.dataset.m === mode));
+  $("idees").innerHTML = IDEES[prof].map((t) => `<button type="button" class="chip">${t}</button>`).join("");
+  $("idees").querySelectorAll(".chip").forEach((b) => b.onclick = () => { $("sujet").value = b.textContent; });
+}
+document.querySelectorAll(".prof").forEach((b) => b.onclick = () => { prof = b.dataset.k; paint(); });
+document.querySelectorAll("#modes .chip").forEach((b) => b.onclick = () => { mode = b.dataset.m; paint(); });
+
+function start() {
+  const sujet = $("sujet").value.trim();
+  const voiceId = $("voiceid").value.trim();
+  const w = monterVoix($("voice-slot"), prof, {
+    mode, sujet: sujet || "au choix de l'élève", niveau: "3e", accroche: MODE_TXT[mode](sujet),
+  }, { voiceId: voiceId || undefined, expanded: true });
+  if (w) $("status").textContent = `${PROF_NOM[prof]} t'attend en bas à droite de l'écran. Clique sur le bouton d'appel et autorise le micro. Tu peux aussi lui écrire.`;
+  else $("status").textContent = "";
+}
+$("go").onclick = start;
+
+$("voicelink").onclick = () => {
+  const v = $("voiceid").value.trim();
+  if (!/^[A-Za-z0-9]{10,40}$/.test(v)) { $("voicemsg").textContent = "Cet identifiant ne ressemble pas à un Voice ID ElevenLabs (lettres et chiffres)."; return; }
+  const u = new URL(location.href.split("?")[0]);
+  u.searchParams.set("prof", prof); u.searchParams.set("voix", v);
+  $("voicemsg").innerHTML = `Lien de classe : <a href="${u}">${u}</a>`;
+};
+
+paint();
+if (P.auto === "1") start();
+</script>
+</body>
+</html>

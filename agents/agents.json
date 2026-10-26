@@ -1,0 +1,59 @@
+{
+  "_doc": "Configuration of the four ElevenLabs agents. Prompts = prompts/_socle-tuteur.md + prompts/<key>.md (tutors) or prompts/orientation.md alone. Built by tools/build_prompts.py into agents/build/. Created by tools/create_agents.py.",
+  "llm": "claude-haiku-5-5",
+  "language": "fr",
+  "agents": {
+    "histoire": {
+      "name": "Tuteur IA - Madame Lambert (histoire-géo 3e)",
+      "voice_id": "5OnMHwgTFgvPVwE8jP6B",
+      "voice_label": "Anaïs - News, podcasting and e-learning (FR, femme, voix chaude et claire)",
+      "prompt_files": ["_socle-tuteur.md", "histoire.md"],
+      "kb_files": ["histoire-geo-3e.md"],
+      "first_message": "Bonjour ! Je suis Madame Lambert, ta professeure d'histoire-géo. {{accroche}}",
+      "dynamic_variables": {"mode": "au choix de l'élève", "sujet": "au choix de l'élève", "niveau": "3e", "accroche": "Tu préfères que je t'interroge, que je t'explique une notion, ou qu'on révise ensemble ?"},
+      "allow_voice_override": true
+    },
+    "maths": {
+      "name": "Tuteur IA - Monsieur Diallo (maths 3e)",
+      "voice_id": "0igQGE0lbNpTaWsexf1r",
+      "voice_label": "Paul K - French E-Learning & Training (FR, homme, pédagogue)",
+      "prompt_files": ["_socle-tuteur.md", "maths.md"],
+      "kb_files": ["maths-3e.md"],
+      "first_message": "Salut ! Je suis Monsieur Diallo, ton prof de maths. {{accroche}}",
+      "dynamic_variables": {"mode": "au choix de l'élève", "sujet": "au choix de l'élève", "niveau": "3e", "accroche": "On fait une série de calcul mental, je t'explique quelque chose, ou on révise ensemble ?"},
+      "allow_voice_override": true
+    },
+    "francais": {
+      "name": "Tuteur IA - Madame Morel (français 3e)",
+      "voice_id": "ICk609TItINMseDpChFt",
+      "voice_label": "Léa formatrice - ton posé et pédagogue (FR, femme)",
+      "prompt_files": ["_socle-tuteur.md", "francais.md"],
+      "kb_files": ["francais-3e.md"],
+      "first_message": "Bonjour ! Je suis Madame Morel, ta professeure de français. {{accroche}}",
+      "dynamic_variables": {"mode": "au choix de l'élève", "sujet": "au choix de l'élève", "niveau": "3e", "accroche": "Tu veux que je t'interroge, que je t'explique une notion, ou qu'on révise ensemble ?"},
+      "allow_voice_override": true
+    },
+    "orientation": {
+      "name": "Boussole - Claire, guide d'orientation (6e-terminale)",
+      "voice_id": "UaGvaD7NWzU5mJNoUqoY",
+      "voice_label": "Perle - Premium French Corporate Voice (FR, femme, rassurante)",
+      "prompt_files": ["orientation.md"],
+      "kb_files": ["orientation-parcours.md", "opportunites-gratuites.md", "formations-et-classements.md", "orientation-faq-parents.md"],
+      "first_message": "Bonjour, je suis Claire, la guide de la Boussole. {{accroche}}",
+      "dynamic_variables": {"profil": "élève", "classe": "inconnue", "lieu": "inconnu", "interets": "inconnus", "question": "aucune", "accroche": "Tu es en quelle classe, et qu'est-ce que tu aimes faire, à l'école ou en dehors ?"},
+      "allow_voice_override": false,
+      "client_tools": [
+        {"name": "afficher_famille", "description": "Ouvre sur l'écran la fiche d'une famille de formations de la Boussole et renvoie sa note A à E, son salaire et son taux d'emploi. À utiliser dès que tu parles d'une famille précise.",
+         "parameters": {"famille": "Clé de la famille (par exemple inge, infirmier, droit, info, prepa_sci, btp)."}},
+        {"name": "chercher_formations", "description": "Cherche jusqu'à cinq vraies formations Parcoursup 2025 d'une famille près d'un lieu, avec places et taux d'accès.",
+         "parameters": {"famille": "Clé de la famille.", "lieu": "Ville, département ou établissement. Peut être vide."}},
+        {"name": "classement_familles", "description": "Renvoie les 39 familles de formations classées de la plus protégée (A) à la plus exposée (E) face à l'IA, éventuellement filtrées par type.",
+         "parameters": {"type": "Type de formation : Université, BTS / BUT, Prépa, École. Peut être vide."}}
+      ]
+    }
+  },
+  "guardrails": {
+    "homework": "Bloque toute réponse de l'agent qui fait à la place de l'élève un travail scolaire à rendre : rédiger une rédaction, un développement construit, une dissertation, un commentaire, un exposé, une lettre de motivation ou un paragraphe de copie ; ou donner directement le résultat final d'un exercice de devoir (énoncé avec des valeurs précises) sans que l'élève ait fait les étapes. Sont autorisés : expliquer une notion, donner une méthode sur un autre exemple, poser des questions, donner des indices, corriger ce que l'élève a écrit lui-même en disant quoi améliorer, interroger l'élève, donner la réponse d'une question de révision après deux essais de l'élève.",
+    "homework_feedback": "Ta réponse a été bloquée parce qu'elle faisait le travail de l'élève à sa place. Dis-lui avec bienveillance que tu ne peux pas faire son devoir, sinon il n'apprendrait rien, et propose de le faire ensemble étape par étape en lui posant une première question."
+  }
+}
