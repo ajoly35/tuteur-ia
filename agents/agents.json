@@ -26,8 +26,8 @@
   },
   "maths": {
    "name": "Tuteur IA - Monsieur Diallo (maths 3e)",
-   "voice_id": "0igQGE0lbNpTaWsexf1r",
-   "voice_label": "Paul K - French E-Learning & Training (FR, homme, pédagogue)",
+   "voice_id": "nbiTBaMRdSobTQJDzIWm",
+   "voice_label": "Antoine - E-learning Instructor (FR, homme, pédagogue ; Paul K refusé : modération en direct)",
    "prompt_files": [
     "_socle-tuteur.md",
     "maths.md"
@@ -47,8 +47,8 @@
   },
   "francais": {
    "name": "Tuteur IA - Madame Morel (français 3e)",
-   "voice_id": "ICk609TItINMseDpChFt",
-   "voice_label": "Léa formatrice - ton posé et pédagogue (FR, femme)",
+   "voice_id": "UaGvaD7NWzU5mJNoUqoY",
+   "voice_label": "Perle (FR, femme, rassurante), partagée avec la guide d'orientation : Léa formatrice n'est plus dans la bibliothèque et le compte a 3 emplacements de voix",
    "prompt_files": [
     "_socle-tuteur.md",
     "francais.md"

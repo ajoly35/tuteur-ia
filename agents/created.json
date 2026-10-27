@@ -1,0 +1,42 @@
+{
+  "kb": {
+    "histoire-geo-3e.md": {
+      "id": "diXpv8FLYfrbTbpkFi5x",
+      "name": "histoire-geo-3e.md"
+    },
+    "maths-3e.md": {
+      "id": "m8fk4NbHD3tW9cEwD6C3",
+      "name": "maths-3e.md"
+    },
+    "francais-3e.md": {
+      "id": "9ZZVGtHtkCFKslhvub1h",
+      "name": "francais-3e.md"
+    },
+    "orientation-parcours.md": {
+      "id": "dBHynirEZlPFROIiNqgs",
+      "name": "orientation-parcours.md"
+    },
+    "opportunites-gratuites.md": {
+      "id": "OR3PhAj5xwZfVvjGirzB",
+      "name": "opportunites-gratuites.md"
+    },
+    "formations-et-classements.md": {
+      "id": "oqwoBI5ZWNZNRswm1KtL",
+      "name": "formations-et-classements.md"
+    },
+    "orientation-faq-parents.md": {
+      "id": "emIbQ4opAU4YhMA18SWp",
+      "name": "orientation-faq-parents.md"
+    }
+  },
+  "tools": {
+    "afficher_famille": "tool_0001m5z4znq9edkr6hmp78qwh4f7",
+    "chercher_formations": "tool_4601m5z4znzeepjs3bxgwvsgc24y",
+    "classement_familles": "tool_7101m5z4zpche5fbev04njj44vhk"
+  },
+  "agents": {
+    "histoire": "agent_0201m5z51hjyf798pnx0g52btzz8",
+    "francais": "agent_1401m5z51kkxf3v9219jzjbfdq90",
+    "orientation": "agent_4901m5z51ncqf0naw0t2mmxe0f3p"
+  }
+}

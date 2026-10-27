@@ -2,10 +2,10 @@
 // Agent IDs are filled in by agents/create_agents.py (or by hand) after the agents exist.
 window.TUTEUR_CONFIG = {
   agents: {
-    histoire: "",
+    histoire: "agent_0201m5z51hjyf798pnx0g52btzz8",
     maths: "",
-    francais: "",
-    orientation: "",
+    francais: "agent_1401m5z51kkxf3v9219jzjbfdq90",
+    orientation: "agent_4901m5z51ncqf0naw0t2mmxe0f3p",
   },
   widgetSrc: "https://unpkg.com/@elevenlabs/convai-widget-embed@0.19.0/dist/index.js",
 };

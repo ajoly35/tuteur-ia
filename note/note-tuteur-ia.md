@@ -24,7 +24,7 @@ _Adrien Joly – Octobre 2026_
 - **Un contrat exigeant.** Passer à un meilleur modèle en trois mois au plus, remettre le modèle en concurrence tous les 12 à 24 mois, et lier 20 à 30 % du paiement aux résultats d'un essai indépendant, mesurés sur des épreuves sans l'outil.
 - **Un essai d'abord.** Démarrer dans quelques académies, avec un groupe témoin. Ouvrir le tuteur dès la 6e va au-delà du cadre de 2025, qui réserve l'usage par l'élève à partir de la 4e : l'essai doit le justifier.
 
-* Prototype : https://ajoly35.github.io/tuteur-ia/ (tuteur de révision et guide d'orientation, liens de test).
+* Pour essayer : la [Boussole IA des formations](https://claude.ai/artifact/CXvCnNr4PhKKqcAE4ubsRi), qui classe les formations de Parcoursup selon leur résilience à l'IA. Le tuteur vocal et la guide d'orientation sont en cours de mise en ligne.
 
 ### Références
 
