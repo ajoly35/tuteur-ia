@@ -1,0 +1,28 @@
+name: Garder l'app Streamlit éveillée
+# Streamlit Community Cloud puts apps to sleep after a period without visits.
+# A real browser visit every 6 hours keeps it awake. Set the repository variable STREAMLIT_URL first.
+on:
+  schedule:
+    - cron: "17 */6 * * *"
+  workflow_dispatch:
+jobs:
+  visit:
+    if: ${{ vars.STREAMLIT_URL != '' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - run: npx -y playwright@1.47.2 install --with-deps chromium
+      - run: |
+          cat > visit.mjs <<'JS'
+          import { chromium } from "playwright";
+          const browser = await chromium.launch();
+          const page = await browser.newPage();
+          await page.goto(process.env.URL, { waitUntil: "networkidle", timeout: 90000 });
+          const wake = page.getByRole("button", { name: /get this app back up/i });
+          if (await wake.count()) { await wake.click(); await page.waitForTimeout(60000); console.log("woken up"); }
+          else console.log("already awake");
+          await browser.close();
+          JS
+          npm i playwright@1.47.2 >/dev/null 2>&1 && node visit.mjs
+        env:
+          URL: ${{ vars.STREAMLIT_URL }}

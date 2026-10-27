@@ -110,8 +110,9 @@
 
   <details>
     <summary>Pourquoi l'histoire-géographie de 3e d'abord</summary>
-    <p>Le brevet demande de connaître par cœur des repères (dates, lieux, acteurs) et de savoir les relier dans un récit. Or la façon la plus efficace de retenir est de se faire interroger : se tester sur une notion la fixe mieux que la relire (Roediger et Karpicke, 2006). Un tuteur vocal fait exactement cela, à la maison, sans écran à lire, au rythme de l'élève. La voix aide aussi les élèves qui lisent mal, pour qui une fiche de révision est un obstacle.</p>
-    <p>Les mathématiques (calcul mental, automatismes) et le français (récitation, grammaire, oral du brevet) profitent aussi de la voix : c'est pourquoi le prototype propose trois professeurs.</p>
+    <p>C'est l'épreuve écrite la plus faible du brevet : note médiane de 10 sur 20 en 2025, contre 10,7 en français et 12,4 en maths (DEPP, note d'information 26.04). Or ce qui manque se travaille très bien à l'oral : retenir des repères (dates, lieux, acteurs), définir une notion en une phrase, enchaîner ses idées à voix haute avant d'écrire le développement construit, qui vaut 25 points sur 40.</p>
+    <p>Se faire interroger fixe mieux une notion que la relire (Roediger et Karpicke, 2006). Un tuteur vocal le fait à la maison, sans écran à lire, au rythme de l'élève. La voix aide aussi les élèves qui lisent mal : écouter un texte plutôt que le lire améliore leur compréhension de 0,35 écart-type en moyenne (Wood et al., 2018), un résultat mesuré sur la lecture audio, pas encore sur un tuteur qui dialogue.</p>
+    <p>Les mathématiques (la partie automatismes du brevet, 20 minutes sans calculatrice) et le français (récitation, grammaire, oral du brevet) profitent aussi de la voix : c'est pourquoi le prototype propose trois professeurs.</p>
   </details>
 
   <footer>
@@ -164,8 +165,7 @@ $("go").onclick = start;
 $("voicelink").onclick = () => {
   const v = $("voiceid").value.trim();
   if (!/^[A-Za-z0-9]{10,40}$/.test(v)) { $("voicemsg").textContent = "Cet identifiant ne ressemble pas à un Voice ID ElevenLabs (lettres et chiffres)."; return; }
-  const u = new URL(location.href.split("?")[0]);
-  u.searchParams.set("prof", prof); u.searchParams.set("voix", v);
+  const u = lienPage("tuteur", { prof, voix: v });
   $("voicemsg").innerHTML = `Lien de classe : <a href="${u}">${u}</a>`;
 };
 

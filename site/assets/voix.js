@@ -49,10 +49,20 @@ window.TUTEUR_CONFIG = {
     return w;
   };
 
+  // URL parameters. Inside the Streamlit wrapper the page runs in an iframe, so the app passes them in window.__PARAMS.
   window.paramsURL = function () {
+    if (window.__PARAMS) return Object.assign({}, window.__PARAMS);
     const p = new URLSearchParams(location.search);
     const o = {};
     for (const [k, v] of p.entries()) o[k] = v;
     return o;
+  };
+
+  // Shareable link to a page ("tuteur" or "orientation") with parameters, on GitHub Pages or in the Streamlit app.
+  window.lienPage = function (page, params) {
+    const q = new URLSearchParams(params);
+    if (window.__APP_URL) { q.set("page", page); return window.__APP_URL + "?" + q.toString(); }
+    const base = location.href.split("?")[0].replace(/(tuteur|orientation)\/(index\.html)?$/, "");
+    return base + page + "/?" + q.toString();
   };
 })();

@@ -32,6 +32,13 @@ ELEVENLABS_API_KEY=sk_... python3 tools/create_agents.py
 ```
 Le script crée les documents de connaissances, les outils de la guide et les quatre agents, puis écrit leurs identifiants dans `site/assets/voix.js`. Relancé, il met à jour les agents existants. Pousser ensuite `site/` pour mettre le site à jour.
 
+## Mettre en ligne
+
+Le dépôt est privé et le compte GitHub est au plan gratuit : GitHub Pages refuse un dépôt privé (« Your current plan does not support GitHub Pages for this repository »). Deux options, toutes deux prêtes :
+
+1. **Streamlit Community Cloud (dépôt privé possible).** Sur share.streamlit.io, se connecter avec GitHub, « Create app », dépôt `ajoly35/tuteur-ia`, branche `main`, fichier `streamlit_app.py`. Dans Settings > Secrets : `APP_URL = "https://<nom>.streamlit.app/"`. Puis, dans le dépôt GitHub, Settings > Secrets and variables > Actions > Variables : `STREAMLIT_URL` = la même adresse ; le workflow `keep-awake.yml` visite l'app toutes les six heures pour qu'elle ne s'endorme pas. Liens de test : `https://<nom>.streamlit.app/?page=tests`.
+2. **GitHub Pages.** Passer au plan Pro, ou rendre le dépôt public (il ne contient que des prompts, des données publiques et le site), puis Settings > Pages > Source : GitHub Actions. Le workflow `pages.yml` publie `site/` à `https://ajoly35.github.io/tuteur-ia/`.
+
 ## Garde-fous
 
 - Dans le prompt : refus de faire les devoirs (rédaction, développement construit, résultat d'exercice), méthode pas à pas, aucune donnée personnelle, numéros d'aide (3020, 3018, 119, 3114).

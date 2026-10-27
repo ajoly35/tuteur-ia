@@ -59,7 +59,9 @@ def main(src_path, out_path):
     js_a = body.index("// ---------- Ask ----------")
     js_b = body.index("</script>", js_a)
     body = body[:js_a] + body[js_b:]
-    body = body.replace("</script>", '</script>\n<div id="voice-slot"></div>\n<script src="../assets/voix.js"></script>\n<script src="../assets/orientation-voix.js"></script>', 1)
+    # The voice scripts use globals of the page script ($, D, findOffers...), so they go after the last script.
+    k = body.rindex("</script>") + len("</script>")
+    body = body[:k] + '\n<div id="voice-slot"></div>\n<script src="../assets/voix.js"></script>\n<script src="../assets/orientation-voix.js"></script>' + body[k:]
     body = body.replace("</div>\n\n<script", '''  <footer class="small" style="border-top:1px solid var(--rule);padding-top:16px">Prototype Préparer l'avenir. Voix et conversation : ElevenLabs. <a href="../">Accueil</a> · <a href="../tuteur/">Le tuteur de révision</a> · <a href="../tests.html">Liens de test</a></footer>
 </div>
 
