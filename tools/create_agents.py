@@ -102,9 +102,14 @@ for key, a in cfg["agents"].items():
                 "language": cfg["language"],
                 "dynamic_variables": {"dynamic_variable_placeholders": a["dynamic_variables"]},
                 "prompt": {"prompt": prompt, "llm": cfg["llm"], "temperature": 0.3, "knowledge_base": kb, "tool_ids": tools,
-                           "timezone": "Europe/Paris"},
+                           "timezone": "Europe/Paris",
+                           # Lets the agent switch language mid-call when the pupil speaks or asks for English.
+                           "built_in_tools": {"language_detection": {"name": "language_detection", "description": "",
+                                                                     "params": {"system_tool_type": "language_detection"}}}},
             },
-            "tts": {"voice_id": a["voice_id"]},
+            "language_presets": {lang: {"overrides": {"agent": {"language": lang, "first_message": a[f"first_message_{lang}"]}}}
+                                 for lang in cfg.get("extra_languages", [])},
+            "tts": {"voice_id": a["voice_id"], "model_id": cfg.get("tts_model", "eleven_flash_v2_5")},
             "conversation": {"max_duration_seconds": 1800},
         },
         "platform_settings": {
