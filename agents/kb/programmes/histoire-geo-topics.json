@@ -1,0 +1,51 @@
+{
+  "6e": [
+    {"sujet": "La révolution néolithique", "question": "Qu'est-ce qui change dans la vie des hommes au moment de la révolution néolithique ?"},
+    {"sujet": "La démocratie à Athènes", "question": "Dans quelle cité grecque la démocratie est-elle née ?"},
+    {"sujet": "L'Empire romain", "question": "Quel général romain a conquis la Gaule ?"},
+    {"sujet": "Habiter une métropole", "question": "Qu'est-ce qu'une métropole, d'après toi ?"},
+    {"sujet": "La laïcité à l'école", "question": "Quelle liberté la laïcité garantit-elle à chacun ?"}
+  ],
+  "5e": [
+    {"sujet": "La naissance de l'islam", "question": "Comment s'appelle le prophète à l'origine de l'islam ?"},
+    {"sujet": "La société féodale", "question": "Quel est le rôle d'un seigneur dans la société féodale ?"},
+    {"sujet": "Les grandes découvertes", "question": "En quelle année Christophe Colomb atteint-il l'Amérique ?"},
+    {"sujet": "La croissance démographique", "question": "Combien d'habitants compte à peu près la planète aujourd'hui ?"},
+    {"sujet": "Lutter contre les discriminations", "question": "Qu'est-ce qu'une discrimination ?"}
+  ],
+  "4e": [
+    {"sujet": "La Révolution française", "question": "En quelle année la Déclaration des droits de l'homme et du citoyen est-elle adoptée ?"},
+    {"sujet": "Les traites négrières", "question": "Peux-tu m'expliquer ce qu'était le commerce triangulaire ?"},
+    {"sujet": "Le droit de vote", "question": "En quelle année le suffrage universel masculin est-il instauré en France ?"},
+    {"sujet": "L'urbanisation du monde", "question": "Qu'est-ce que l'urbanisation ?"},
+    {"sujet": "L'État de droit", "question": "Qu'est-ce qu'un État de droit ?"}
+  ],
+  "3e": [
+    {"sujet": "La Première Guerre mondiale", "question": "En quelle année se termine la Première Guerre mondiale ?"},
+    {"sujet": "Les régimes totalitaires", "question": "Quelles sont les principales caractéristiques d'un régime totalitaire ?"},
+    {"sujet": "La guerre froide", "question": "Quels sont les deux pays qui s'affrontent pendant la guerre froide ?"},
+    {"sujet": "La France et l'Union européenne", "question": "Combien d'États membres compte l'Union européenne aujourd'hui ?"},
+    {"sujet": "La séparation des pouvoirs", "question": "Quels sont les trois pouvoirs que la Constitution sépare ?"}
+  ],
+  "2nde": [
+    {"sujet": "La démocratie athénienne", "question": "Quel homme politique est associé à l'apogée de la démocratie athénienne ?"},
+    {"sujet": "L'imprimerie et la Renaissance", "question": "Qui a mis au point l'imprimerie à caractères mobiles en Europe ?"},
+    {"sujet": "Les réformes religieuses", "question": "En quelle année Luther ouvre-t-il le temps des réformes ?"},
+    {"sujet": "Les sociétés face aux risques", "question": "Quelle différence fais-tu entre un aléa et un risque ?"},
+    {"sujet": "La liberté de la presse", "question": "Pourquoi la liberté de la presse est-elle essentielle en démocratie ?"}
+  ],
+  "1re": [
+    {"sujet": "Le Code civil", "question": "En quelle année le Code civil est-il promulgué ?"},
+    {"sujet": "La séparation des Églises et de l'État", "question": "En quelle année est votée la loi de séparation des Églises et de l'État ?"},
+    {"sujet": "La Première Guerre mondiale", "question": "Quelle bataille arrête l'avancée allemande vers Paris en septembre 1914 ?"},
+    {"sujet": "La métropolisation", "question": "Qu'est-ce que la métropolisation ?"},
+    {"sujet": "Nationalité et citoyenneté", "question": "Quelle est la différence entre le droit du sang et le droit du sol ?"}
+  ],
+  "tle": [
+    {"sujet": "La crise de 1929", "question": "Dans quel pays commence la crise de 1929 ?"},
+    {"sujet": "La Seconde Guerre mondiale", "question": "Que s'est-il passé le 6 juin 1944 ?"},
+    {"sujet": "La fin de la guerre froide", "question": "En quelle année le mur de Berlin tombe-t-il ?"},
+    {"sujet": "Mers et océans", "question": "Qu'est-ce qu'une zone économique exclusive ?"},
+    {"sujet": "Le débat démocratique", "question": "Quel est le rôle des partis politiques dans une démocratie ?"}
+  ]
+}

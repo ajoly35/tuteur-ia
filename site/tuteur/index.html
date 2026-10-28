@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Révise à voix haute</title>
-<meta name="description" content="Prototype de tuteur vocal en français pour réviser le brevet : histoire-géographie, mathématiques, français.">
+<meta name="description" content="Prototype de tuteur vocal en français pour réviser de la 6e à la terminale : histoire-géographie, mathématiques, français, sur le programme officiel de chaque classe.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
 <link rel="stylesheet" href="../assets/style.css">
@@ -12,6 +12,7 @@
 /* Layout: pick a subject, pick a way of working, then talk. The widget floats bottom-right once started. */
 .prof { text-align: left; cursor: pointer; border: 2px solid var(--rule); border-radius: 16px; background: var(--card); padding: 18px; display: grid; gap: 8px; align-content: start; }
 .prof[aria-pressed="true"] { border-color: var(--c); background: var(--c-soft); }
+.prof:disabled { opacity: .5; cursor: not-allowed; }
 .prof .who { display: flex; align-items: center; gap: 12px; }
 .avatar { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-weight: 700; font-size: 22px; color: #fff; background: var(--c); flex: none; }
 .prof .subj { font-size: 14px; color: var(--ink-3); }
@@ -32,25 +33,33 @@
   <header>
     <div class="tag">Préparer l'avenir · prototype · octobre 2026</div>
     <h1>Révise à voix haute</h1>
-    <p class="lead">Un tuteur vocal pour préparer le brevet. Tu cliques, il te pose tout de suite une question. Il t'interroge, t'explique ce que tu n'as pas compris, ou révise avec toi comme un ami d'étude. Il ne fait jamais tes devoirs à ta place.</p>
+    <p class="lead">Un tuteur vocal pour réviser, de la 6e à la terminale, sur le programme officiel de ta classe. Tu cliques, il te pose tout de suite une question. Il t'interroge, t'explique ce que tu n'as pas compris, ou révise avec toi comme un ami d'étude. Il ne fait jamais tes devoirs à ta place.</p>
     <p class="small">Prototype pour une proposition de politique éducative. Le tuteur peut se tromper : vérifie avec ton manuel et ton professeur. Ne donne ni ton nom de famille, ni ton adresse, ni ton collège.</p>
   </header>
 
   <section aria-labelledby="h-prof" style="display:grid;gap:14px">
-    <h2 id="h-prof">1. Choisis ta matière</h2>
+    <h2 id="h-prof">1. Ta classe et ta matière</h2>
+    <div class="field" style="max-width:280px">
+      <label for="niveau">Ta classe</label>
+      <select id="niveau">
+        <option value="6e">6e</option><option value="5e">5e</option><option value="4e">4e</option><option value="3e" selected>3e</option>
+        <option value="2nde">Seconde</option><option value="1re">Première</option><option value="tle">Terminale</option>
+      </select>
+    </div>
     <div class="grid3" id="profs">
       <button type="button" class="prof p-histoire" data-k="histoire" aria-pressed="true">
         <span class="badge">Le plus utile à l'oral</span>
         <span class="who"><span class="avatar" aria-hidden="true">H</span><span><span class="name">Histoire-géographie</span><br><span class="subj">et EMC</span></span></span>
-        <span>Les repères du brevet, les grandes notions depuis 1914, la méthode du développement construit.</span>
+        <span>Les repères, les grandes notions et la méthode du programme de ta classe, jusqu'au brevet et au bac.</span>
       </button>
       <button type="button" class="prof p-maths" data-k="maths" aria-pressed="false">
-        <span class="who"><span class="avatar" aria-hidden="true">M</span><span><span class="name">Mathématiques</span><br><span class="subj">Automatismes et exercices</span></span></span>
-        <span>Calcul mental et automatismes, Pythagore, Thalès, fonctions, probabilités. Pas à pas : c'est toi qui calcules.</span>
+        <span class="who"><span class="avatar" aria-hidden="true">M</span><span><span class="name">Mathématiques</span><br><span class="subj">Tronc commun et spécialité</span></span></span>
+        <span>Automatismes, calcul, géométrie, fonctions, probabilités, selon le programme de ta classe. Pas à pas : c'est toi qui calcules.</span>
       </button>
       <button type="button" class="prof p-francais" data-k="francais" aria-pressed="false">
         <span class="who"><span class="avatar" aria-hidden="true">F</span><span><span class="name">Français</span><br><span class="subj">Langue et oral</span></span></span>
-        <span>Grammaire à l'oral, figures de style, récitation, et la répétition de ton oral du brevet, chronomètre en main.</span>
+        <span>Grammaire à l'oral, figures de style, œuvres au programme, récitation, oral du brevet et du bac, chronomètre en main.</span>
+        <span class="small" id="fr-tle" hidden>Pas de français en terminale : c'est la philosophie.</span>
       </button>
     </div>
   </section>
@@ -64,7 +73,7 @@
     </div>
     <div class="field">
       <label for="sujet">Sur quel sujet ? (facultatif)</label>
-      <input id="sujet" type="text" autocomplete="off" placeholder="Par exemple : la guerre froide">
+      <input id="sujet" type="text" autocomplete="off" placeholder="Par exemple : un chapitre de ton cours">
       <div class="chips" id="idees" aria-label="Idées de sujets"></div>
     </div>
     <div><button class="btn" id="go" type="button">Commencer à parler</button></div>
@@ -123,46 +132,30 @@
 <div id="voice-slot"></div>
 
 <script src="../assets/voix.js"></script>
+<script src="sujets.js"></script>
 <script>
 const $ = (id) => document.getElementById(id);
-const IDEES = {
-  histoire: ["La Première Guerre mondiale", "Les régimes totalitaires", "La guerre froide", "La décolonisation", "La Ve République", "Les aires urbaines en France"],
-  maths: ["Calcul mental et pourcentages", "Le théorème de Pythagore", "Les fonctions affines", "Les probabilités", "Les équations"],
-  francais: ["Les figures de style", "Les propositions subordonnées", "Le passé simple", "Réciter un poème", "Préparer l'oral du brevet"],
-};
-// Opening question per suggested topic: the tutor's first message, so the call starts on the question.
-const QUESTIONS = {
-  "La Première Guerre mondiale": "En quelle année commence la Première Guerre mondiale, et pourquoi parle-t-on de guerre totale ?",
-  "Les régimes totalitaires": "Qu'est-ce qu'un régime totalitaire ? Donne-moi une définition en une phrase.",
-  "La guerre froide": "La guerre froide oppose deux blocs. Lesquels, et pourquoi dit-on qu'elle est « froide » ?",
-  "La décolonisation": "Quelle colonie française devient indépendante en 1962, et après quelle guerre ?",
-  "La Ve République": "En quelle année naît la Ve République, et qui en est le premier président ?",
-  "Les aires urbaines en France": "Qu'est-ce qu'une aire urbaine ? Explique-le-moi avec ta ville ou la ville la plus proche.",
-  "Calcul mental et pourcentages": "Combien font quinze pour cent de quatre-vingts ? Et comment tu as fait ?",
-  "Le théorème de Pythagore": "Dans quel type de triangle peut-on utiliser le théorème de Pythagore, et que dit-il ?",
-  "Les fonctions affines": "f de x égale deux x plus trois. Combien vaut f de cinq ?",
-  "Les probabilités": "On lance un dé à six faces. Quelle est la probabilité d'obtenir un nombre pair, et pourquoi ?",
-  "Les équations": "Résous dans ta tête : trois x plus deux égale quatorze. Combien vaut x ?",
-  "Les figures de style": "« Cette obscure clarté qui tombe des étoiles. » Quelle figure de style, et pourquoi ?",
-  "Les propositions subordonnées": "Dans « Je pense qu'il viendra », quelle est la proposition subordonnée, et de quel type ?",
-  "Le passé simple": "Conjugue le verbe venir au passé simple, à la troisième personne du pluriel.",
-  "Réciter un poème": "Quel poème as-tu à apprendre ? Donne-moi le titre et l'auteur, puis récite-moi la première strophe.",
-  "Préparer l'oral du brevet": "Quel projet présentes-tu à l'oral ? Dis-moi en une phrase de quoi il parle et pourquoi tu l'as choisi.",
-};
-const DEFAUT = { histoire: "La guerre froide", maths: "Calcul mental et pourcentages", francais: "Les figures de style" };
+// Topics and opening questions per subject and class, built from the official programmes (sujets.js).
+const NIVEAUX = ["6e", "5e", "4e", "3e", "2nde", "1re", "tle"];
+const NOM_NIVEAU = { "6e": "6e", "5e": "5e", "4e": "4e", "3e": "3e", "2nde": "seconde", "1re": "première", tle: "terminale" };
+const sujets = () => (window.SUJETS[prof] || {})[niveau] || [];
 // Cold call: the first message jumps straight into the topic with a question, in every mode.
 function accroche(mode, sujet) {
-  const t = sujet || DEFAUT[prof];
+  const liste = sujets();
+  const t = sujet || (liste[0] ? liste[0].sujet : "");
   const s = t.charAt(0).toUpperCase() + t.slice(1);
-  const k = Object.keys(QUESTIONS).find((x) => t.toLowerCase().includes(x.toLowerCase().replace(/^(les?|la|l')\s*/, "")));
-  const q = QUESTIONS[k];
+  const norm = (x) => x.toLowerCase().replace(/^(les?|la|l'|un|une|des)\s*/, "");
+  const hit = liste.find((x) => t.toLowerCase().includes(norm(x.sujet)));
+  const q = hit && hit.question;
   if (mode === "interroger") return q ? `Première question. ${q}` : `${s}. Première question : qu'est-ce que tu en sais ? Donne-moi l'idée principale en une phrase.`;
   if (mode === "expliquer") return `${s}. Avant que je t'explique, dis-moi en une phrase ce que tu en sais déjà.`;
   return `${s}. On révise ensemble, et tu commences. ${q || "Explique-moi ça comme si j'étais en sixième."}`;
 }
 const MODES = ["interroger", "expliquer", "binome"];
 const P = paramsURL();
-let prof = IDEES[P.prof] ? P.prof : "histoire";
+let niveau = NIVEAUX.includes(P.niveau) ? P.niveau : "3e";
+let prof = window.SUJETS[P.prof] ? P.prof : "histoire";
+$("niveau").value = niveau;
 let mode = MODES.includes(P.mode) ? P.mode : "interroger";
 if (P.sujet) $("sujet").value = P.sujet;
 if (P.voix) $("voiceid").value = P.voix;
@@ -170,17 +163,24 @@ if (P.voix) $("voiceid").value = P.voix;
 function paint() {
   document.querySelectorAll(".prof").forEach((b) => b.setAttribute("aria-pressed", b.dataset.k === prof));
   document.querySelectorAll("#modes .chip").forEach((b) => b.setAttribute("aria-pressed", b.dataset.m === mode));
-  $("idees").innerHTML = IDEES[prof].map((t) => `<button type="button" class="chip">${t}</button>`).join("");
+  // No français in terminale (philosophy instead).
+  const frOk = niveau !== "tle";
+  document.querySelector('.prof[data-k="francais"]').disabled = !frOk;
+  $("fr-tle").hidden = frOk;
+  if (!frOk && prof === "francais") prof = "histoire";
+  document.querySelectorAll(".prof").forEach((b) => b.setAttribute("aria-pressed", b.dataset.k === prof));
+  $("idees").innerHTML = sujets().map((x) => `<button type="button" class="chip">${x.sujet}</button>`).join("");
   $("idees").querySelectorAll(".chip").forEach((b) => b.onclick = () => { $("sujet").value = b.textContent; });
 }
-document.querySelectorAll(".prof").forEach((b) => b.onclick = () => { prof = b.dataset.k; paint(); });
+document.querySelectorAll(".prof").forEach((b) => b.onclick = () => { prof = b.dataset.k; $("sujet").value = ""; paint(); });
+$("niveau").onchange = () => { niveau = $("niveau").value; $("sujet").value = ""; paint(); };
 document.querySelectorAll("#modes .chip").forEach((b) => b.onclick = () => { mode = b.dataset.m; paint(); });
 
 function start() {
   const sujet = $("sujet").value.trim();
   const voiceId = $("voiceid").value.trim();
   const w = monterVoix($("voice-slot"), prof, {
-    mode, sujet: sujet || DEFAUT[prof], niveau: "3e", accroche: accroche(mode, sujet),
+    mode, sujet: sujet || (sujets()[0] || {}).sujet || "au choix de l'élève", niveau: NOM_NIVEAU[niveau], accroche: accroche(mode, sujet),
   }, { voiceId: voiceId || undefined, expanded: true });
   if (w) $("status").textContent = "Ton tuteur t'attend en bas à droite de l'écran. Clique sur le bouton d'appel et autorise le micro : la première question arrive tout de suite.";
   else $("status").textContent = "";
@@ -190,7 +190,7 @@ $("go").onclick = start;
 $("voicelink").onclick = () => {
   const v = $("voiceid").value.trim();
   if (!/^[A-Za-z0-9]{10,40}$/.test(v)) { $("voicemsg").textContent = "Cet identifiant ne ressemble pas à un Voice ID ElevenLabs (lettres et chiffres)."; return; }
-  const u = lienPage("tuteur", { prof, voix: v });
+  const u = lienPage("tuteur", { prof, niveau, voix: v });
   $("voicemsg").innerHTML = `Lien de classe : <a href="${u}">${u}</a>`;
 };
 

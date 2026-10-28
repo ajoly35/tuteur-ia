@@ -1,10 +1,10 @@
 {
- "_doc": "Configuration of the four ElevenLabs agents. Prompts = prompts/_socle-tuteur.md + prompts/<key>.md (tutors) or prompts/orientation.md alone. Built by tools/build_prompts.py into agents/build/. Created by tools/create_agents.py.",
+ "_doc": "Configuration of the four ElevenLabs agents. Prompts = prompts/_socle-tuteur.md + prompts/<key>.md (tutors) or prompts/orientation.md alone. Built by tools/build_prompts.py into agents/build/. Created by tools/create_agents.py. Tutors use RAG over agents/kb/programmes/ (official programme per class, 2026-2027).",
  "llm": "claude-haiku-5-5",
  "language": "fr",
  "agents": {
   "histoire": {
-   "name": "Tuteur IA - histoire-géo 3e",
+   "name": "Tuteur IA - histoire-géo-EMC (6e-terminale)",
    "voice_id": "5OnMHwgTFgvPVwE8jP6B",
    "voice_label": "Anaïs - News, podcasting and e-learning (FR, femme, voix chaude et claire)",
    "prompt_files": [
@@ -12,7 +12,14 @@
     "histoire.md"
    ],
    "kb_files": [
-    "histoire-geo-3e.md"
+    "histoire-geo-3e.md",
+    "programmes/histoire-geo-6e.md",
+    "programmes/histoire-geo-5e.md",
+    "programmes/histoire-geo-4e.md",
+    "programmes/histoire-geo-3e.md",
+    "programmes/histoire-geo-2nde.md",
+    "programmes/histoire-geo-1re.md",
+    "programmes/histoire-geo-tle.md"
    ],
    "first_message": "{{accroche}}",
    "dynamic_variables": {
@@ -22,10 +29,11 @@
     "accroche": "Allez, on y va. Première question : en quelle année commence la Première Guerre mondiale, et pourquoi ?"
    },
    "allow_voice_override": true,
-   "first_message_en": "Right, let's go. First question: what year did the First World War start, and why?"
+   "first_message_en": "Right, let's go. First question: what year did the First World War start, and why?",
+   "rag": true
   },
   "maths": {
-   "name": "Tuteur IA - maths 3e",
+   "name": "Tuteur IA - maths (6e-terminale)",
    "voice_id": "nbiTBaMRdSobTQJDzIWm",
    "voice_label": "Antoine - E-learning Instructor (FR, homme, pédagogue ; Paul K refusé : modération en direct)",
    "prompt_files": [
@@ -33,7 +41,14 @@
     "maths.md"
    ],
    "kb_files": [
-    "maths-3e.md"
+    "maths-3e.md",
+    "programmes/maths-6e.md",
+    "programmes/maths-5e.md",
+    "programmes/maths-4e.md",
+    "programmes/maths-3e.md",
+    "programmes/maths-2nde.md",
+    "programmes/maths-1re.md",
+    "programmes/maths-tle.md"
    ],
    "first_message": "{{accroche}}",
    "dynamic_variables": {
@@ -43,10 +58,11 @@
     "accroche": "Allez, calcul mental. Première question : combien font quinze pour cent de quatre-vingts ?"
    },
    "allow_voice_override": true,
-   "first_message_en": "Right, mental arithmetic. First question: what is fifteen percent of eighty?"
+   "first_message_en": "Right, mental arithmetic. First question: what is fifteen percent of eighty?",
+   "rag": true
   },
   "francais": {
-   "name": "Tuteur IA - français 3e",
+   "name": "Tuteur IA - français (6e-première)",
    "voice_id": "UaGvaD7NWzU5mJNoUqoY",
    "voice_label": "Perle (FR, femme, rassurante), partagée avec la guide d'orientation : Léa formatrice n'est plus dans la bibliothèque et le compte a 3 emplacements de voix",
    "prompt_files": [
@@ -54,7 +70,13 @@
     "francais.md"
    ],
    "kb_files": [
-    "francais-3e.md"
+    "francais-3e.md",
+    "programmes/francais-6e.md",
+    "programmes/francais-5e.md",
+    "programmes/francais-4e.md",
+    "programmes/francais-3e.md",
+    "programmes/francais-2nde.md",
+    "programmes/francais-1re.md"
    ],
    "first_message": "{{accroche}}",
    "dynamic_variables": {
@@ -64,7 +86,8 @@
     "accroche": "Allez, on y va. Première question : dans « Le soir, il lisait », quelle est la fonction de « le soir » ?"
    },
    "allow_voice_override": true,
-   "first_message_en": "Right, let's go. First question: in « Le soir, il lisait », what is the function of « le soir »?"
+   "first_message_en": "Right, let's go. First question: in « Le soir, il lisait », what is the function of « le soir »?",
+   "rag": true
   },
   "orientation": {
    "name": "Boussole - Claire, guide d'orientation (6e-terminale)",

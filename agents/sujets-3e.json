@@ -1,0 +1,72 @@
+{
+ "histoire": [
+  {
+   "sujet": "La Première Guerre mondiale",
+   "question": "En quelle année commence la Première Guerre mondiale, et pourquoi parle-t-on de guerre totale ?"
+  },
+  {
+   "sujet": "Les régimes totalitaires",
+   "question": "Qu'est-ce qu'un régime totalitaire ? Donne-moi une définition en une phrase."
+  },
+  {
+   "sujet": "La guerre froide",
+   "question": "La guerre froide oppose deux blocs. Lesquels, et pourquoi dit-on qu'elle est « froide » ?"
+  },
+  {
+   "sujet": "La décolonisation",
+   "question": "Quelle colonie française devient indépendante en 1962, et après quelle guerre ?"
+  },
+  {
+   "sujet": "La Ve République",
+   "question": "En quelle année naît la Ve République, et qui en est le premier président ?"
+  },
+  {
+   "sujet": "Les aires urbaines en France",
+   "question": "Qu'est-ce qu'une aire urbaine ? Explique-le-moi avec ta ville ou la ville la plus proche."
+  }
+ ],
+ "maths": [
+  {
+   "sujet": "Calcul mental et pourcentages",
+   "question": "Combien font quinze pour cent de quatre-vingts ? Et comment tu as fait ?"
+  },
+  {
+   "sujet": "Le théorème de Pythagore",
+   "question": "Dans quel type de triangle peut-on utiliser le théorème de Pythagore, et que dit-il ?"
+  },
+  {
+   "sujet": "Les fonctions affines",
+   "question": "f de x égale deux x plus trois. Combien vaut f de cinq ?"
+  },
+  {
+   "sujet": "Les probabilités",
+   "question": "On lance un dé à six faces. Quelle est la probabilité d'obtenir un nombre pair, et pourquoi ?"
+  },
+  {
+   "sujet": "Les équations",
+   "question": "Résous dans ta tête : trois x plus deux égale quatorze. Combien vaut x ?"
+  }
+ ],
+ "francais": [
+  {
+   "sujet": "Les figures de style",
+   "question": "« Cette obscure clarté qui tombe des étoiles. » Quelle figure de style, et pourquoi ?"
+  },
+  {
+   "sujet": "Les propositions subordonnées",
+   "question": "Dans « Je pense qu'il viendra », quelle est la proposition subordonnée, et de quel type ?"
+  },
+  {
+   "sujet": "Le passé simple",
+   "question": "Conjugue le verbe venir au passé simple, à la troisième personne du pluriel."
+  },
+  {
+   "sujet": "Réciter un poème",
+   "question": "Quel poème as-tu à apprendre ? Donne-moi le titre et l'auteur, puis récite-moi la première strophe."
+  },
+  {
+   "sujet": "Préparer l'oral du brevet",
+   "question": "Quel projet présentes-tu à l'oral ? Dis-moi en une phrase de quoi il parle et pourquoi tu l'as choisi."
+  }
+ ]
+}

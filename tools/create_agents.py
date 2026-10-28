@@ -18,6 +18,7 @@ import urllib.request
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 API = "https://api.elevenlabs.io/v1"
 KEY = os.environ.get("ELEVENLABS_API_KEY")
+RAG_MODEL = "e5_mistral_7b_instruct"
 if not KEY:
     sys.exit("Set ELEVENLABS_API_KEY to the personal account's key.")
 
@@ -48,6 +49,8 @@ def kb_doc(fname):
     if r and r.get("id"):
         state["kb"][fname] = {"id": r["id"], "name": fname}
         print(f"  + knowledge {fname}: {r['id']}")
+        # Embeddings for retrieval (RAG); the tutors search the programmes instead of loading them whole.
+        call("POST", f"/convai/knowledge-base/{r['id']}/rag-index", {"model": RAG_MODEL})
         return state["kb"][fname]
     return None
 
@@ -103,6 +106,7 @@ for key, a in cfg["agents"].items():
                 "dynamic_variables": {"dynamic_variable_placeholders": a["dynamic_variables"]},
                 "prompt": {"prompt": prompt, "llm": cfg["llm"], "temperature": 0.3, "knowledge_base": kb, "tool_ids": tools,
                            "timezone": "Europe/Paris",
+                           "rag": {"enabled": bool(a.get("rag")), "embedding_model": RAG_MODEL, "max_documents_length": 50000},
                            # Lets the agent switch language mid-call when the pupil speaks or asks for English.
                            "built_in_tools": {"language_detection": {"name": "language_detection", "description": "",
                                                                      "params": {"system_tool_type": "language_detection"}}}},
