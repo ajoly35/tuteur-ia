@@ -5,8 +5,8 @@
  "agents": {
   "histoire": {
    "name": "Tuteur IA - histoire-géo-EMC (6e-terminale)",
-   "voice_id": "5OnMHwgTFgvPVwE8jP6B",
-   "voice_label": "Anaïs - News, podcasting and e-learning (FR, femme, voix chaude et claire)",
+   "voice_id": "mNu8EQcIlFZdOJs7yfhe",
+   "voice_label": "Julia - Warm French Narrator (FR, jeune femme, parisienne, douce et posée ; remplace Anaïs, voix plus jeune)",
    "prompt_files": [
     "_socle-tuteur.md",
     "histoire.md"
@@ -60,8 +60,8 @@
   },
   "maths": {
    "name": "Tuteur IA - maths (6e-terminale)",
-   "voice_id": "nbiTBaMRdSobTQJDzIWm",
-   "voice_label": "Antoine - E-learning Instructor (FR, homme, pédagogue ; Paul K refusé : modération en direct)",
+   "voice_id": "vMF4TzHFcExaamR1mHwz",
+   "voice_label": "Thomas - Calm, Clear & Informative (FR, jeune homme, e-learning ; remplace Antoine, voix plus jeune)",
    "prompt_files": [
     "_socle-tuteur.md",
     "maths.md"
@@ -115,8 +115,8 @@
   },
   "francais": {
    "name": "Tuteur IA - français (6e-première)",
-   "voice_id": "UaGvaD7NWzU5mJNoUqoY",
-   "voice_label": "Perle (FR, femme, rassurante), partagée avec la guide d'orientation : Léa formatrice n'est plus dans la bibliothèque et le compte a 3 emplacements de voix",
+   "voice_id": "mNu8EQcIlFZdOJs7yfhe",
+   "voice_label": "Julia - Warm French Narrator (FR, jeune femme, parisienne, douce et posée ; remplace Perle, voix plus jeune)",
    "prompt_files": [
     "_socle-tuteur.md",
     "francais.md"
