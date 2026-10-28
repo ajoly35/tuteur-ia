@@ -110,11 +110,13 @@ for key, a in cfg["agents"].items():
             "language_presets": {lang: {"overrides": {"agent": {"language": lang, "first_message": a[f"first_message_{lang}"]}}}
                                  for lang in cfg.get("extra_languages", [])},
             "tts": {"voice_id": a["voice_id"], "model_id": cfg.get("tts_model", "eleven_flash_v2_5")},
-            "conversation": {"max_duration_seconds": 1800},
+            "conversation": {"max_duration_seconds": 600},  # 10 min: public links, pay-as-you-go plan
         },
         "platform_settings": {
             "overrides": {"conversation_config_override": {"tts": {"voice_id": bool(a.get("allow_voice_override"))}}},
             "guardrails": guardrails(),
+            # Cost ceiling for public links: 20 conversations a day, 2 at once, no paid bursting.
+            "call_limits": {"agent_concurrency_limit": 2, "daily_limit": 20, "bursting_enabled": False},
         },
     }
     if key in state["agents"]:

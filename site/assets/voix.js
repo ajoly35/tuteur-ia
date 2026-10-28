@@ -3,7 +3,7 @@
 window.TUTEUR_CONFIG = {
   agents: {
     histoire: "agent_0201m5z51hjyf798pnx0g52btzz8",
-    maths: "",
+    maths: "agent_7201m611k8kcf8psbm9xg2yefrps",
     francais: "agent_1401m5z51kkxf3v9219jzjbfdq90",
     orientation: "agent_4901m5z51ncqf0naw0t2mmxe0f3p",
   },

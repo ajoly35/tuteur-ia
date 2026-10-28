@@ -1,0 +1,332 @@
+<title>Boussole IA des formations</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: one calm column for a 15-year-old: question first, then three ideas, then the formations as a simple list. */
+:root {
+  --bg: #f4f6fb;
+  --card: #ffffff;
+  --ink: #18213a;
+  --ink-2: #4b5674;
+  --ink-3: #7a84a0;
+  --rule: #dde2ee;
+  --accent: #3a4fd6;
+  --accent-ink: #ffffff;
+  --accent-soft: #e8ebfb;
+  --a: #13804a; --b: #4f9a2f; --c: #b98a00; --d: #d0662a; --e: #c23b3b;
+  --display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --body: "Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #11152a; --card: #1a2038; --ink: #edf0fa; --ink-2: #bcc3dc; --ink-3: #8c95b3; --rule: #2c3454;
+  --accent: #8c9bff; --accent-ink: #11152a; --accent-soft: #252d52;
+  --a: #3fbf7f; --b: #86c25c; --c: #e0b23a; --d: #ec8a52; --e: #ee6d6d; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #11152a; --card: #1a2038; --ink: #edf0fa; --ink-2: #bcc3dc; --ink-3: #8c95b3; --rule: #2c3454;
+  --accent: #8c9bff; --accent-ink: #11152a; --accent-soft: #252d52;
+  --a: #3fbf7f; --b: #86c25c; --c: #e0b23a; --d: #ec8a52; --e: #ee6d6d; color-scheme: dark; }
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 17px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 28px 56px; }
+.wrap { max-width: 860px; margin: 0 auto; display: grid; gap: 28px; }
+h1, h2, h3 { font-family: var(--display); margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h1 { font-size: clamp(32px, 6vw, 48px); line-height: 1.05; font-weight: 800; }
+h2 { font-size: 24px; font-weight: 800; }
+h3 { font-size: 19px; font-weight: 600; }
+p { margin: 0; }
+.tag { font-size: 13px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+.lead { font-size: 19px; color: var(--ink-2); max-width: 60ch; }
+.proto { font-size: 14px; color: var(--ink-3); }
+header { display: grid; gap: 12px; }
+.card { background: var(--card); border: 1px solid var(--rule); border-radius: 14px; padding: 20px; min-width: 0; }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+/* Ask */
+.ask { display: grid; gap: 14px; border: 2px solid var(--accent); }
+.ask-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.ask-row input { flex: 1 1 260px; min-width: 0; padding: 12px 14px; border-radius: 10px; border: 1px solid var(--rule); background: var(--bg); }
+.btn { border: 0; border-radius: 10px; padding: 12px 18px; background: var(--accent); color: var(--accent-ink); font-weight: 700; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--rule); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { border: 1px solid var(--rule); background: var(--card); border-radius: 999px; padding: 6px 14px; font-size: 15px; cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.chat { display: grid; gap: 12px; }
+.msg { padding: 12px 14px; border-radius: 12px; max-width: 100%; overflow-wrap: anywhere; }
+.msg.me { background: var(--accent-soft); justify-self: end; max-width: 85%; }
+.msg.bot { background: var(--bg); border: 1px solid var(--rule); }
+.msg.bot ul { margin: 6px 0; padding-left: 20px; }
+.msg.bot p + p { margin-top: 8px; }
+.small { font-size: 14px; color: var(--ink-3); }
+
+/* Three ideas */
+.ideas { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 720px) { .ideas { grid-template-columns: minmax(0, 1fr); } }
+.idea { display: grid; gap: 6px; }
+.idea .big { font-family: var(--display); font-size: 34px; font-weight: 800; color: var(--accent); line-height: 1; }
+
+/* France box */
+.france { display: grid; gap: 10px; }
+.bars { display: grid; gap: 10px; }
+.barrow { display: grid; grid-template-columns: minmax(0, 1fr); gap: 4px; }
+.barrow .lab { display: flex; justify-content: space-between; gap: 10px; font-size: 15px; }
+.track { height: 14px; background: var(--rule); border-radius: 7px; overflow: hidden; }
+.track i { display: block; height: 100%; border-radius: 7px; }
+
+/* List */
+.tools { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.tools input { flex: 1 1 220px; min-width: 0; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--rule); background: var(--card); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 14px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.dot { width: 12px; height: 12px; border-radius: 4px; display: inline-block; }
+.list { display: grid; gap: 10px; }
+.fam { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 14px; align-items: start; text-align: left; width: 100%;
+  background: var(--card); border: 1px solid var(--rule); border-radius: 14px; padding: 14px; cursor: pointer; }
+.fam:hover { border-color: var(--accent); }
+.fam[aria-expanded="true"] { border-color: var(--accent); }
+.letter { width: 48px; height: 48px; border-radius: 12px; display: grid; place-items: center; color: #fff; font-family: var(--display); font-weight: 800; font-size: 24px; }
+.fam .name { font-weight: 700; font-size: 18px; }
+.fam .word { font-size: 14px; color: var(--ink-3); }
+.facts { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 15px; color: var(--ink-2); margin-top: 6px; }
+.facts b { color: var(--ink); font-variant-numeric: tabular-nums; }
+.detail { grid-column: 1 / -1; display: grid; gap: 12px; border-top: 1px solid var(--rule); padding-top: 12px; cursor: auto; }
+.offers { display: grid; gap: 8px; }
+.offer { display: grid; gap: 2px; padding: 10px 12px; border-radius: 10px; background: var(--bg); }
+.offer a { color: var(--accent); font-weight: 700; text-decoration: none; }
+.offer a:hover { text-decoration: underline; }
+.offer .meta { font-size: 14px; color: var(--ink-3); }
+.offers-tools { display: flex; gap: 8px; flex-wrap: wrap; }
+.offers-tools input { flex: 1 1 200px; min-width: 0; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--rule); background: var(--card); }
+details { background: var(--card); border: 1px solid var(--rule); border-radius: 14px; padding: 16px 20px; }
+details summary { cursor: pointer; font-family: var(--display); font-weight: 600; font-size: 19px; }
+details[open] summary { margin-bottom: 10px; }
+details p, details li { color: var(--ink-2); font-size: 15px; }
+details ul { padding-left: 20px; margin: 6px 0; }
+a { color: var(--accent); }
+@media (prefers-reduced-motion: no-preference) { .track i { transition: width .4s ease; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="tag">Préparer l'avenir · prototype · octobre 2026</div>
+    <h1>Quelles études pour un monde avec l'IA ?</h1>
+    <p class="lead">L'intelligence artificielle sait déjà faire une partie du travail de certains métiers. Ici, tu peux voir quelles formations après le bac mènent à des métiers qui résistent le mieux, combien on y gagne et où les suivre.</p>
+    <p class="proto">Ceci est un prototype. Les chiffres viennent de vraies études, mais ils donnent une tendance, pas une certitude. Parles-en aussi avec ton professeur principal ou un psychologue de l'Éducation nationale.</p>
+  </header>
+
+  <section class="card ask" aria-labelledby="h-ask">
+    <h2 id="h-ask">Qu'est-ce que tu aimerais faire plus tard ?</h2>
+    <p class="small" id="ask-help">Écris en quelques mots ce qui te plaît, même si tu hésites. La boussole te propose des formations, avec leurs débouchés, leurs salaires et des idées de stages.</p>
+    <form class="ask-row" id="ask-form">
+      <label for="ask-in" hidden>Ta question</label>
+      <input id="ask-in" type="text" autocomplete="off" placeholder="Par exemple : j'aime les maths et aider les gens">
+      <button class="btn" type="submit" id="ask-btn">Demander</button>
+      <button class="btn ghost" type="button" id="stop-btn" hidden>Arrêter</button>
+    </form>
+    <div class="chips" id="ideas-chips">
+      <button class="chip" type="button">J'aime les maths et parler avec les gens</button>
+      <button class="chip" type="button">Je veux soigner les autres</button>
+      <button class="chip" type="button">J'aime l'informatique, est-ce une bonne idée ?</button>
+      <button class="chip" type="button">Je ne sais pas encore</button>
+    </div>
+    <div class="chat" id="chat" aria-live="polite"></div>
+  </section>
+
+  <section aria-labelledby="h-ideas" style="display:grid;gap:14px">
+    <h2 id="h-ideas">Ce qui protège face à l'IA</h2>
+    <div class="ideas">
+      <div class="card idea"><div class="big">1</div><h3>Des maths et du contact humain</h3><p>Les métiers qui demandent à la fois des maths et de savoir travailler avec les autres sont ceux qui ont le plus progressé, en emplois et en salaires.</p><p class="small">David Deming, Harvard, 2017</p></div>
+      <div class="card idea"><div class="big">2</div><h3>Un métier où l'on fait plusieurs choses à la fois</h3><p>L'IA remplace facilement une tâche isolée. Un métier qui mélange beaucoup de tâches liées, des décisions et des responsabilités résiste bien mieux.</p><p class="small">Luis Garicano, 2026</p></div>
+      <div class="card idea"><div class="big">3</div><h3>Une formation large, pour apprendre à apprendre</h3><p>Les compétences très pointues vieillissent vite. Une formation généraliste, qui apprend à penser et à s'adapter, sert toute la vie.</p><p class="small">David Deming, 2025</p></div>
+    </div>
+  </section>
+
+  <section class="card france" aria-labelledby="h-france">
+    <h2 id="h-france">En France, c'est déjà visible</h2>
+    <p>Depuis l'arrivée de ChatGPT fin 2022, les entreprises embauchent moins de jeunes de 21 à 29 ans en CDI dans les métiers les plus exposés à l'IA.</p>
+    <div class="bars" id="bars"></div>
+    <p class="small">Variation des embauches en CDI des 21-29 ans, novembre 2022 à mars 2026. Source : Palladino, Bergeaud, Bertheau, Bunel et Degos (HEC Paris et Banque de France, 2026).</p>
+  </section>
+
+  <section aria-labelledby="h-list" style="display:grid;gap:14px">
+    <h2 id="h-list">Les formations, de la plus protégée à la plus exposée</h2>
+    <div class="tools">
+      <label for="q" hidden>Chercher</label>
+      <input id="q" type="search" placeholder="Chercher : infirmier, droit, BTS, informatique…">
+    </div>
+    <div class="chips" id="groups" role="group" aria-label="Type de formation"></div>
+    <div class="legend" id="legend"></div>
+    <div class="list" id="list"></div>
+    <p class="small" id="count"></p>
+  </section>
+
+  <details>
+    <summary>Comment la boussole est calculée</summary>
+    <p>Chaque famille de formations est reliée aux premiers métiers de ses diplômés. Pour chaque métier, on regarde trois choses :</p>
+    <ul>
+      <li><strong>La part des tâches que l'IA peut déjà faire presque seule</strong> (moitié de la note). Elle vient de l'analyse de 19 000 tâches de 920 métiers par Hosseini et Lichtinger (Harvard, 2026), avec les capacités de l'IA de décembre 2025. Ce sont des métiers américains équivalents aux métiers français.</li>
+      <li><strong>Le type de métier</strong> (un quart de la note) : des tâches une par une, plusieurs tâches liées, ou des relations et des responsabilités (Garicano, 2026).</li>
+      <li><strong>Maths et contact humain</strong> (un quart de la note), notés de 1 à 5 chacun pour la formation (Deming, 2017).</li>
+    </ul>
+    <p>Le salaire et la part de diplômés en emploi viennent du ministère de l'Enseignement supérieur (InserSup, 2026) : salaire net mensuel médian et part en emploi salarié en France, 30 mois après le diplôme. Les formations viennent de Parcoursup 2025 : <span id="psup-count"></span>.</p>
+    <p>Limites : l'IA « peut faire » une tâche ne veut pas dire que le métier va disparaître. Au Danemark, on ne voit encore aucun effet sur les salaires. Les notes de type de métier et de maths sont des jugements, à vérifier.</p>
+    <p class="small">Sources : Hosseini et Lichtinger (2026), <a href="https://github.com/s-mahdihosseini/GenAI_Expertise">GenAI and Expertise</a> ; Palladino et al. (2026), <a href="https://heclift.github.io/website/files/papers/LIFT_WP_2026-02.pdf">LIFT WP 2026-02</a> ; Aghion, Bergeaud, Bunel et Delbouve (2025), Diffusion de l'IA en France ; Deming (2017), <a href="https://scholar.harvard.edu/sites/scholar.harvard.edu/files/ddeming/files/deming_socialskills_qje.pdf">The Growing Importance of Social Skills</a> ; Deming (2025), <a href="https://forklightning.substack.com/p/shorting-the-ai-jobs-apocalypse">Shorting the AI jobs apocalypse</a> ; Garicano, Li et Wu (2026), Messy Jobs ; MESR, <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-insersup">InserSup</a> et <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-parcoursup">Parcoursup 2025</a>.</p>
+  </details>
+</div>
+
+<script src="data.js"></script>
+<script>
+const D = window.BOUSSOLE;
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const BANDS = [["A", 65, "--a", "Très protégée"], ["B", 52, "--b", "Plutôt protégée"], ["C", 40, "--c", "À moitié exposée"], ["D", 28, "--d", "Exposée"], ["E", -1, "--e", "Très exposée"]];
+const TIER = { 1: "des tâches une par une", 2: "plusieurs tâches liées", 3: "des relations et des responsabilités" };
+const psupLink = (cod) => `https://dossierappel.parcoursup.fr/Candidats/public/fiches/afficherFicheFormation?g_ta_cod=${cod}&typeBac=0&originePc=0`;
+const euro = (n) => n.toLocaleString("fr-FR") + " €";
+
+D.fams.forEach((f, i) => {
+  f.i = i;
+  const e = 1 - Math.min(f.expo, 0.8) / 0.8, m = (f.tier - 1) / 2, d = (f.math * f.social - 1) / 24;
+  f.score = Math.round(100 * (0.5 * e + 0.25 * m + 0.25 * d));
+  f.band = BANDS.find((b) => f.score > b[1]);
+  f.sur10 = Math.max(0, Math.round(f.expo * 10));
+});
+const byScore = [...D.fams].sort((a, b) => b.score - a.score);
+
+// France bars
+const FR = [["Métiers les plus exposés (traducteurs, journalistes, banque…)", -28.3], ["Métiers les moins exposés (infirmiers, maternelle, bâtiment…)", -7.5], ["Jeunes développeurs informatiques", -42]];
+$("bars").innerHTML = FR.map(([l, v]) => `<div class="barrow"><div class="lab"><span>${l}</span><b>${String(v).replace(".", ",")} %</b></div><div class="track"><i style="width:${Math.abs(v) / 45 * 100}%;background:var(${v < -20 ? "--e" : "--c"})"></i></div></div>`).join("");
+
+// Groups
+const groups = ["Toutes", ...new Set(D.fams.map((f) => f.g))];
+let group = "Toutes", open = null;
+$("groups").innerHTML = groups.map((g) => `<button class="chip" type="button" aria-pressed="${g === group}">${esc(g)}</button>`).join("");
+$("groups").querySelectorAll(".chip").forEach((b) => b.onclick = () => { group = b.textContent; $("groups").querySelectorAll(".chip").forEach((x) => x.setAttribute("aria-pressed", x === b)); renderList(); });
+$("legend").innerHTML = BANDS.map((b) => `<span><i class="dot" style="background:var(${b[2]})"></i>${b[0]} : ${b[3]}</span>`).join("");
+$("psup-count").textContent = `${D.meta.psup_classees.toLocaleString("fr-FR")} formations sur ${D.meta.psup_total.toLocaleString("fr-FR")} rattachées à une famille`;
+
+function factsHtml(f) {
+  const ins = f.ins ? `<span>Travaillent 30 mois ${esc(f.ins.niveau)} : <b>${Math.round(f.ins.emploi / 10)} sur 10</b></span><span>Salaire : <b>${euro(f.ins.salaire)}</b> net par mois</span>` : `<span>Salaire et emploi : pas encore de données</span>`;
+  return `<div class="facts"><span>L'IA peut faire <b>${f.sur10} tâche${f.sur10 > 1 ? "s" : ""} sur 10</b></span>${ins}</div>`;
+}
+
+function renderList() {
+  const q = $("q").value.trim().toLowerCase();
+  const rows = byScore.filter((f) => (group === "Toutes" || f.g === group) && (!q || (f.n + " " + f.s + " " + f.jobs).toLowerCase().includes(q)));
+  $("list").innerHTML = rows.map((f) => `<div class="fam" role="button" tabindex="0" data-i="${f.i}" aria-expanded="${open === f.i}">
+      <div class="letter" style="background:var(${f.band[2]})" aria-label="Note ${f.band[0]}">${f.band[0]}</div>
+      <div style="min-width:0"><div class="name">${esc(f.s)}</div><div class="word">${f.band[3]} · ${esc(f.n)}</div>${factsHtml(f)}</div>
+      ${open === f.i ? detailHtml(f) : ""}</div>`).join("") || `<p>Rien ne correspond. Essaie un autre mot.</p>`;
+  $("count").textContent = `${rows.length} famille${rows.length > 1 ? "s" : ""} de formations.`;
+  $("list").querySelectorAll(".fam").forEach((el) => {
+    const toggle = (e) => { if (e.target.closest(".detail")) return; const i = +el.dataset.i; open = open === i ? null : i; renderList(); };
+    el.onclick = toggle;
+    el.onkeydown = (e) => { if ((e.key === "Enter" || e.key === " ") && !e.target.closest(".detail")) { e.preventDefault(); toggle(e); } };
+  });
+  const oq = document.getElementById("oq");
+  if (oq) { oq.oninput = () => renderOffers(D.fams[open], oq.value); renderOffers(D.fams[open], ""); }
+}
+
+function detailHtml(f) {
+  return `<div class="detail">
+    <p>${esc(f.note)}</p>
+    <p><strong>Métiers :</strong> ${esc(f.jobs)}. Dans ces métiers, le travail est fait surtout de ${TIER[f.tier]}.</p>
+    <p class="small">Maths : ${f.math}/5 · contact humain : ${f.social}/5 · note ${f.score}/100</p>
+    ${f.nb ? `<h3>Où suivre cette formation (${f.nb.toLocaleString("fr-FR")} sur Parcoursup)</h3>
+    <div class="offers-tools"><label for="oq" hidden>Ville ou établissement</label><input id="oq" type="search" placeholder="Ta ville, ton département ou un établissement"></div>
+    <div class="offers" id="offers"></div>` : `<p class="small">Cette formation ne se trouve pas directement sur Parcoursup : on y accède après une licence ou un concours.</p>`}
+  </div>`;
+}
+
+function findOffers(fi, q, n) {
+  q = (q || "").trim().toLowerCase();
+  return D.offers.filter((o) => o[0] === fi && (!q || (o[1] + " " + o[2] + " " + o[3] + " " + o[4]).toLowerCase().includes(q)))
+    .sort((a, b) => b[5] - a[5]).slice(0, n);
+}
+function renderOffers(f, q) {
+  const el = $("offers"); if (!el) return;
+  const list = findOffers(f.i, q, 12);
+  el.innerHTML = list.map((o) => `<div class="offer"><a href="${psupLink(o[7])}" target="_blank" rel="noopener">${esc(o[4])}</a>
+    <span class="meta">${esc(o[1])} · ${esc(o[2])} (${esc(o[3])}) · ${o[8] ? "public" : "privé"} · ${o[5]} places${o[6] >= 0 ? ` · ${o[6]} % des candidats ont reçu une proposition` : ""}</span></div>`).join("")
+    || `<p class="small">Aucune formation trouvée ici. Essaie le nom de ton département.</p>`;
+}
+$("q").oninput = renderList;
+renderList();
+
+// ---------- Ask ----------
+const FAMS_TXT = byScore.map((f) => `- ${f.k} | ${f.n} | note ${f.band[0]} (${f.band[3]}) | l'IA peut faire ${f.sur10}/10 des tâches | type de métier : ${TIER[f.tier]} | maths ${f.math}/5, contact humain ${f.social}/5 | ${f.ins ? `${Math.round(f.ins.emploi)} % en emploi salarié 30 mois ${f.ins.niveau}, salaire médian ${f.ins.salaire} € net/mois` : "pas de données d'insertion"} | métiers : ${f.jobs} | ${f.note}`).join("\n");
+const RULES = `Tu es la « Boussole IA des formations », un conseiller d'orientation bienveillant pour des collégiens et lycéens français de 14 à 18 ans.
+Réponds en français, en tutoyant, avec des phrases courtes et des mots simples (niveau 3e). 120 à 220 mots au plus.
+Ta réponse :
+1. Une phrase qui montre que tu as compris ce que l'élève aime.
+2. Deux ou trois familles de formations de la liste ci-dessous, chacune avec : sa note de A à E, combien de tâches sur 10 l'IA peut faire, le salaire et la part en emploi s'ils existent, et une idée de stage ou d'activité à faire dès le collège ou le lycée (stage de 3e, stage de seconde, bénévolat, club, MOOC, journée portes ouvertes).
+3. Si l'élève donne une ville ou un département, utilise l'outil chercher_formations pour citer une ou deux formations réelles près de chez lui.
+4. Termine par une question pour l'aider à avancer.
+Règles : n'invente aucun chiffre, utilise seulement ceux de la liste. Rappelle que la note est une tendance, pas une certitude, et que ce que l'élève aime compte beaucoup. Ne décourage jamais un élève ; s'il vise une formation exposée, explique comment la rendre plus solide (ajouter des maths, du travail en équipe, une deuxième matière). Ne demande ni nom, ni adresse, ni données personnelles. Conseille d'en parler à son professeur principal ou au psychologue de l'Éducation nationale.
+Ce qui protège face à l'IA (à expliquer simplement si utile) : combiner maths et contact humain (Deming, 2017) ; un métier fait de plusieurs tâches liées et de responsabilités (Garicano, 2026) ; une formation large qui apprend à apprendre (Deming, 2025). En France, depuis fin 2022, les embauches en CDI des 21-29 ans ont baissé de 28 % dans les métiers les plus exposés, contre 7,5 % dans les moins exposés (HEC et Banque de France, 2026).
+Familles de formations (clé | nom | données) :
+${FAMS_TXT}`;
+
+const TOOLS = [{
+  name: "chercher_formations",
+  description: "Cherche des formations réelles sur Parcoursup 2025 pour une famille (sa clé) et un lieu (ville, département ou établissement). Renvoie jusqu'à 5 formations avec l'établissement, la ville, le nombre de places et le lien Parcoursup.",
+  inputSchema: { type: "object", properties: { famille: { type: "string", description: "clé de la famille, par exemple infirmier, inge, droit" }, lieu: { type: "string", description: "ville, département ou établissement" } }, required: ["famille"] },
+  execute(input) {
+    const f = D.fams.find((x) => x.k === String(input.famille));
+    if (!f) throw new Error("Clé inconnue. Clés possibles : " + D.fams.map((x) => x.k).join(", "));
+    return findOffers(f.i, String(input.lieu || ""), 5).map((o) => ({ formation: o[4], etablissement: o[1], ville: o[2], departement: o[3], places: o[5], lien: psupLink(o[7]) }));
+  },
+}];
+
+let sample = null, turns = [], ctl = null;
+const chat = $("chat");
+function md(t) {
+  const lines = esc(t).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>").replace(/(https:\/\/dossierappel\.parcoursup\.fr\S+)/g, '<a href="$1" target="_blank" rel="noopener">voir sur Parcoursup</a>').split("\n");
+  let out = "", inList = false;
+  for (const l of lines) {
+    const m = l.match(/^\s*(?:[-•*]|\d+\.)\s+(.*)/);
+    if (m) { if (!inList) { out += "<ul>"; inList = true; } out += `<li>${m[1]}</li>`; }
+    else { if (inList) { out += "</ul>"; inList = false; } if (l.trim()) out += `<p>${l}</p>`; }
+  }
+  return out + (inList ? "</ul>" : "");
+}
+function bubble(cls, html) { const d = document.createElement("div"); d.className = "msg " + cls; d.innerHTML = html; chat.appendChild(d); return d; }
+
+function localAnswer(text) {
+  const t = text.toLowerCase();
+  const pick = D.fams.filter((f) => (f.n + " " + f.s + " " + f.jobs).toLowerCase().split(/[\s,()']+/).some((w) => w.length > 4 && t.includes(w)));
+  const list = (pick.length ? pick : byScore.slice(0, 3)).sort((a, b) => b.score - a.score).slice(0, 3);
+  return `Voici des pistes à regarder dans la liste plus bas :\n${list.map((f) => `- **${f.s}** : note ${f.band[0]}, l'IA peut faire ${f.sur10} tâches sur 10${f.ins ? `, salaire ${euro(f.ins.salaire)} par mois` : ""}.`).join("\n")}\nOuvre chaque formation pour voir où la suivre près de chez toi.`;
+}
+
+async function ask(text) {
+  text = text.trim(); if (!text) return;
+  bubble("me", esc(text));
+  $("ask-in").value = "";
+  const out = bubble("bot", "<p>Je réfléchis…</p>");
+  if (!sample) { out.innerHTML = md(localAnswer(text)); return; }
+  turns.push({ role: "user", content: text });
+  ctl = new AbortController();
+  $("ask-btn").disabled = true; $("stop-btn").hidden = false;
+  try {
+    const { text: ans } = await sample([{ role: "user", content: RULES }, ...turns.slice(-8)], {
+      cache: false, signal: ctl.signal, tools: TOOLS, modelTier: "default",
+      onText: ({ text }) => { out.innerHTML = md(text); },
+    });
+    turns.push({ role: "assistant", content: ans });
+  } catch (e) {
+    if (e.text) out.innerHTML = md(e.text); else out.innerHTML = md(localAnswer(text));
+    if (["not_granted", "sampling_disabled", "not_declared", "capability_disabled", "capability_removed", "tools_unavailable"].includes(e.code)) {
+      sample = null; $("ask-help").textContent = "La conversation n'est pas disponible ici : la boussole te montre des pistes dans la liste.";
+    } else if (e.code === "rate_limited") bubble("bot", "<p>Beaucoup de questions d'un coup : réessaie dans un moment.</p>");
+    else if (e.code !== "cancelled") bubble("bot", "<p>La réponse a été interrompue. Tu peux reposer ta question.</p>");
+    turns.pop();
+  } finally { $("ask-btn").disabled = false; $("stop-btn").hidden = true; }
+}
+$("ask-form").addEventListener("submit", (e) => { e.preventDefault(); ask($("ask-in").value); });
+$("stop-btn").onclick = () => ctl?.abort();
+$("ideas-chips").querySelectorAll(".chip").forEach((b) => b.onclick = () => ask(b.textContent));
+(async () => { try { sample = await window.claude?.use("sample"); } catch { sample = null; } })();
+</script>
