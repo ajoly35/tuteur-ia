@@ -59,7 +59,7 @@ def client_tool(t):
     if t["name"] in state["tools"]:
         return state["tools"][t["name"]]
     props = {k: {"type": "string", "description": v} for k, v in t["parameters"].items()}
-    body = {"tool_config": {"type": "client", "name": t["name"], "description": t["description"], "expects_response": True,
+    body = {"tool_config": {"type": "client", "name": t["name"], "description": t["description"], "expects_response": t.get("expects_response", True),
                             "response_timeout_secs": 10,
                             "parameters": {"type": "object", "properties": props, "required": [list(props)[0]]}}}
     r = call("POST", "/convai/tools", body)
@@ -113,7 +113,7 @@ for key, a in cfg["agents"].items():
             },
             "language_presets": {lang: {"overrides": {"agent": {"language": lang, "first_message": a[f"first_message_{lang}"]}}}
                                  for lang in cfg.get("extra_languages", [])},
-            "tts": {"voice_id": a["voice_id"], "model_id": cfg.get("tts_model", "eleven_flash_v2_5")},
+            "tts": {"voice_id": a["voice_id"], "model_id": cfg.get("tts_model", "eleven_flash_v2_5"), **a.get("tts_settings", {})},
             # 10 min: public links, pay-as-you-go plan. Voice only: no text-only conversations.
             "conversation": {"max_duration_seconds": 600, "text_only": False},
         },

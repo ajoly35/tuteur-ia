@@ -112,7 +112,9 @@
   "tools": {
     "afficher_famille": "tool_0001m5z4znq9edkr6hmp78qwh4f7",
     "chercher_formations": "tool_4601m5z4znzeepjs3bxgwvsgc24y",
-    "classement_familles": "tool_7101m5z4zpche5fbev04njj44vhk"
+    "classement_familles": "tool_7101m5z4zpche5fbev04njj44vhk",
+    "afficher_question": "tool_5001m622cz4xe7nskpev8dzkbxe8",
+    "afficher_bilan": "tool_1001m623bfsjehfscd6xw1cdjsyp"
   },
   "agents": {
     "histoire": "agent_0201m5z51hjyf798pnx0g52btzz8",

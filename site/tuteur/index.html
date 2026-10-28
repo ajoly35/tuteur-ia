@@ -26,6 +26,22 @@
 .status { font-size: 15px; color: var(--ink-2); }
 .voice-row { display: flex; gap: 10px; flex-wrap: wrap; }
 .voice-row input { flex: 1 1 240px; }
+/* Question board: the tutor writes each question here (client tool afficher_question), apart from the voice chat. */
+.tableau { position: sticky; top: 12px; z-index: 5; border: 2px solid var(--c); border-left-width: 8px; border-radius: 16px; background: var(--c-soft); padding: 18px 22px; display: grid; gap: 10px; box-shadow: 0 6px 24px rgba(0,0,0,.08); }
+.tableau[hidden] { display: none; }
+.tableau .tag-q { justify-self: start; font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; background: var(--c); color: #fff; }
+.tableau .q { margin: 0; font-family: var(--display); font-weight: 600; font-size: clamp(22px, 3.2vw, 30px); line-height: 1.3; color: var(--ink); }
+.tableau .q .cite { font-family: var(--body); font-style: italic; font-weight: 700; background: var(--card); border-radius: 6px; padding: 0 6px; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.tableau .avant { margin: 0; padding-left: 18px; font-size: 14px; color: var(--ink-3); }
+.tableau.flash { animation: flash .6s ease-out; }
+@keyframes flash { from { transform: scale(1.02); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .tableau.flash { animation: none; } }
+.bilan { border: 2px solid var(--c); border-radius: 16px; background: var(--card); padding: 18px 22px; display: grid; gap: 12px; }
+.bilan[hidden] { display: none; }
+.bilan h2 { margin: 0; font-family: var(--display); }
+.bilan dl { margin: 0; display: grid; gap: 10px; }
+.bilan dt { font-size: 13px; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; color: var(--c); }
+.bilan dd { margin: 2px 0 0; font-size: 17px; line-height: 1.45; }
 </style>
 </head>
 <body>
@@ -78,6 +94,22 @@
     </div>
     <div><button class="btn" id="go" type="button">Commencer à parler</button></div>
     <p class="status" id="status" aria-live="polite"></p>
+  </section>
+
+  <section class="tableau" id="tableau" aria-live="polite" aria-label="Question du tuteur" hidden>
+    <span class="tag-q" id="tag-q">Question</span>
+    <p class="q" id="q"></p>
+    <ol class="avant" id="avant" aria-label="Questions précédentes" hidden></ol>
+  </section>
+
+  <section class="bilan" id="bilan" aria-live="polite" hidden>
+    <h2>Ton bilan</h2>
+    <dl>
+      <div><dt>Ce que tu sais bien</dt><dd id="b-acquis"></dd></div>
+      <div><dt>À revoir</dt><dd id="b-revoir"></dd></div>
+      <div><dt>Où le revoir</dt><dd id="b-ou"></dd></div>
+      <div><dt>Conseils pour réviser</dt><dd id="b-conseils"></dd></div>
+    </dl>
   </section>
 
   <section aria-labelledby="h-gf" class="grid2">
@@ -147,7 +179,8 @@ function accroche(mode, sujet) {
   const norm = (x) => x.toLowerCase().replace(/^(les?|la|l'|un|une|des)\s*/, "");
   const hit = liste.find((x) => t.toLowerCase().includes(norm(x.sujet)));
   const q = hit && hit.question;
-  if (mode === "interroger") return q ? `Première question. ${q}` : `${s}. Première question : qu'est-ce que tu en sais ? Donne-moi l'idée principale en une phrase.`;
+  const petits = niveau === "6e" || niveau === "5e";
+  if (mode === "interroger") return q ? `${petits ? "On commence tranquillement, prends ton temps." : "On commence."} Première question. ${q}` : `${s}. Première question : qu'est-ce que tu en sais ? Donne-moi l'idée principale en une phrase.`;
   if (mode === "expliquer") return `${s}. Avant que je t'explique, dis-moi en une phrase ce que tu en sais déjà.`;
   return `${s}. On révise ensemble, et tu commences. ${q || "Explique-moi ça comme si j'étais en sixième."}`;
 }
@@ -176,12 +209,56 @@ document.querySelectorAll(".prof").forEach((b) => b.onclick = () => { prof = b.d
 $("niveau").onchange = () => { niveau = $("niveau").value; $("sujet").value = ""; paint(); };
 document.querySelectorAll("#modes .chip").forEach((b) => b.onclick = () => { mode = b.dataset.m; paint(); });
 
+// Question board. Quoted phrases « ... » are set apart so the pupil sees exactly what to analyse.
+const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+// French typography: non-breaking spaces before ? ! : ; and inside « », so no mark is left alone on a line.
+const enCite = (s) => esc(s).replace(/«\s*([^»]+?)\s*»/g, '«\u00a0<span class="cite">$1</span>\u00a0»').replace(/ ([?!:;])/g, "\u00a0$1");
+let nQ = 0, courante = "";
+const precedentes = [];
+function afficherQuestion(texte) {
+  const q = String(texte || "").trim();
+  if (!q) return "vide";
+  const board = $("tableau");
+  if (q === courante) return "ok";
+  if (courante) precedentes.unshift(courante);
+  courante = q;
+  nQ += 1;
+  board.className = `tableau p-${prof}`;
+  board.hidden = false;
+  $("tag-q").textContent = `Question ${nQ}`;
+  $("q").innerHTML = enCite(q);
+  const av = $("avant");
+  av.innerHTML = precedentes.slice(0, 3).map((x) => `<li>${enCite(x)}</li>`).join("");
+  av.hidden = precedentes.length === 0;
+  void board.offsetWidth; board.classList.add("flash");
+  return "ok";
+}
+
+// Summary card: what the pupil knows, what to revise, where in the manual, study tips (client tool afficher_bilan).
+function afficherBilan(b) {
+  const champs = { "b-acquis": b.acquis, "b-revoir": b.a_revoir, "b-ou": b.ou_chercher, "b-conseils": b.conseils };
+  for (const [id, v] of Object.entries(champs)) {
+    $(id).innerHTML = enCite(String(v || "").trim()) || "–";
+  }
+  const card = $("bilan");
+  card.className = `bilan p-${prof}`;
+  card.hidden = false;
+  card.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  return "ok";
+}
+
 function start() {
   const sujet = $("sujet").value.trim();
   const voiceId = $("voiceid").value.trim();
   const w = monterVoix($("voice-slot"), prof, {
     mode, sujet: sujet || (sujets()[0] || {}).sujet || "au choix de l'élève", niveau: NOM_NIVEAU[niveau], accroche: accroche(mode, sujet),
-  }, { voiceId: voiceId || undefined, expanded: true });
+  }, { voiceId: voiceId || undefined, expanded: true,
+        clientTools: { afficher_question: ({ question }) => afficherQuestion(question), afficher_bilan: (b) => afficherBilan(b || {}) } });
+  $("bilan").hidden = true;
+  // The opening question is on the board before the call starts.
+  nQ = 0; courante = ""; precedentes.length = 0;
+  afficherQuestion(accroche(mode, sujet).replace(/^.*?Première question\.\s*/, ""));
+  $("tableau").scrollIntoView({ behavior: "smooth", block: "start" });
   if (w) $("status").textContent = "Ton tuteur t'attend en bas à droite de l'écran. Clique sur le bouton d'appel et autorise le micro : la première question arrive tout de suite.";
   else $("status").textContent = "";
 }

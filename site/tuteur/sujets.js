@@ -320,11 +320,11 @@ window.SUJETS = {
   "6e": [
    {
     "sujet": "Le complément d'objet direct",
-    "question": "Dans la phrase le renard mange le fromage, quel groupe de mots est le complément d'objet direct du verbe ?"
+    "question": "Dans la phrase « Le renard mange le fromage », quel groupe de mots est le complément d'objet direct du verbe ?"
    },
    {
     "sujet": "L'attribut du sujet",
-    "question": "Dans la phrase Ulysse est rusé, quelle est la fonction de l'adjectif rusé ?"
+    "question": "Dans la phrase « Ulysse est rusé », quelle est la fonction de l'adjectif « rusé » ?"
    },
    {
     "sujet": "Les récits des origines",
@@ -336,7 +336,7 @@ window.SUJETS = {
    },
    {
     "sujet": "Phrase simple et phrase complexe",
-    "question": "Combien de propositions comptes-tu dans la phrase le loup arrive et l'agneau tremble, et comment sont-elles reliées ?"
+    "question": "Combien de propositions comptes-tu dans la phrase « Le loup arrive et l'agneau tremble », et comment sont-elles reliées ?"
    }
   ],
   "5e": [
@@ -354,11 +354,11 @@ window.SUJETS = {
    },
    {
     "sujet": "Discours direct et indirect",
-    "question": "Comment transformes-tu au discours indirect la phrase Paul dit, je suis fatigué ?"
+    "question": "Comment transformes-tu au discours indirect la phrase « Paul dit : je suis fatigué » ?"
    },
    {
     "sujet": "Le passé simple",
-    "question": "Comment conjugues-tu le verbe venir au passé simple, à la troisième personne du pluriel ?"
+    "question": "Comment conjugues-tu le verbe « venir » au passé simple, à la troisième personne du pluriel ?"
    }
   ],
   "4e": [
@@ -376,11 +376,11 @@ window.SUJETS = {
    },
    {
     "sujet": "La voix passive",
-    "question": "Comment mets-tu à la voix passive la phrase le chat mange la souris ?"
+    "question": "Comment mets-tu à la voix passive la phrase « Le chat mange la souris » ?"
    },
    {
     "sujet": "Le pronom relatif",
-    "question": "Dans la phrase le livre que je lis est passionnant, quelle est la nature du mot que, et quel nom remplace-t-il ?"
+    "question": "Dans la phrase « Le livre que je lis est passionnant », quelle est la nature du mot « que », et quel nom remplace-t-il ?"
    }
   ],
   "3e": [
@@ -394,7 +394,7 @@ window.SUJETS = {
    },
    {
     "sujet": "Le passé simple",
-    "question": "Conjugue le verbe venir au passé simple, à la troisième personne du pluriel."
+    "question": "Conjugue le verbe « venir » au passé simple, à la troisième personne du pluriel."
    },
    {
     "sujet": "Réciter un poème",
@@ -408,15 +408,15 @@ window.SUJETS = {
   "2nde": [
    {
     "sujet": "La poésie de la Pléiade",
-    "question": "Quel poète de la Pléiade a écrit l'ode qui commence par mignonne, allons voir si la rose ?"
+    "question": "Quel poète de la Pléiade a écrit l'ode qui commence par « Mignonne, allons voir si la rose » ?"
    },
    {
     "sujet": "Les relatives avec auquel",
-    "question": "Comment relies-tu en une seule phrase voici le projet et je pense à ce projet, avec le bon pronom relatif ?"
+    "question": "Comment relies-tu en une seule phrase « Voici le projet » et « Je pense à ce projet », avec le bon pronom relatif ?"
    },
    {
     "sujet": "Imparfait et passé simple",
-    "question": "Dans la phrase il lisait quand le téléphone sonna, quelle différence de valeur fais-tu entre l'imparfait et le passé simple ?"
+    "question": "Dans la phrase « Il lisait quand le téléphone sonna », quelle différence de valeur fais-tu entre l'imparfait et le passé simple ?"
    },
    {
     "sujet": "Les règles du théâtre classique",
@@ -424,13 +424,13 @@ window.SUJETS = {
    },
    {
     "sujet": "Littérature d'idées et presse",
-    "question": "Quel écrivain a publié J'accuse dans le journal L'Aurore en 1898, pour défendre le capitaine Dreyfus ?"
+    "question": "Quel écrivain a publié « J'accuse… ! » dans le journal L'Aurore en 1898, pour défendre le capitaine Dreyfus ?"
    }
   ],
   "1re": [
    {
     "sujet": "Rimbaud, Cahier de Douai",
-    "question": "Dans Ma Bohème de Rimbaud, qui commence par je m'en allais, les poings dans mes poches crevées, quel genre de vie le poète célèbre-t-il ?"
+    "question": "Dans Ma Bohème de Rimbaud, qui commence par « Je m'en allais, les poings dans mes poches crevées », quel genre de vie le poète célèbre-t-il ?"
    },
    {
     "sujet": "Corneille, Le Menteur",
@@ -442,11 +442,11 @@ window.SUJETS = {
    },
    {
     "sujet": "L'interrogation indirecte",
-    "question": "Comment transformes-tu la question viendras-tu demain en interrogation indirecte, en commençant par je me demande ?"
+    "question": "Comment transformes-tu la question « Viendras-tu demain ? » en interrogation indirecte, en commençant par « Je me demande » ?"
    },
    {
     "sujet": "La négation partielle",
-    "question": "Dans la phrase je ne mange guère, quel sens la négation ne guère donne-t-elle à la phrase ?"
+    "question": "Dans la phrase « Je ne mange guère », quel sens la négation « ne… guère » donne-t-elle à la phrase ?"
    }
   ]
  }

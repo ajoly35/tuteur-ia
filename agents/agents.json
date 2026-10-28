@@ -30,7 +30,33 @@
    },
    "allow_voice_override": true,
    "first_message_en": "Right, let's go. First question: what year did the First World War start, and why?",
-   "rag": true
+   "rag": true,
+   "client_tools": [
+    {
+     "name": "afficher_question",
+     "description": "Affiche en grand sur l'écran de l'élève la question que tu vas poser. À appeler juste avant chaque nouvelle question.",
+     "expects_response": false,
+     "parameters": {
+      "question": "Le texte exact de la question, avec les guillemets « » autour des phrases ou mots cités."
+     }
+    },
+    {
+     "name": "afficher_bilan",
+     "description": "Affiche sur l'écran de l'élève son bilan : ce qu'il maîtrise, ce qu'il doit revoir, où le revoir dans son manuel ou son cahier, et les conseils de méthode. À appeler juste avant de dire le bilan.",
+     "expects_response": false,
+     "parameters": {
+      "acquis": "Ce que l'élève maîtrise, en une ou deux phrases courtes.",
+      "a_revoir": "La ou les notions précises à revoir.",
+      "ou_chercher": "Où le revoir : leçon du cahier, chapitre du manuel, mot à chercher dans le sommaire ou l'index (jamais de numéro de page inventé).",
+      "conseils": "Un ou deux conseils de méthode concrets."
+     }
+    }
+   ],
+   "tts_settings": {
+    "speed": 0.78,
+    "stability": 0.6,
+    "similarity_boost": 0.75
+   }
   },
   "maths": {
    "name": "Tuteur IA - maths (6e-terminale)",
@@ -59,7 +85,33 @@
    },
    "allow_voice_override": true,
    "first_message_en": "Right, mental arithmetic. First question: what is fifteen percent of eighty?",
-   "rag": true
+   "rag": true,
+   "client_tools": [
+    {
+     "name": "afficher_question",
+     "description": "Affiche en grand sur l'écran de l'élève la question que tu vas poser. À appeler juste avant chaque nouvelle question.",
+     "expects_response": false,
+     "parameters": {
+      "question": "Le texte exact de la question, avec les guillemets « » autour des phrases ou mots cités."
+     }
+    },
+    {
+     "name": "afficher_bilan",
+     "description": "Affiche sur l'écran de l'élève son bilan : ce qu'il maîtrise, ce qu'il doit revoir, où le revoir dans son manuel ou son cahier, et les conseils de méthode. À appeler juste avant de dire le bilan.",
+     "expects_response": false,
+     "parameters": {
+      "acquis": "Ce que l'élève maîtrise, en une ou deux phrases courtes.",
+      "a_revoir": "La ou les notions précises à revoir.",
+      "ou_chercher": "Où le revoir : leçon du cahier, chapitre du manuel, mot à chercher dans le sommaire ou l'index (jamais de numéro de page inventé).",
+      "conseils": "Un ou deux conseils de méthode concrets."
+     }
+    }
+   ],
+   "tts_settings": {
+    "speed": 0.78,
+    "stability": 0.6,
+    "similarity_boost": 0.75
+   }
   },
   "francais": {
    "name": "Tuteur IA - français (6e-première)",
@@ -87,7 +139,33 @@
    },
    "allow_voice_override": true,
    "first_message_en": "Right, let's go. First question: in « Le soir, il lisait », what is the function of « le soir »?",
-   "rag": true
+   "rag": true,
+   "client_tools": [
+    {
+     "name": "afficher_question",
+     "description": "Affiche en grand sur l'écran de l'élève la question que tu vas poser. À appeler juste avant chaque nouvelle question.",
+     "expects_response": false,
+     "parameters": {
+      "question": "Le texte exact de la question, avec les guillemets « » autour des phrases ou mots cités."
+     }
+    },
+    {
+     "name": "afficher_bilan",
+     "description": "Affiche sur l'écran de l'élève son bilan : ce qu'il maîtrise, ce qu'il doit revoir, où le revoir dans son manuel ou son cahier, et les conseils de méthode. À appeler juste avant de dire le bilan.",
+     "expects_response": false,
+     "parameters": {
+      "acquis": "Ce que l'élève maîtrise, en une ou deux phrases courtes.",
+      "a_revoir": "La ou les notions précises à revoir.",
+      "ou_chercher": "Où le revoir : leçon du cahier, chapitre du manuel, mot à chercher dans le sommaire ou l'index (jamais de numéro de page inventé).",
+      "conseils": "Un ou deux conseils de méthode concrets."
+     }
+    }
+   ],
+   "tts_settings": {
+    "speed": 0.78,
+    "stability": 0.6,
+    "similarity_boost": 0.75
+   }
   },
   "orientation": {
    "name": "Boussole - Claire, guide d'orientation (6e-terminale)",

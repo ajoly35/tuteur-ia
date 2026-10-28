@@ -1,44 +1,44 @@
 {
   "6e": [
-    {"sujet": "Le complément d'objet direct", "question": "Dans la phrase le renard mange le fromage, quel groupe de mots est le complément d'objet direct du verbe ?"},
-    {"sujet": "L'attribut du sujet", "question": "Dans la phrase Ulysse est rusé, quelle est la fonction de l'adjectif rusé ?"},
+    {"sujet": "Le complément d'objet direct", "question": "Dans la phrase « Le renard mange le fromage », quel groupe de mots est le complément d'objet direct du verbe ?"},
+    {"sujet": "L'attribut du sujet", "question": "Dans la phrase « Ulysse est rusé », quelle est la fonction de l'adjectif « rusé » ?"},
     {"sujet": "Les récits des origines", "question": "Dans le récit de la Genèse, en combien de jours Dieu crée-t-il le monde avant de se reposer ?"},
     {"sujet": "La ruse au théâtre", "question": "Dans Les Fourberies de Scapin de Molière, dans quoi Scapin fait-il cacher Géronte pour lui donner des coups de bâton ?"},
-    {"sujet": "Phrase simple et phrase complexe", "question": "Combien de propositions comptes-tu dans la phrase le loup arrive et l'agneau tremble, et comment sont-elles reliées ?"}
+    {"sujet": "Phrase simple et phrase complexe", "question": "Combien de propositions comptes-tu dans la phrase « Le loup arrive et l'agneau tremble », et comment sont-elles reliées ?"}
   ],
   "5e": [
     {"sujet": "Le héros épique", "question": "Dans l'Odyssée, comment s'appelle le cyclope qu'Ulysse aveugle pour s'échapper de sa grotte ?"},
     {"sujet": "La fable et sa morale", "question": "Dans Le Corbeau et le Renard de La Fontaine, quelle leçon le renard donne-t-il au corbeau après lui avoir pris son fromage ?"},
     {"sujet": "Le monde renversé au théâtre", "question": "Dans L'Île des esclaves de Marivaux, que doivent échanger les maîtres et les esclaves en arrivant sur l'île ?"},
-    {"sujet": "Discours direct et indirect", "question": "Comment transformes-tu au discours indirect la phrase Paul dit, je suis fatigué ?"},
-    {"sujet": "Le passé simple", "question": "Comment conjugues-tu le verbe venir au passé simple, à la troisième personne du pluriel ?"}
+    {"sujet": "Discours direct et indirect", "question": "Comment transformes-tu au discours indirect la phrase « Paul dit : je suis fatigué » ?"},
+    {"sujet": "Le passé simple", "question": "Comment conjugues-tu le verbe « venir » au passé simple, à la troisième personne du pluriel ?"}
   ],
   "4e": [
     {"sujet": "La nouvelle fantastique", "question": "Dans Le Horla de Maupassant, qu'est-ce que le narrateur découvre de mystérieux dans sa carafe en se réveillant ?"},
     {"sujet": "Le dilemme tragique", "question": "Dans Le Cid de Corneille, pourquoi Rodrigue doit-il se battre contre le père de Chimène, la femme qu'il aime ?"},
     {"sujet": "Le roman naturaliste", "question": "Quel écrivain du dix-neuvième siècle a écrit le cycle des Rougon-Macquart, qui raconte l'histoire d'une famille sous le Second Empire ?"},
-    {"sujet": "La voix passive", "question": "Comment mets-tu à la voix passive la phrase le chat mange la souris ?"},
-    {"sujet": "Le pronom relatif", "question": "Dans la phrase le livre que je lis est passionnant, quelle est la nature du mot que, et quel nom remplace-t-il ?"}
+    {"sujet": "La voix passive", "question": "Comment mets-tu à la voix passive la phrase « Le chat mange la souris » ?"},
+    {"sujet": "Le pronom relatif", "question": "Dans la phrase « Le livre que je lis est passionnant », quelle est la nature du mot « que », et quel nom remplace-t-il ?"}
   ],
   "3e": [
     {"sujet": "Le récit autobiographique", "question": "Comment appelle-t-on l'engagement par lequel l'auteur d'une autobiographie promet au lecteur de dire la vérité sur sa propre vie ?"},
     {"sujet": "La satire chez Voltaire", "question": "Dans Candide de Voltaire, quelle philosophie Pangloss enseigne-t-il à Candide, alors que les malheurs s'accumulent ?"},
-    {"sujet": "La poésie de la Résistance", "question": "Dans le poème de Paul Éluard où revient le vers j'écris ton nom, quel est le nom que le poète écrit partout ?"},
-    {"sujet": "Le subjonctif présent", "question": "Comment complètes-tu la phrase il faut que je, avec le verbe être au subjonctif présent ?"},
-    {"sujet": "L'attribut du COD", "question": "Dans la phrase les élèves ont élu Marie déléguée, quelle est la fonction du mot déléguée ?"}
+    {"sujet": "La poésie de la Résistance", "question": "Dans le poème de Paul Éluard où revient le vers « J'écris ton nom », quel est le nom que le poète écrit partout ?"},
+    {"sujet": "Le subjonctif présent", "question": "Comment complètes-tu la phrase « Il faut que je… », avec le verbe être au subjonctif présent ?"},
+    {"sujet": "L'attribut du COD", "question": "Dans la phrase « Les élèves ont élu Marie déléguée », quelle est la fonction du mot « déléguée » ?"}
   ],
   "2nde": [
-    {"sujet": "La poésie de la Pléiade", "question": "Quel poète de la Pléiade a écrit l'ode qui commence par mignonne, allons voir si la rose ?"},
-    {"sujet": "Les relatives avec auquel", "question": "Comment relies-tu en une seule phrase voici le projet et je pense à ce projet, avec le bon pronom relatif ?"},
-    {"sujet": "Imparfait et passé simple", "question": "Dans la phrase il lisait quand le téléphone sonna, quelle différence de valeur fais-tu entre l'imparfait et le passé simple ?"},
+    {"sujet": "La poésie de la Pléiade", "question": "Quel poète de la Pléiade a écrit l'ode qui commence par « Mignonne, allons voir si la rose » ?"},
+    {"sujet": "Les relatives avec auquel", "question": "Comment relies-tu en une seule phrase « Voici le projet » et « Je pense à ce projet », avec le bon pronom relatif ?"},
+    {"sujet": "Imparfait et passé simple", "question": "Dans la phrase « Il lisait quand le téléphone sonna », quelle différence de valeur fais-tu entre l'imparfait et le passé simple ?"},
     {"sujet": "Les règles du théâtre classique", "question": "Parmi les trois unités du théâtre classique, laquelle impose que l'action se déroule en une seule journée ?"},
-    {"sujet": "Littérature d'idées et presse", "question": "Quel écrivain a publié J'accuse dans le journal L'Aurore en 1898, pour défendre le capitaine Dreyfus ?"}
+    {"sujet": "Littérature d'idées et presse", "question": "Quel écrivain a publié « J'accuse… ! » dans le journal L'Aurore en 1898, pour défendre le capitaine Dreyfus ?"}
   ],
   "1re": [
-    {"sujet": "Rimbaud, Cahier de Douai", "question": "Dans Ma Bohème de Rimbaud, qui commence par je m'en allais, les poings dans mes poches crevées, quel genre de vie le poète célèbre-t-il ?"},
+    {"sujet": "Rimbaud, Cahier de Douai", "question": "Dans Ma Bohème de Rimbaud, qui commence par « Je m'en allais, les poings dans mes poches crevées », quel genre de vie le poète célèbre-t-il ?"},
     {"sujet": "Corneille, Le Menteur", "question": "Dans Le Menteur de Corneille, quel est le principal défaut de Dorante, le personnage principal ?"},
     {"sujet": "La Boétie et la servitude", "question": "Selon La Boétie, dans le Discours de la servitude volontaire, que suffirait-il que le peuple fasse pour que le tyran perde son pouvoir ?"},
-    {"sujet": "L'interrogation indirecte", "question": "Comment transformes-tu la question viendras-tu demain en interrogation indirecte, en commençant par je me demande ?"},
-    {"sujet": "La négation partielle", "question": "Dans la phrase je ne mange guère, quel sens la négation ne guère donne-t-elle à la phrase ?"}
+    {"sujet": "L'interrogation indirecte", "question": "Comment transformes-tu la question « Viendras-tu demain ? » en interrogation indirecte, en commençant par « Je me demande » ?"},
+    {"sujet": "La négation partielle", "question": "Dans la phrase « Je ne mange guère », quel sens la négation « ne… guère » donne-t-elle à la phrase ?"}
   ]
 }
