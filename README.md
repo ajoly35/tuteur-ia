@@ -4,7 +4,7 @@ Deux prototypes vocaux en français, construits pour la note « Un tuteur IA pou
 
 | Prototype | Page | Agent(s) ElevenLabs |
 |---|---|---|
-| **Tuteur de révision** (3e, brevet) : trois professeurs, trois façons de travailler (m'interroger, m'expliquer, réviser ensemble), garde-fous anti-devoirs, voix du professeur possible | `site/tuteur/` | Madame Lambert (histoire-géo-EMC), Monsieur Diallo (maths), Madame Morel (français) |
+| **Tuteur de révision** (3e, brevet) : trois matières, trois façons de travailler (m'interroger, m'expliquer, réviser ensemble), voix uniquement, première question dès le début de l'appel (méthode socratique), garde-fous anti-devoirs, voix du professeur possible | `site/tuteur/` | Tuteurs sans nom : histoire-géo-EMC, maths, français |
 | **Boussole d'orientation** (6e à terminale, élèves et parents) : la Boussole IA des formations + une guide vocale qui ouvre les fiches et cherche des formations Parcoursup près de chez l'élève | `site/orientation/` | Claire |
 | Dix scénarios de test | `site/tests.html` | |
 
@@ -13,7 +13,7 @@ Deux prototypes vocaux en français, construits pour la note « Un tuteur IA pou
 ```
 agents/
   agents.json            configuration des 4 agents (voix, premier message, variables, outils, garde-fous)
-  prompts/               prompts sources : _socle-tuteur.md (commun) + un fichier par personnage
+  prompts/               prompts sources : _socle-tuteur.md (commun) + un fichier par matière
   kb/                    bases de connaissances (programmes de 3e, orientation) + SOURCES.md
   build/                 prompts assemblés (tools/build_prompts.py)
   created.json           identifiants des agents créés (écrit par tools/create_agents.py)

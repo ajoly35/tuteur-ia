@@ -4,7 +4,7 @@
  "language": "fr",
  "agents": {
   "histoire": {
-   "name": "Tuteur IA - Madame Lambert (histoire-géo 3e)",
+   "name": "Tuteur IA - histoire-géo 3e",
    "voice_id": "5OnMHwgTFgvPVwE8jP6B",
    "voice_label": "Anaïs - News, podcasting and e-learning (FR, femme, voix chaude et claire)",
    "prompt_files": [
@@ -14,18 +14,18 @@
    "kb_files": [
     "histoire-geo-3e.md"
    ],
-   "first_message": "Bonjour ! Je suis Madame Lambert, ta professeure d'histoire-géo. {{accroche}}",
+   "first_message": "{{accroche}}",
    "dynamic_variables": {
     "mode": "au choix de l'élève",
     "sujet": "au choix de l'élève",
     "niveau": "3e",
-    "accroche": "Tu préfères que je t'interroge, que je t'explique une notion, ou qu'on révise ensemble ?"
+    "accroche": "Allez, on y va. Première question : en quelle année commence la Première Guerre mondiale, et pourquoi ?"
    },
    "allow_voice_override": true,
-   "first_message_en": "Hello! I'm Madame Lambert, your history and geography teacher. Shall I quiz you, explain something, or shall we revise together?"
+   "first_message_en": "Right, let's go. First question: what year did the First World War start, and why?"
   },
   "maths": {
-   "name": "Tuteur IA - Monsieur Diallo (maths 3e)",
+   "name": "Tuteur IA - maths 3e",
    "voice_id": "nbiTBaMRdSobTQJDzIWm",
    "voice_label": "Antoine - E-learning Instructor (FR, homme, pédagogue ; Paul K refusé : modération en direct)",
    "prompt_files": [
@@ -35,18 +35,18 @@
    "kb_files": [
     "maths-3e.md"
    ],
-   "first_message": "Salut ! Je suis Monsieur Diallo, ton prof de maths. {{accroche}}",
+   "first_message": "{{accroche}}",
    "dynamic_variables": {
     "mode": "au choix de l'élève",
     "sujet": "au choix de l'élève",
     "niveau": "3e",
-    "accroche": "On fait une série de calcul mental, je t'explique quelque chose, ou on révise ensemble ?"
+    "accroche": "Allez, calcul mental. Première question : combien font quinze pour cent de quatre-vingts ?"
    },
    "allow_voice_override": true,
-   "first_message_en": "Hi! I'm Monsieur Diallo, your maths teacher. Shall we do some mental arithmetic, shall I explain something, or shall we revise together?"
+   "first_message_en": "Right, mental arithmetic. First question: what is fifteen percent of eighty?"
   },
   "francais": {
-   "name": "Tuteur IA - Madame Morel (français 3e)",
+   "name": "Tuteur IA - français 3e",
    "voice_id": "UaGvaD7NWzU5mJNoUqoY",
    "voice_label": "Perle (FR, femme, rassurante), partagée avec la guide d'orientation : Léa formatrice n'est plus dans la bibliothèque et le compte a 3 emplacements de voix",
    "prompt_files": [
@@ -56,15 +56,15 @@
    "kb_files": [
     "francais-3e.md"
    ],
-   "first_message": "Bonjour ! Je suis Madame Morel, ta professeure de français. {{accroche}}",
+   "first_message": "{{accroche}}",
    "dynamic_variables": {
     "mode": "au choix de l'élève",
     "sujet": "au choix de l'élève",
     "niveau": "3e",
-    "accroche": "Tu veux que je t'interroge, que je t'explique une notion, ou qu'on révise ensemble ?"
+    "accroche": "Allez, on y va. Première question : dans « Le soir, il lisait », quelle est la fonction de « le soir » ?"
    },
    "allow_voice_override": true,
-   "first_message_en": "Hello! I'm Madame Morel, your French teacher. Shall I quiz you, explain a point, or shall we revise together?"
+   "first_message_en": "Right, let's go. First question: in « Le soir, il lisait », what is the function of « le soir »?"
   },
   "orientation": {
    "name": "Boussole - Claire, guide d'orientation (6e-terminale)",
