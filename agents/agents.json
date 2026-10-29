@@ -180,14 +180,14 @@
     "formations-et-classements.md",
     "orientation-faq-parents.md"
    ],
-   "first_message": "Bonjour, je suis Claire, la guide de la Boussole. {{accroche}}",
+   "first_message": "Bonjour ! Je suis Claire, la guide d'orientation de la Boussole. {{accroche}}",
    "dynamic_variables": {
     "profil": "élève",
     "classe": "inconnue",
     "lieu": "inconnu",
     "interets": "inconnus",
     "question": "aucune",
-    "accroche": "Tu es en quelle classe, et qu'est-ce que tu aimes faire, à l'école ou en dehors ?"
+    "accroche": "Je suis là pour t'aider à réfléchir à la suite : ce qui te plaît, les métiers qui te tentent, et les formations qui y mènent. Pour commencer, tu es en quelle classe, et qu'est-ce que tu aimes faire ?"
    },
    "allow_voice_override": false,
    "client_tools": [
@@ -214,7 +214,12 @@
      }
     }
    ],
-   "first_message_en": "Hello, I'm Claire, the Boussole guide. What year are you in, and what do you enjoy doing, at school or outside it?"
+   "first_message_en": "Hello! I'm Claire, the Boussole careers guide. I'm here to help you think about what comes next: what you enjoy, the jobs that appeal to you, and the courses that lead there. To start, what year are you in, and what do you enjoy doing?",
+   "tts_settings": {
+    "speed": 0.85,
+    "stability": 0.7,
+    "similarity_boost": 0.75
+   }
   }
  },
  "guardrails": {

@@ -57,6 +57,29 @@
     },
   };
 
+  // Opening line after "Bonjour ! Je suis Claire...": says what Claire is for, then builds on what the
+  // form already gave (class, interests) instead of asking for it again, with a first question fitted to the age.
+  function accrocher(v, q) {
+    const classe = v.classe !== "inconnue" ? v.classe : "";
+    const gouts = v.interets !== "inconnus" ? v.interets : "";
+    if (v.profil === "parent") {
+      return "Je suis là pour vous aider à y voir clair sur l'orientation de votre enfant. "
+        + (q ? `Vous m'avez demandé : « ${q} ». On en parle. ` : "")
+        + (classe ? `Votre enfant est en ${classe} : qu'est-ce qui vous préoccupe le plus ?` : "En quelle classe est votre enfant, et qu'est-ce qui vous préoccupe ?");
+    }
+    const intro = "Je suis là pour t'aider à réfléchir à la suite : ce qui te plaît, les métiers qui te tentent, et les formations qui y mènent. ";
+    if (q) return intro + `Tu m'as demandé : « ${q} ». On en parle.` + (classe ? "" : " Tu es en quelle classe ?");
+    const college = ["6e", "5e"].includes(classe);
+    const fin = ["4e", "3e"].includes(classe);
+    const suite = college ? "Qu'est-ce que tu préfères là-dedans, et qu'est-ce que tu aimes faire en dehors de l'école ?"
+      : fin ? "Est-ce que tu as déjà une idée de ce que tu aimerais faire après la 3e, ou d'un métier qui te tente ?"
+      : "Est-ce qu'il y a des métiers ou des domaines qui te tentent, même vaguement ?";
+    if (classe && gouts) return intro + `Tu es en ${classe} et tu aimes ${gouts}. ${suite}`;
+    if (classe) return intro + `Tu es en ${classe}. Qu'est-ce que tu aimes faire, à l'école ou en dehors ?`;
+    if (gouts) return intro + `Tu aimes ${gouts}. Tu es en quelle classe ?`;
+    return intro + "Pour commencer, tu es en quelle classe, et qu'est-ce que tu aimes faire ?";
+  }
+
   function start() {
     const vars = {
       profil: $("v-profil").value,
@@ -65,12 +88,7 @@
       interets: $("v-int").value.trim() || "inconnus",
       question: question || "aucune",
     };
-    const accroche = question
-      ? `Tu m'as demandé : « ${question} ». On en parle ? Dis-moi d'abord en quelle classe tu es, si tu ne me l'as pas déjà dit.`
-      : vars.profil === "parent"
-        ? "Vous êtes parent : en quelle classe est votre enfant, et qu'est-ce qui vous préoccupe ?"
-        : "Tu es en quelle classe, et qu'est-ce que tu aimes faire, à l'école ou en dehors ?";
-    vars.accroche = accroche;
+    vars.accroche = accrocher(vars, question);
     const w = monterVoix($("voice-slot"), "orientation", vars, { clientTools, expanded: true });
     if (w) $("v-status").textContent = "Claire t'attend en bas à droite. Clique sur le bouton d'appel et autorise le micro, ou écris-lui.";
   }
