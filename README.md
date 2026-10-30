@@ -1,12 +1,11 @@
-# Tuteur IA public : révision vocale et orientation
+# Boussole d'orientation : une guide vocale et la Boussole IA des formations
 
-Deux prototypes vocaux en français, construits pour la note « Un tuteur IA pour l'Éducation nationale » (Préparer l'avenir, GT Éducation, octobre 2026).
+Un prototype vocal en français pour l'orientation des élèves et des parents (Préparer l'avenir, GT Éducation, octobre 2026).
 
 | Prototype | Page | Agent(s) ElevenLabs |
 |---|---|---|
-| **Tuteur de révision** (3e, brevet) : trois matières, trois façons de travailler (m'interroger, m'expliquer, réviser ensemble), voix uniquement, première question dès le début de l'appel (méthode socratique), garde-fous anti-devoirs, voix du professeur possible | `site/tuteur/` | Tuteurs sans nom : histoire-géo-EMC, maths, français |
 | **Boussole d'orientation** (6e à terminale, élèves et parents) : la Boussole IA des formations + une guide vocale qui ouvre les fiches et cherche des formations Parcoursup près de chez l'élève | `site/orientation/` | Claire |
-| Dix scénarios de test | `site/tests.html` | |
+| Cinq scénarios de test | `site/tests.html` | |
 
 ## Arborescence
 
@@ -21,7 +20,6 @@ site/                    site statique servi par GitHub Pages
   assets/voix.js         chargeur du widget ElevenLabs + identifiants des agents
   assets/orientation-voix.js  outils côté navigateur de la guide (afficher_famille, chercher_formations, classement_familles)
   orientation/data.js    données de la Boussole (Parcoursup 2025, InserSup, Hosseini et Lichtinger 2026)
-note/                    note d'une page (.md source, .docx, .pdf au format v12)
 tools/                   build_prompts.py, create_agents.py, port_boussole.py
 ```
 
@@ -43,10 +41,6 @@ Le dépôt est privé et le compte GitHub est au plan gratuit : GitHub Pages ref
 
 - Dans le prompt : refus de faire les devoirs (rédaction, développement construit, résultat d'exercice), méthode pas à pas, aucune donnée personnelle, numéros d'aide (3020, 3018, 119, 3114).
 - Dans la plateforme : un garde-fou personnalisé relit chaque réponse et la bloque si elle fait le travail de l'élève (relance avec un message de refus bienveillant), modération (contenus sexuels, mineurs, automutilation, haine, violence), focus et protection contre l'injection de prompt.
-
-## La voix du professeur
-
-Un professeur clone sa propre voix dans ElevenLabs (Instant Voice Clone, une à deux minutes d'audio, avec son accord écrit), puis colle l'identifiant de voix dans la page du tuteur : le lien de classe produit (`?prof=histoire&voix=ID`) fait parler le tuteur avec sa voix. Les agents tuteurs autorisent ce remplacement de voix ; la guide d'orientation, non.
 
 ## Données et sources
 
