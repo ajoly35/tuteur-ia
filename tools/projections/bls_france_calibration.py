@@ -242,6 +242,43 @@ bench = {"us_growth_pct": 100 * (bls.emp35.sum() / bls.emp25.sum() - 1),
          "fr_dep_rate_pct": 100 * float(((age["Y55-64"] + age["Y_GE65"]) / age["Y_GE15"] / 10).loc["TOTAL"]),
          "fr_total_growth_2014_24_pct": 100 * g_total_fr}
 
+
+# ---------- 4b. Metiers 2030 (France Strategie and Dares, 2022): official French projection 2019-2030 by FAP ----------
+# Hand mapping of each Boussole family to the FAP-2009 families of its graduates' first jobs.
+FAP = {"maths": ["N0Z", "W0Z", "L5Z"], "info": ["M2Z"], "info_court": ["M1Z", "M0Z"], "actuariat": ["Q2Z", "N0Z", "M2Z"],
+       "inge": ["H0Z", "B7Z", "M2Z", "N0Z"], "physique": ["N0Z", "E2Z", "W0Z"], "eco": ["L5Z", "Q2Z", "P2Z", "L4Z"],
+       "commerce_pge": ["R4Z", "L5Z", "L6Z", "Q2Z"], "bachelor": ["R2Z", "R4Z", "U0Z"], "compta": ["L1Z", "L4Z"],
+       "vente": ["R1Z", "R3Z", "R2Z"], "banque": ["Q0Z", "Q1Z"], "admin": ["L0Z", "L2Z", "L3Z"], "droit": ["P3Z", "P2Z", "L5Z"],
+       "iep": ["P2Z", "U0Z", "L5Z"], "socio_psy": ["V4Z", "N0Z", "L5Z"], "lettres": ["W0Z", "V5Z", "U0Z", "P2Z"],
+       "langues": ["U0Z", "J5Z", "R2Z"], "journalisme": ["U0Z"], "arts": ["U1Z"], "cpes": ["L5Z", "N0Z", "P2Z", "H0Z"],
+       "prepa_sci": ["H0Z", "B7Z", "M2Z"], "prepa_eco": ["R4Z", "L5Z", "L6Z", "Q2Z"], "prepa_lit": ["W0Z", "P2Z", "U0Z", "L5Z"],
+       "infirmier": ["V1Z"], "sante": ["V2Z"], "paramedical": ["V3Z"], "bio": ["N0Z", "E2Z", "A2Z"], "labo": ["E2Z", "V3Z"],
+       "social": ["V4Z"], "aide": ["V4Z", "V3Z"], "meef": ["W0Z"], "staps": ["V5Z", "W0Z"], "elec": ["G1Z", "C2Z"],
+       "industrie": ["D6Z", "E2Z", "H0Z"], "btp": ["B6Z", "B7Z"], "agri": ["A2Z", "A1Z"], "tourisme": ["S1Z", "S2Z", "S3Z", "J5Z"],
+       "logistique": ["J6Z", "J4Z"]}
+m30 = pd.read_excel(f"{RAW}/m2030/cahier.xlsx", sheet_name="Annexe 4 -Tableau de synthèse A", header=None).iloc[5:, 1:10]
+m30.columns = ["fap", "titre", "qualif", "emp19", "creation", "departs", "besoins", "debutants", "deseq"]
+m30_total = m30[m30.fap.astype(str).str.strip() == "Ensemble"].iloc[0]
+m30 = m30[m30.titre.notna()].set_index("fap")
+for c in ["emp19", "creation", "departs", "besoins", "debutants", "deseq"]:
+    m30[c] = pd.to_numeric(m30[c], errors="coerce")
+assert all(f in m30.index for l in FAP.values() for f in l), [f for l in FAP.values() for f in l if f not in m30.index]
+def m30_agg(faps):
+    d = m30.loc[sorted(set(faps))]
+    e = d.emp19.sum()
+    return pd.Series({"m30_growth_pct": 100 * d.creation.sum() / e,             # 2019-2030, 11 years
+                      "m30_postes_pct_yr": 100 * d.besoins.sum() / e / 11,
+                      "m30_departs_pct_yr": 100 * d.departs.sum() / e / 11,
+                      "m30_deseq_pct": 100 * d.deseq.sum() / d.besoins.sum()})  # share of needs not met by young entrants
+fam_tab = fam_tab.join(fam_tab.k.map(FAP).apply(m30_agg))
+gm = {g: m30_agg([f for k in d.k for f in FAP[k]]) for g, d in fam.groupby("grade")}
+for col in ["m30_growth_pct", "m30_postes_pct_yr", "m30_departs_pct_yr", "m30_deseq_pct"]:
+    grade_tab[col] = pd.Series({g: v[col] for g, v in gm.items()}).round(1)
+tot = m30_total.apply(lambda v: pd.to_numeric(v, errors="ignore"))
+bench["m30_growth_pct"] = 100 * tot.creation / tot.emp19
+bench["m30_postes_pct_yr"] = 100 * tot.besoins / tot.emp19 / 11
+bench["m30_departs_pct_yr"] = 100 * tot.departs / tot.emp19 / 11
+
 # ---------- outputs ----------
 bls.to_csv(f"{OUT}/occupations_merged.csv", index=False)
 fam_tab.drop(columns="socs").to_csv(f"{OUT}/by_family.csv", index=False)
@@ -272,10 +309,11 @@ print(fam_tab.drop(columns="socs").sort_values("score", ascending=False).round(1
 r1 = lambda x: None if pd.isna(x) else round(float(x), 1)
 proj = {"fams": {row.k: {"us_g": r1(row.us_growth_pct), "us_o": r1(row.us_openings_pct), "fr_g": r1(row.fr_growth_pct),
                           "fr_o": r1(row.fr_postes_pct), "us_p": r1(row.us_postes_pct), "adj": r1(row.bls_ai_adjusted_pct),
-                          "ar_m": r1(row.ar_emp_moderate_pct), "ar_r": r1(row.ar_emp_rapid_pct)}
+                          "ar_m": r1(row.ar_emp_moderate_pct), "ar_r": r1(row.ar_emp_rapid_pct),
+                          "m_g": r1(row.m30_growth_pct), "m_o": r1(row.m30_postes_pct_yr), "m_d": r1(row.m30_deseq_pct)}
                  for row in fam_tab.itertuples()},
         "meta": {"rho_tier": round(rho, 2), "us_g": r1(bench["us_growth_pct"]), "fr_g": r1(bench["fr_growth_pct"]),
-                 "fr_o": r1(bench["fr_postes_pct"]), "us_p": r1(bench["us_postes_pct"]), "demog": r1(bench["fr_demog_20_64_2025_35_pct"]),
+                 "fr_o": r1(bench["fr_postes_pct"]), "us_p": r1(bench["us_postes_pct"]), "m_g": r1(bench["m30_growth_pct"]), "m_o": r1(bench["m30_postes_pct_yr"]), "demog": r1(bench["fr_demog_20_64_2025_35_pct"]),
                  "grades": {g: {k: r1(v) for k, v in row.items()} for g, row in grade_tab.iterrows()}}}
 with open(f"{OUT}/projections.js", "w", encoding="utf-8") as fh:
     fh.write("window.BOUSSOLE_PROJ=" + json.dumps(proj, ensure_ascii=False, separators=(",", ":")) + ";\n")

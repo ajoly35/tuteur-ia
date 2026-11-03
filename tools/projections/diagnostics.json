@@ -106,6 +106,9 @@
   "fr_postes_pct": 1.97,
   "us_postes_pct": 4.61,
   "fr_dep_rate_pct": 2.0,
-  "fr_total_growth_2014_24_pct": 9.92
+  "fr_total_growth_2014_24_pct": 9.92,
+  "m30_growth_pct": 3.58,
+  "m30_postes_pct_yr": 2.87,
+  "m30_departs_pct_yr": 2.54
  }
 }
