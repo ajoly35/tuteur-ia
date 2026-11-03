@@ -77,6 +77,11 @@ button, input, select { font: inherit; color: inherit; }
 
 /* List */
 .tools { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.tools select { flex: 1 1 150px; min-width: 0; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--rule); background: var(--card); }
+.profil { display: grid; gap: 6px; }
+.chemin { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; font-size: 15px; }
+.chemin span { background: var(--accent-soft); border-radius: 8px; padding: 4px 8px; }
+.chemin i { color: var(--ink-3); font-style: normal; }
 .tools input { flex: 1 1 220px; min-width: 0; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--rule); background: var(--card); }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 14px; color: var(--ink-2); }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
@@ -156,6 +161,14 @@ a { color: var(--accent); }
       <label for="q" hidden>Chercher</label>
       <input id="q" type="search" placeholder="Chercher : infirmier, droit, BTS, informatique…">
     </div>
+    <div class="profil">
+      <p class="small" style="margin:0"><strong>Ton profil (bac général)</strong> : choisis tes deux spécialités de terminale et la mention que tu vises, pour voir tes chances d'admission et de réussite.</p>
+      <div class="tools">
+        <label for="sp1" hidden>Première spécialité</label><select id="sp1"></select>
+        <label for="sp2" hidden>Deuxième spécialité</label><select id="sp2"></select>
+        <label for="men" hidden>Mention visée</label><select id="men"><option value="all">Mention : je ne sais pas</option><option value="P">Sans mention</option><option value="AB">Assez bien</option><option value="B">Bien</option><option value="TB">Très bien</option></select>
+      </div>
+    </div>
     <div class="chips" id="groups" role="group" aria-label="Type de formation"></div>
     <div class="legend" id="legend"></div>
     <div class="list" id="list"></div>
@@ -172,13 +185,15 @@ a { color: var(--accent); }
     </ul>
     <p>Le salaire et la part de diplômés en emploi viennent du ministère de l'Enseignement supérieur (InserSup, 2026) : salaire net mensuel médian et part en emploi salarié en France, 30 mois après le diplôme. Les formations viennent de Parcoursup 2025 : <span id="psup-count"></span>.</p>
     <p><strong>Comparaison avec les prévisions officielles.</strong> La part des tâches qu'une IA peut faire (Hosseini et Lichtinger) concorde avec le classement des métiers du Bureau of Labor Statistics américain, qui combine cinq mesures d'exposition (corrélation des rangs : <span id="rho"></span>). Pour la France, chaque formation affiche la projection officielle Les métiers en 2030 (France Stratégie et Dares, 2022) pour les familles professionnelles de ses premiers métiers : créations d'emplois de 2019 à 2030, et postes à pourvoir, qui ajoutent les départs en fin de carrière. Cette projection date d'avant l'IA générative ; la prévision américaine du BLS pour 2025-2035, elle, en tient compte. Une transposition de la prévision du BLS à la France (secteurs et démographie, Eurostat ; population de 20 à 64 ans : <span id="demog"></span> d'ici 2035) est disponible dans les données du site. Les prévisions du BLS sont prudentes : elles ne changent un métier que si les preuves sont solides. Le modèle d'Althoff et Reichardt (2026) donne le scénario d'une IA qui progresse vite.</p>
+    <p><strong>Admission et réussite.</strong> Les chances d'admission viennent de Parcoursup 2025 : pour chaque doublette de spécialités du bac général, la part des candidats ayant demandé ces formations qui ont reçu au moins une proposition. Les taux de réussite viennent du suivi des bacheliers par le ministère de l'Enseignement supérieur (passage en deuxième année et obtention du diplôme, selon la mention au bac) ; ce sont les dernières données publiées par formation, pour des élèves entrés à l'université en 2012-2014 et en IUT en 2013-2014, avant la réforme du bac. En 2024, 49,1 % des néo-bacheliers passent en deuxième année de licence (SIES, 2025) : la réussite reste du même ordre.</p>
     <p>Limites : l'IA « peut faire » une tâche ne veut pas dire que le métier va disparaître. Au Danemark, on ne voit encore aucun effet sur les salaires. Les notes de type de métier et de maths sont des jugements, à vérifier. La note regarde les premiers métiers, pas ce qu'on apprend : dans plus de 1 000 universités américaines, les cours les plus exposés à l'IA sont ceux d'écriture et d'analyse de données (statistiques, anglais, informatique), et le lien entre ce qu'on apprend et le métier qu'on exerce est faible (Light, 2026).</p>
-    <p class="small">Sources : Hosseini et Lichtinger (2026), <a href="https://github.com/s-mahdihosseini/GenAI_Expertise">GenAI and Expertise</a> ; Palladino et al. (2026), <a href="https://heclift.github.io/website/files/papers/LIFT_WP_2026-02.pdf">LIFT WP 2026-02</a> ; Aghion, Bergeaud, Bunel et Delbouve (2025), Diffusion de l'IA en France ; Deming (2017), <a href="https://scholar.harvard.edu/sites/scholar.harvard.edu/files/ddeming/files/deming_socialskills_qje.pdf">The Growing Importance of Social Skills</a> ; Deming (2025), <a href="https://forklightning.substack.com/p/shorting-the-ai-jobs-apocalypse">Shorting the AI jobs apocalypse</a> ; Garicano, Li et Wu (2026), Messy Jobs ; BLS, <a href="https://www.bls.gov/emp/tables/occupational-projections-and-characteristics.htm">Employment Projections 2025-35</a> et <a href="https://www.bls.gov/emp/publications/ai-exposure-categories.htm">AI exposure categories</a> ; Althoff et Reichardt (2026), <a href="https://hugoreichardt.com/pdf/tstc_compadvantage.pdf">Task-Specific Technical Change and Comparative Advantage</a> ; Eurostat (enquête Forces de travail 2024, projections EUROPOP2023) ; France Stratégie et Dares (2022), <a href="https://www.strategie.gouv.fr/publications/metiers-2030">Les métiers en 2030</a> ; Light (2026), <a href="https://jacob-light.github.io/field-ai-exposure.pdf">How Exposed Is Higher Education to Artificial Intelligence?</a> ; MESR, <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-insersup">InserSup</a> et <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-parcoursup">Parcoursup 2025</a>.</p>
+    <p class="small">Sources : Hosseini et Lichtinger (2026), <a href="https://github.com/s-mahdihosseini/GenAI_Expertise">GenAI and Expertise</a> ; Palladino et al. (2026), <a href="https://heclift.github.io/website/files/papers/LIFT_WP_2026-02.pdf">LIFT WP 2026-02</a> ; Aghion, Bergeaud, Bunel et Delbouve (2025), Diffusion de l'IA en France ; Deming (2017), <a href="https://scholar.harvard.edu/sites/scholar.harvard.edu/files/ddeming/files/deming_socialskills_qje.pdf">The Growing Importance of Social Skills</a> ; Deming (2025), <a href="https://forklightning.substack.com/p/shorting-the-ai-jobs-apocalypse">Shorting the AI jobs apocalypse</a> ; Garicano, Li et Wu (2026), Messy Jobs ; BLS, <a href="https://www.bls.gov/emp/tables/occupational-projections-and-characteristics.htm">Employment Projections 2025-35</a> et <a href="https://www.bls.gov/emp/publications/ai-exposure-categories.htm">AI exposure categories</a> ; Althoff et Reichardt (2026), <a href="https://hugoreichardt.com/pdf/tstc_compadvantage.pdf">Task-Specific Technical Change and Comparative Advantage</a> ; Eurostat (enquête Forces de travail 2024, projections EUROPOP2023) ; France Stratégie et Dares (2022), <a href="https://www.strategie.gouv.fr/publications/metiers-2030">Les métiers en 2030</a> ; MESR-SIES, <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-parcoursup-enseignements-de-specialite-bacheliers-generaux-3/">Parcoursup 2025 selon les enseignements de spécialité</a>, <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-parcours-et-reussite-des-bacheliers-en-licence/">Parcours et réussite en licence</a> et <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-parcours-et-reussite-des-bacheliers-en-dut/">en DUT</a> ; Light (2026), <a href="https://jacob-light.github.io/field-ai-exposure.pdf">How Exposed Is Higher Education to Artificial Intelligence?</a> ; MESR, <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-insersup">InserSup</a> et <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-parcoursup">Parcoursup 2025</a>.</p>
   </details>
 </div>
 
 <script src="data.js"></script>
 <script src="projections.js"></script>
+<script src="reussite.js"></script>
 <script>
 const D = window.BOUSSOLE;
 const P = window.BOUSSOLE_PROJ || { fams: {}, meta: {} };
@@ -206,6 +221,42 @@ $("bars").innerHTML = FR.map(([l, v]) => `<div class="barrow"><div class="lab"><
 // Groups
 const groups = ["Toutes", ...new Set(D.fams.map((f) => f.g))];
 let group = "Toutes", open = null;
+const RE = window.BOUSSOLE_REUSSITE || { adm: {}, succ: {}, specs: [], meta: {} };
+const SPECS = RE.specs || [];
+["sp1", "sp2"].forEach((id, j) => { $(id).innerHTML = `<option value="">${j ? "Deuxième" : "Première"} spécialité</option>` + SPECS.map((x) => `<option>${esc(x)}</option>`).join(""); });
+const prof = () => ({ d: $("sp1").value && $("sp2").value && $("sp1").value !== $("sp2").value ? [$("sp1").value, $("sp2").value].sort().join("|") : "", m: $("men").value });
+["sp1", "sp2", "men"].forEach((id) => $(id).onchange = () => renderList());
+const pc = (a, b) => (b ? Math.round((100 * a) / b) : null);
+function admInfo(f) {
+  const a = RE.adm[f.k]; if (!a || !a.t[0]) return null;
+  const all = pc(a.t[1], a.t[0]), d = prof().d, x = d && a.d[d];
+  return { all, mine: x && x[0] >= 30 ? pc(x[1], x[0]) : null, n: x ? x[0] : 0, share: x ? pc(x[0], a.t[0]) : 0, d,
+           top: Object.entries(a.d).sort((p, q) => q[1][2] - p[1][2]).slice(0, 3).map(([k, v]) => [k.replace("|", " + "), pc(v[2], a.t[2])]) };
+}
+function succInfo(f) {
+  const s = RE.succ[f.k]; if (!s) return null;
+  const m = prof().m, r = s[m] || s.all;
+  return { ...r, lic: s.type === "lic", m: s[m] ? m : "all" };
+}
+const MEN = { all: "", P: " sans mention", AB: " avec une mention assez bien", B: " avec une mention bien", TB: " avec une mention très bien" };
+function reussiteHtml(f) {
+  const a = admInfo(f), s = succInfo(f);
+  if (!a && !s) return "";
+  let h = "";
+  if (a) {
+    const mine = a.d ? (a.mine != null ? `Avec <b>${esc(a.d.replace("|", " + "))}</b>, <b>${a.mine} %</b> des candidats ont reçu au moins une proposition (${a.all} % pour l'ensemble des candidats).${a.share < 3 ? ` Attention : seulement ${a.share} % des candidats de ces formations ont cette doublette.` : ""}` : `Très peu de candidats avec ${esc(a.d.replace("|", " + "))} demandent ces formations : vérifie les attendus de chaque formation sur Parcoursup.`) : `<b>${a.all} %</b> des candidats ont reçu au moins une proposition. Choisis tes spécialités plus haut pour voir tes chances.`;
+    h += `<p class="small"><strong>Admission (Parcoursup ${RE.meta.psup}, bac général) :</strong> ${mine} Doublettes les plus fréquentes chez les admis : ${a.top.map(([k, v]) => `${esc(k)} (${v} %)`).join(", ")}.</p>`;
+  }
+  if (s) {
+    const y = s.lic ? "licence" : "DUT (aujourd'hui BUT)";
+    h += `<p class="small"><strong>Réussite :</strong> sur 100 bacheliers${MEN[s.m]} inscrits en première année, <b>${s.l2}</b> passent en deuxième année du premier coup et <b>${s.red}</b> redoublent ; les autres changent de voie ou arrêtent. Au bout de ${s.lic ? "3 ou 4" : "2 ou 3"} ans, <b>${s.dip}</b> sur 100 ont obtenu leur ${y}. Chiffres du ministère pour des élèves entrés en ${s.lic ? RE.meta.lic_dip + "-" + RE.meta.lic_l2 : RE.meta.dut_dip + "-" + RE.meta.dut_l2}, avant la réforme du bac : un ordre de grandeur.</p>`;
+  }
+  const p = P.fams[f.k];
+  const steps = [a && [`Admission`, `${a.mine != null ? a.mine : a.all} %`], s && [`2e année`, `${s.l2} %`], s && [`Diplôme`, `${s.dip} %`],
+    f.ins && [`En emploi à 30 mois`, `${Math.round(f.ins.emploi)} %`], f.ins && [`Salaire`, euro(f.ins.salaire)], p && p.m_o != null && [`Postes à pourvoir`, `${String(p.m_o).replace(".", ",")} / 100 par an`], [`Note IA`, f.band[0]]].filter(Boolean);
+  h += `<div class="chemin" aria-label="Ton parcours">${steps.map(([k, v]) => `<span>${k} : <b>${v}</b></span>`).join("<i>→</i>")}</div>`;
+  return h;
+}
 $("groups").innerHTML = groups.map((g) => `<button class="chip" type="button" aria-pressed="${g === group}">${esc(g)}</button>`).join("");
 $("groups").querySelectorAll(".chip").forEach((b) => b.onclick = () => { group = b.textContent; $("groups").querySelectorAll(".chip").forEach((x) => x.setAttribute("aria-pressed", x === b)); renderList(); });
 $("legend").innerHTML = BANDS.map((b) => `<span><i class="dot" style="background:var(${b[2]})"></i>${b[0]} : ${b[3]}</span>`).join("");
@@ -214,7 +265,10 @@ $("psup-count").textContent = `${D.meta.psup_classees.toLocaleString("fr-FR")} f
 
 function factsHtml(f) {
   const ins = f.ins ? `<span>Travaillent 30 mois ${esc(f.ins.niveau)} : <b>${Math.round(f.ins.emploi / 10)} sur 10</b></span><span>Salaire : <b>${euro(f.ins.salaire)}</b> net par mois</span>` : `<span>Salaire et emploi : pas encore de données</span>`;
-  return `<div class="facts"><span>L'IA peut faire <b>${f.sur10} tâche${f.sur10 > 1 ? "s" : ""} sur 10</b></span>${ins}</div>`;
+  const a = admInfo(f), s = succInfo(f);
+  const adm = a && a.d && a.mine != null ? `<span>Avec tes spécialités : <b>${a.mine} %</b> de propositions</span>` : "";
+  const re = s ? `<span>Diplôme en ${s.lic ? "3-4" : "2-3"} ans : <b>${Math.round(s.dip / 10)} sur 10</b></span>` : "";
+  return `<div class="facts">${adm}${re}<span>L'IA peut faire <b>${f.sur10} tâche${f.sur10 > 1 ? "s" : ""} sur 10</b></span>${ins}</div>`;
 }
 
 function renderList() {
@@ -248,6 +302,7 @@ function detailHtml(f) {
     <p>${esc(f.note)}</p>
     <p><strong>Métiers :</strong> ${esc(f.jobs)}. Dans ces métiers, le travail est fait surtout de ${TIER[f.tier]}.</p>
     <p class="small">Maths : ${f.math}/5 · contact humain : ${f.social}/5 · note ${f.score}/100</p>
+    ${reussiteHtml(f)}
     ${projHtml(f)}
     ${f.nb ? `<h3>Où suivre cette formation (${f.nb.toLocaleString("fr-FR")} sur Parcoursup)</h3>
     <div class="offers-tools"><label for="oq" hidden>Ville ou établissement</label><input id="oq" type="search" placeholder="Ta ville, ton département ou un établissement"></div>
@@ -271,7 +326,7 @@ $("q").oninput = renderList;
 renderList();
 
 // ---------- Ask ----------
-const FAMS_TXT = byScore.map((f) => `- ${f.k} | ${f.n} | note ${f.band[0]} (${f.band[3]}) | l'IA peut faire ${f.sur10}/10 des tâches | type de métier : ${TIER[f.tier]} | maths ${f.math}/5, contact humain ${f.social}/5 | ${f.ins ? `${Math.round(f.ins.emploi)} % en emploi salarié 30 mois ${f.ins.niveau}, salaire médian ${f.ins.salaire} € net/mois` : "pas de données d'insertion"} | métiers : ${f.jobs}${P.fams[f.k] ? ` | emploi 2025-2035 aux États-Unis ${pct(P.fams[f.k].us_g)}, en France d'ici 2030 (Métiers 2030, avant l'IA générative) ${pct(P.fams[f.k].m_g)}, ${P.fams[f.k].m_o} postes à pourvoir par an pour 100 emplois` : ""} | ${f.note}`).join("\n");
+const FAMS_TXT = byScore.map((f) => `- ${f.k} | ${f.n} | note ${f.band[0]} (${f.band[3]}) | l'IA peut faire ${f.sur10}/10 des tâches | type de métier : ${TIER[f.tier]} | maths ${f.math}/5, contact humain ${f.social}/5 | ${f.ins ? `${Math.round(f.ins.emploi)} % en emploi salarié 30 mois ${f.ins.niveau}, salaire médian ${f.ins.salaire} € net/mois` : "pas de données d'insertion"} | métiers : ${f.jobs}${RE.succ[f.k] && RE.succ[f.k].all ? ` | sur 10 inscrits, ${Math.round(RE.succ[f.k].all.dip / 10)} obtiennent le diplôme en ${RE.succ[f.k].type === "lic" ? "3 ou 4" : "2 ou 3"} ans, ${Math.round(RE.succ[f.k].all.l2 / 10)} passent en 2e année du premier coup` : ""}${RE.adm[f.k] && RE.adm[f.k].t[0] ? ` | ${Math.round(100 * RE.adm[f.k].t[1] / RE.adm[f.k].t[0])} % des candidats reçoivent une proposition ; doublettes les plus fréquentes chez les admis : ${Object.entries(RE.adm[f.k].d).sort((p, q) => q[1][2] - p[1][2]).slice(0, 3).map(([k]) => k.replace("|", " + ")).join(", ")}` : ""}${P.fams[f.k] ? ` | emploi 2025-2035 aux États-Unis ${pct(P.fams[f.k].us_g)}, en France d'ici 2030 (Métiers 2030, avant l'IA générative) ${pct(P.fams[f.k].m_g)}, ${P.fams[f.k].m_o} postes à pourvoir par an pour 100 emplois` : ""} | ${f.note}`).join("\n");
 const RULES = `Tu es la « Boussole IA des formations », un conseiller d'orientation bienveillant pour des collégiens et lycéens français de 14 à 18 ans.
 Réponds en français, en tutoyant, avec des phrases courtes et des mots simples (niveau 3e). 120 à 220 mots au plus.
 Ta réponse :
@@ -280,6 +335,7 @@ Ta réponse :
 3. Si l'élève donne une ville ou un département, utilise l'outil chercher_formations pour citer une ou deux formations réelles près de chez lui.
 4. Termine par une question pour l'aider à avancer.
 Règles : n'invente aucun chiffre, utilise seulement ceux de la liste. Rappelle que la note est une tendance, pas une certitude, et que ce que l'élève aime compte beaucoup. Ne décourage jamais un élève ; s'il vise une formation exposée, explique comment la rendre plus solide (ajouter des maths, du travail en équipe, une deuxième matière). Ne demande ni nom, ni adresse, ni données personnelles. Conseille d'en parler à son professeur principal ou au psychologue de l'Éducation nationale.
+Réussite : avant de donner le taux de réussite d'une formation, demande d'abord à l'élève combien, sur 10 inscrits, il pense obtenir le diplôme ; puis donne le vrai chiffre de la liste et explique l'écart sans le décourager (beaucoup d'élèves surestiment leurs chances en licence). Si l'élève donne ses deux spécialités, indique la part de candidats avec cette doublette qui ont reçu une proposition, si elle figure dans la liste.
 Ce qui protège face à l'IA (à expliquer simplement si utile) : combiner maths et contact humain (Deming, 2017) ; un métier fait de plusieurs tâches liées et de responsabilités (Garicano, 2026) ; une formation large qui apprend à apprendre (Deming, 2025). En France, depuis fin 2022, les embauches en CDI des 21-29 ans ont baissé de 28 % dans les métiers les plus exposés, contre 7,5 % dans les moins exposés (HEC et Banque de France, 2026).
 Familles de formations (clé | nom | données) :
 ${FAMS_TXT}`;
