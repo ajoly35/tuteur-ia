@@ -1,0 +1,111 @@
+{
+ "spearman_hl_vs_bls_tier": 0.727,
+ "n": 831,
+ "hl_share_by_tier": [
+  {
+   "exposure": "Low",
+   "occupations": 213.0,
+   "hl_share_mean_empw": 0.042,
+   "hl_share_median": 0.036
+  },
+  {
+   "exposure": "Moderate",
+   "occupations": 206.0,
+   "hl_share_mean_empw": 0.103,
+   "hl_share_median": 0.101
+  },
+  {
+   "exposure": "High",
+   "occupations": 206.0,
+   "hl_share_mean_empw": 0.191,
+   "hl_share_median": 0.184
+  },
+  {
+   "exposure": "Very high",
+   "occupations": 206.0,
+   "hl_share_mean_empw": 0.494,
+   "hl_share_median": 0.406
+  }
+ ],
+ "spearman_hl_vs_AR_emp_moderate_3digit": -0.137,
+ "n_3digit": 93,
+ "spearman_hl_vs_AR_wage_moderate_3digit": -0.327,
+ "spearman_bls_tier_vs_AR_emp_moderate_3digit": 0.023,
+ "hl_match_exact_pct": 92.5,
+ "isco_match_exact_pct": 86.3,
+ "fr_employment_covered_pct": 99.3,
+ "dep_rate_fr_by_isco1_pct": {
+  "NRP": 1.62,
+  "OC0": 0.78,
+  "OC1": 2.42,
+  "OC2": 1.79,
+  "OC3": 1.86,
+  "OC4": 1.98,
+  "OC5": 1.99,
+  "OC6": 3.07,
+  "OC7": 1.66,
+  "OC8": 2.15,
+  "OC9": 2.66,
+  "TOTAL": 2.0
+ },
+ "shift_share_check_median_abs_error_pts": 0.09,
+ "g_sector_fr_10y_pct": {
+  "A": -17.1,
+  "B": -36.5,
+  "C": -10.3,
+  "D": -0.4,
+  "E": 1.3,
+  "F": -3.9,
+  "G": -3.8,
+  "H": -0.4,
+  "I": 13.1,
+  "J": 21.5,
+  "K": -4.0,
+  "L": 2.8,
+  "M": 16.0,
+  "N": 16.5,
+  "O": -7.8,
+  "P": -6.1,
+  "Q": -5.1,
+  "R": 3.2,
+  "S": 8.4,
+  "T": -27.3,
+  "TOTAL": -0.6,
+  "DE": 0.5,
+  "SE": -0.6
+ },
+ "g_sector_us_10y_pct": {
+  "A": 1.5,
+  "B": 0.7,
+  "C": 0.6,
+  "DE": 9.8,
+  "F": 5.0,
+  "G": 0.5,
+  "H": 3.1,
+  "I": 4.3,
+  "J": 5.3,
+  "K": 2.3,
+  "L": 3.4,
+  "M": 7.7,
+  "N": 0.9,
+  "O": 0.3,
+  "P": 0.7,
+  "Q": 9.2,
+  "R": 5.7,
+  "S": 3.8,
+  "SE": 1.5
+ },
+ "us_industry_effect_empw_pct": 3.48,
+ "exit_us_mean_pct": 4.26,
+ "benchmarks": {
+  "us_growth_pct": 3.48,
+  "us_openings_pct": 10.25,
+  "fr_growth_pct": -0.43,
+  "fr_demog_20_64_2025_35_pct": -0.59,
+  "fr_growth_trend_pct": -0.27,
+  "fr_postes_pct": 1.97,
+  "us_postes_pct": 4.61,
+  "fr_dep_rate_pct": 2.0,
+  "fr_total_growth_2014_24_pct": 9.92
+ }
+}

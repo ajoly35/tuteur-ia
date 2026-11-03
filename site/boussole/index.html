@@ -171,14 +171,18 @@ a { color: var(--accent); }
       <li><strong>Maths et contact humain</strong> (un quart de la note), notés de 1 à 5 chacun pour la formation (Deming, 2017).</li>
     </ul>
     <p>Le salaire et la part de diplômés en emploi viennent du ministère de l'Enseignement supérieur (InserSup, 2026) : salaire net mensuel médian et part en emploi salarié en France, 30 mois après le diplôme. Les formations viennent de Parcoursup 2025 : <span id="psup-count"></span>.</p>
-    <p>Limites : l'IA « peut faire » une tâche ne veut pas dire que le métier va disparaître. Au Danemark, on ne voit encore aucun effet sur les salaires. Les notes de type de métier et de maths sont des jugements, à vérifier.</p>
-    <p class="small">Sources : Hosseini et Lichtinger (2026), <a href="https://github.com/s-mahdihosseini/GenAI_Expertise">GenAI and Expertise</a> ; Palladino et al. (2026), <a href="https://heclift.github.io/website/files/papers/LIFT_WP_2026-02.pdf">LIFT WP 2026-02</a> ; Aghion, Bergeaud, Bunel et Delbouve (2025), Diffusion de l'IA en France ; Deming (2017), <a href="https://scholar.harvard.edu/sites/scholar.harvard.edu/files/ddeming/files/deming_socialskills_qje.pdf">The Growing Importance of Social Skills</a> ; Deming (2025), <a href="https://forklightning.substack.com/p/shorting-the-ai-jobs-apocalypse">Shorting the AI jobs apocalypse</a> ; Garicano, Li et Wu (2026), Messy Jobs ; MESR, <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-insersup">InserSup</a> et <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-parcoursup">Parcoursup 2025</a>.</p>
+    <p><strong>Comparaison avec les prévisions officielles.</strong> La part des tâches qu'une IA peut faire (Hosseini et Lichtinger) concorde avec le classement des métiers du Bureau of Labor Statistics américain, qui combine cinq mesures d'exposition (corrélation des rangs : <span id="rho"></span>). Pour chaque formation, on affiche aussi la prévision d'emploi 2025-2035 du BLS, transposée à la France : on garde l'évolution que le BLS prévoit pour chaque métier à l'intérieur de chaque secteur (c'est là qu'il intègre l'IA), on remplace le poids des secteurs par celui de la France, et la croissance de l'emploi suit l'évolution de la population de 20 à 64 ans (<span id="demog"></span> d'ici 2035). Les postes à pourvoir ajoutent aux créations d'emplois les départs en fin de carrière, calculés à partir de l'âge des salariés en France (Eurostat) et des taux de sortie du BLS. Les prévisions du BLS sont prudentes : elles ne changent un métier que si les preuves sont solides. Le modèle d'Althoff et Reichardt (2026) donne le scénario d'une IA qui progresse vite.</p>
+    <p>Limites : l'IA « peut faire » une tâche ne veut pas dire que le métier va disparaître. Au Danemark, on ne voit encore aucun effet sur les salaires. Les notes de type de métier et de maths sont des jugements, à vérifier. La note regarde les premiers métiers, pas ce qu'on apprend : dans plus de 1 000 universités américaines, les cours les plus exposés à l'IA sont ceux d'écriture et d'analyse de données (statistiques, anglais, informatique), et le lien entre ce qu'on apprend et le métier qu'on exerce est faible (Light, 2026).</p>
+    <p class="small">Sources : Hosseini et Lichtinger (2026), <a href="https://github.com/s-mahdihosseini/GenAI_Expertise">GenAI and Expertise</a> ; Palladino et al. (2026), <a href="https://heclift.github.io/website/files/papers/LIFT_WP_2026-02.pdf">LIFT WP 2026-02</a> ; Aghion, Bergeaud, Bunel et Delbouve (2025), Diffusion de l'IA en France ; Deming (2017), <a href="https://scholar.harvard.edu/sites/scholar.harvard.edu/files/ddeming/files/deming_socialskills_qje.pdf">The Growing Importance of Social Skills</a> ; Deming (2025), <a href="https://forklightning.substack.com/p/shorting-the-ai-jobs-apocalypse">Shorting the AI jobs apocalypse</a> ; Garicano, Li et Wu (2026), Messy Jobs ; BLS, <a href="https://www.bls.gov/emp/tables/occupational-projections-and-characteristics.htm">Employment Projections 2025-35</a> et <a href="https://www.bls.gov/emp/publications/ai-exposure-categories.htm">AI exposure categories</a> ; Althoff et Reichardt (2026), <a href="https://hugoreichardt.com/pdf/tstc_compadvantage.pdf">Task-Specific Technical Change and Comparative Advantage</a> ; Eurostat (enquête Forces de travail 2024, projections EUROPOP2023) ; Light (2026), <a href="https://jacob-light.github.io/field-ai-exposure.pdf">How Exposed Is Higher Education to Artificial Intelligence?</a> ; MESR, <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-insersup">InserSup</a> et <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-parcoursup">Parcoursup 2025</a>.</p>
   </details>
 </div>
 
 <script src="data.js"></script>
+<script src="projections.js"></script>
 <script>
 const D = window.BOUSSOLE;
+const P = window.BOUSSOLE_PROJ || { fams: {}, meta: {} };
+const pct = (x) => (x > 0 ? "+" : "") + String(x).replace(".", ",") + " %";
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const BANDS = [["A", 65, "--a", "Très protégée"], ["B", 52, "--b", "Plutôt protégée"], ["C", 40, "--c", "À moitié exposée"], ["D", 28, "--d", "Exposée"], ["E", -1, "--e", "Très exposée"]];
@@ -205,6 +209,7 @@ let group = "Toutes", open = null;
 $("groups").innerHTML = groups.map((g) => `<button class="chip" type="button" aria-pressed="${g === group}">${esc(g)}</button>`).join("");
 $("groups").querySelectorAll(".chip").forEach((b) => b.onclick = () => { group = b.textContent; $("groups").querySelectorAll(".chip").forEach((x) => x.setAttribute("aria-pressed", x === b)); renderList(); });
 $("legend").innerHTML = BANDS.map((b) => `<span><i class="dot" style="background:var(${b[2]})"></i>${b[0]} : ${b[3]}</span>`).join("");
+if (P.meta.rho_tier) { $("rho").textContent = String(P.meta.rho_tier).replace(".", ","); $("demog").textContent = pct(P.meta.demog); }
 $("psup-count").textContent = `${D.meta.psup_classees.toLocaleString("fr-FR")} formations sur ${D.meta.psup_total.toLocaleString("fr-FR")} rattachées à une famille`;
 
 function factsHtml(f) {
@@ -229,11 +234,20 @@ function renderList() {
   if (oq) { oq.oninput = () => renderOffers(D.fams[open], oq.value); renderOffers(D.fams[open], ""); }
 }
 
+function projHtml(f) {
+  const p = P.fams[f.k];
+  if (!p) return "";
+  const adj = p.adj >= 50 ? " Les statisticiens américains ont déjà baissé leurs prévisions à cause de l'IA pour la plupart de ces métiers." : p.adj > 0 ? " Les statisticiens américains ont déjà baissé leurs prévisions à cause de l'IA pour une partie de ces métiers." : "";
+  const ar = p.ar_r == null ? "" : ` Si l'IA progresse très vite, un modèle de chercheurs de Stanford et de Barcelone prévoit, à long terme, ${pct(Math.round(p.ar_r))} d'emplois dans ces métiers (Althoff et Reichardt, 2026).`;
+  return `<p class="small"><strong>D'ici 2035 :</strong> aux États-Unis, l'emploi dans ces métiers devrait évoluer de <b>${pct(p.us_g)}</b> (prévision officielle ; ${pct(P.meta.us_g)} pour l'ensemble des métiers). Transposé à la France, avec ses secteurs et l'âge de ses salariés : <b>${pct(p.fr_g)}</b>, et environ <b>${String(p.fr_o).replace(".", ",")} postes à pourvoir par an pour 100 emplois</b>.${adj}${ar}</p>`;
+}
+
 function detailHtml(f) {
   return `<div class="detail">
     <p>${esc(f.note)}</p>
     <p><strong>Métiers :</strong> ${esc(f.jobs)}. Dans ces métiers, le travail est fait surtout de ${TIER[f.tier]}.</p>
     <p class="small">Maths : ${f.math}/5 · contact humain : ${f.social}/5 · note ${f.score}/100</p>
+    ${projHtml(f)}
     ${f.nb ? `<h3>Où suivre cette formation (${f.nb.toLocaleString("fr-FR")} sur Parcoursup)</h3>
     <div class="offers-tools"><label for="oq" hidden>Ville ou établissement</label><input id="oq" type="search" placeholder="Ta ville, ton département ou un établissement"></div>
     <div class="offers" id="offers"></div>` : `<p class="small">Cette formation ne se trouve pas directement sur Parcoursup : on y accède après une licence ou un concours.</p>`}
@@ -256,7 +270,7 @@ $("q").oninput = renderList;
 renderList();
 
 // ---------- Ask ----------
-const FAMS_TXT = byScore.map((f) => `- ${f.k} | ${f.n} | note ${f.band[0]} (${f.band[3]}) | l'IA peut faire ${f.sur10}/10 des tâches | type de métier : ${TIER[f.tier]} | maths ${f.math}/5, contact humain ${f.social}/5 | ${f.ins ? `${Math.round(f.ins.emploi)} % en emploi salarié 30 mois ${f.ins.niveau}, salaire médian ${f.ins.salaire} € net/mois` : "pas de données d'insertion"} | métiers : ${f.jobs} | ${f.note}`).join("\n");
+const FAMS_TXT = byScore.map((f) => `- ${f.k} | ${f.n} | note ${f.band[0]} (${f.band[3]}) | l'IA peut faire ${f.sur10}/10 des tâches | type de métier : ${TIER[f.tier]} | maths ${f.math}/5, contact humain ${f.social}/5 | ${f.ins ? `${Math.round(f.ins.emploi)} % en emploi salarié 30 mois ${f.ins.niveau}, salaire médian ${f.ins.salaire} € net/mois` : "pas de données d'insertion"} | métiers : ${f.jobs}${P.fams[f.k] ? ` | emploi 2025-2035 aux États-Unis ${pct(P.fams[f.k].us_g)}, transposé à la France ${pct(P.fams[f.k].fr_g)}, ${P.fams[f.k].fr_o} postes à pourvoir par an pour 100 emplois` : ""} | ${f.note}`).join("\n");
 const RULES = `Tu es la « Boussole IA des formations », un conseiller d'orientation bienveillant pour des collégiens et lycéens français de 14 à 18 ans.
 Réponds en français, en tutoyant, avec des phrases courtes et des mots simples (niveau 3e). 120 à 220 mots au plus.
 Ta réponse :
