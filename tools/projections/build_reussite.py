@@ -156,3 +156,154 @@ print("ok", OUT)
 for k in ADM:
     t = adm[k]["t"]; s = succ.get(k, {})
     print(f"{k:13s} voeux {t[0]:7d} prop {100*t[1]/max(t[0],1):5.1f}%  succ {s.get('type','-')} all {s.get('all')} TB {s.get('TB')}")
+
+# =====================================================================================================
+# Recent national rates and per-university rates (MESR-SIES, Note Flash 2025-29, session 2024)
+# Usage (second step): python3 build_reussite.py ... <out.js> <sies_nationaux.xlsx> <sies_etablissements.xlsx> <data.js>
+# =====================================================================================================
+if len(sys.argv) > 5:
+    import re
+    import unicodedata
+    NAT, ETAB, DATAJS = sys.argv[5:8]
+    DISC = {"droit": "Droit, Sc. politiques", "iep": "Droit, Sc. politiques", "eco": "Economie, AES",
+            "lettres": "Arts, lettres, langues, SHS", "langues": "Arts, lettres, langues, SHS", "socio_psy": "Arts, lettres, langues, SHS",
+            "journalisme": "Arts, lettres, langues, SHS", "arts": "Arts, lettres, langues, SHS",
+            "maths": "Sciences-santé", "info": "Sciences-santé", "physique": "Sciences-santé", "bio": "Sciences-santé", "staps": "STAPS"}
+    DISC_FR = {"Droit, Sc. politiques": "droit et science politique", "Economie, AES": "économie, gestion et AES",
+               "Arts, lettres, langues, SHS": "arts, lettres, langues et sciences humaines", "Sciences-santé": "sciences et santé", "STAPS": "STAPS"}
+    SPEC = {"HIST_GE": "HGGSP", "LIT_PHI": "HLP", "LLCER": "LLCER", "MATHS": "Maths", "PHY_CHI": "Physique-chimie", "SES": "SES",
+            "SVT": "SVT", "NUMERIQ": "NSI", "SC_INGE": "SI", "ART_PLA": "Arts", "EPS": "EPPCS"}
+    MEN2 = {"Très bien": "TB", "Bien": "B", "Assez bien": "AB", "Passable premier groupe": "P"}
+    clean = lambda s: re.sub(r"\s+", " ", str(s)).strip()
+
+    def table(path, sheet):
+        t = pd.read_excel(path, sheet, header=None)
+        hdr = [clean(h) for h in t.iloc[2]]
+        t = t.iloc[3:].copy(); t.columns = hdr
+        return t
+    num = lambda v: float(v) if isinstance(v, (int, float)) and not pd.isna(v) else None
+
+    dev = table(NAT, "Devenir cohorte 2023")
+    dev["Discipline en L1"] = dev["Discipline en L1"].map(clean)
+    reu = table(NAT, "Reussite - 3ou4 ans - tous")
+    reu["Discipline en L1"] = reu["Discipline en L1"].map(clean)
+    nat = {}
+    for disc in set(DISC.values()):
+        d, r = dev[dev["Discipline en L1"] == disc], reu[reu["Discipline en L1"] == disc]
+        out = {"by_m": {}, "by_d": {}}
+        def row(x):
+            return {"n": int(x["Inscrits en L1"]), "l2": round(num(x["Taux de passage en L2"])), "red": round(num(x["Taux de redoublement en L1"])),
+                    "reo": round(num(x["Taux de réorientation"])), "out": round(num(x["Taux de sortie de l'enseignement supérieur"]))}
+        for _, x in d.iterrows():
+            car, mod = clean(x["Caractéristiques des étudiants"]), clean(x["Modalités"])
+            if num(x["Inscrits en L1"]) is None or num(x["Taux de passage en L2"]) is None:
+                continue
+            if car == "Ensemble":
+                out["all"] = row(x)
+            elif car == "Mention obtenue au baccalauréat" and mod in MEN2:
+                out["by_m"][MEN2[mod]] = row(x)
+            elif car == "Série du baccalauréat" and "/" in mod:
+                a, b = [SPEC.get(s.strip()) for s in mod.split("/")]
+                if a and b and num(x["Inscrits en L1"]) >= 200:
+                    out["by_d"]["|".join(sorted([a, b]))] = row(x)
+        for _, x in r.iterrows():
+            car, mod = clean(x["Caractéristiques"]), clean(x["Modalités"])
+            v = num(x["Réussite cumulée en 4 ans (%)"])
+            if v is None:
+                continue
+            if car == "Ensemble":
+                out.setdefault("all", {})["dip"] = round(v)
+            elif car == "Mention obtenue au baccalauréat" and mod in MEN2:
+                out["by_m"].setdefault(MEN2[mod], {})["dip"] = round(v)
+        nat[disc] = out
+
+    # ---- per university ----
+    def norm(s):
+        s = unicodedata.normalize("NFKD", str(s)).encode("ascii", "ignore").decode().lower()
+        return re.sub(r"\s+", " ", s)
+    # Parcoursup establishment name -> SIES establishment (first rule that matches wins; private institutes never match)
+    RULES_U = [
+        (r"catholique|uco|ices|ircom|cnam|ileps|institut saint-pie|isfec|fac libre|faculte libre|facultes libres|protestant|enseignement prive|ecm|ecole de commerce|lycee|esslil|inalco|eivp|ecole du numerique", None),
+        (r"dauphine", "PSL"), (r"departement universitaire de sciences d'agen", "DE BORDEAUX"), (r"roscoff - sorbonne", "SORBONNE UNIVERSITE"),
+        (r"aix-marseille", "AIX-MARSEILLE"), (r"avignon", "AVIGNON"), (r"paris-saclay|paris saclay", "PARIS SACLAY"),
+        (r"cergy", "CERGY"), (r"lyon 3|jean moulin", "LYON 3"), (r"lyon 1|claude bernard", "LYON 1"), (r"lyon 2|lumiere", "LYON 2"),
+        (r"reims|urca|eisine|esireims", "REIMS"), (r"champollion", "CHAMPOLLION"), (r"la rochelle", "LA ROCHELLE"),
+        (r"le mans|du mans", "LE MANS"), (r"nantes universite", "NANTES"), (r"^sorbonne universite", "SORBONNE UNIVERSITE"),
+        (r"jean monnet|saint-etienne", "SAINT ETIENNE"), (r"universite de lille", "LILLE"), (r"universite angers", "ANGERS"),
+        (r"bordeaux montaigne", "BORDEAUX 3"), (r"universite de bordeaux", "DE BORDEAUX"), (r"bourgogne", "DIJON"),
+        (r"clermont auvergne", "CLERMONT"), (r"cote d'azur", "COTE AZUR"), (r"grenoble alpes", "GRENOBLE"), (r"gustave eiffel", "GUSTAVE EIFFEL"),
+        (r"le havre", "LE HAVRE"), (r"franche-comte|marie et louis pasteur", "BESANCON"), (r"assas", "ASSAS"),
+        (r"paris 1 pantheon", "PARIS 1"), (r"paris 8", "PARIS 8"), (r"paris cite", "PARIS CITE"), (r"nanterre", "NANTERRE"),
+        (r"upec|est-creteil|est- creteil", "CRETEIL"), (r"paul valery|montpellier 3", "MONTPELLIER 3"), (r"universite de montpellier", "MONTPELLIER"),
+        (r"polytechnique hauts-de-france", "POLYTECHNIQUE"), (r"savoie mont blanc", "SAVOIE"), (r"sorbonne nouvelle", "PARIS 3"),
+        (r"sorbonne paris nord", "SORBONNE PARIS NORD"), (r"toulouse 2|jean jaures", "TOULOUSE 2"), (r"toulouse capitole|toulouse school of economics", "TOULOUSE 1"),
+        (r"toulouse iii|paul sabatier", "TOULOUSE 3"), (r"universite d'amiens|insset", "AMIENS"), (r"artois", "ARTOIS"), (r"evry", "EVRY"),
+        (r"orleans", "ORLEANS"), (r"universite de brest", "BREST"), (r"universite de bretagne sud", "BRETAGNE SUD"), (r"caen", "CAEN"),
+        (r"corte", "CORSE"), (r"guyane", "GUYANE"), (r"universite de la reunion", "REUNION"), (r"limoges", "LIMOGES"), (r"lorraine", "LORRAINE"),
+        (r"mayotte", "MAYOTTE"), (r"mulhouse|uha business", "MULHOUSE"), (r"nimes", "NIMES"), (r"pau et des pays", "PAU"), (r"perpignan", "PERPIGNAN"),
+        (r"poitiers", "POITIERS"), (r"rennes 2", "RENNES 2"), (r"universite de rennes", "RENNES 1"), (r"rouen", "ROUEN"),
+        (r"strasbourg", "STRASBOURG"), (r"toulon", "TOULON"), (r"universite de tours", "TOURS"), (r"versailles", "VERSAILLES"),
+        (r"universite de la polynesie", "POLYNESIE"), (r"antilles", "ANTILLES"), (r"littoral", "LITTORAL"), (r"nouvelle-caledonie", "NOUVELLE-CALEDONIE"),
+    ]
+    # canonical key -> regex on the SIES name (several SIES spellings per university across sheets)
+    SIES_KEY = {"AIX-MARSEILLE": r"AIX-MARSEILLE", "AVIGNON": r"AVIGNON", "PARIS SACLAY": r"PARIS SACLAY", "CERGY": r"CERGY", "LYON 3": r"LYON 3",
+                "LYON 1": r"LYON 1", "LYON 2": r"LYON 2", "REIMS": r"REIMS", "CHAMPOLLION": r"CHAMPOLLION", "LA ROCHELLE": r"LA ROCHELLE",
+                "LE MANS": r"LE MANS", "NANTES": r"UNIVERSITE NANTES", "SORBONNE UNIVERSITE": r"^SORBONNE UNIVERSITE", "SAINT ETIENNE": r"SAINT ETIENNE",
+                "LILLE": r"UNIVERSITE LILLE", "ANGERS": r"ANGERS", "BORDEAUX 3": r"BORDEAUX 3", "DE BORDEAUX": r"DE BORDEAUX", "DIJON": r"DIJON",
+                "CLERMONT": r"CLERMONT", "COTE AZUR": r"COTE AZUR", "GRENOBLE": r"GRENOBLE", "GUSTAVE EIFFEL": r"GUSTAVE EIFFEL", "LE HAVRE": r"LE HAVRE",
+                "BESANCON": r"BESANCON", "ASSAS": r"ASSAS", "PARIS 1": r"PARIS 1\b", "PARIS 8": r"PARIS 8", "PARIS CITE": r"PARIS CITE",
+                "NANTERRE": r"NANTERRE", "CRETEIL": r"CRETEIL", "MONTPELLIER 3": r"MONTPELLIER 3", "MONTPELLIER": r"MONTPELLIER$",
+                "POLYTECHNIQUE": r"POLYTECHNIQUE", "SAVOIE": r"SAVOIE", "PARIS 3": r"PARIS 3", "SORBONNE PARIS NORD": r"PARIS 13|SORBONNE PARIS NORD",
+                "TOULOUSE 2": r"TOULOUSE 2", "TOULOUSE 1": r"TOULOUSE 1", "TOULOUSE 3": r"TOULOUSE 3", "AMIENS": r"AMIENS", "ARTOIS": r"ARTOIS",
+                "EVRY": r"EVRY", "ORLEANS": r"ORLEANS", "BREST": r"BREST", "BRETAGNE SUD": r"BRETAGNE SUD", "CAEN": r"CAEN", "CORSE": r"CORSE",
+                "GUYANE": r"GUYANE", "REUNION": r"REUNION", "LIMOGES": r"LIMOGES", "LORRAINE": r"LORRAINE", "MAYOTTE": r"MAYOTTE",
+                "MULHOUSE": r"MULHOUSE", "NIMES": r"NIMES", "PAU": r"\bPAU\b", "PERPIGNAN": r"PERPIGNAN", "POITIERS": r"POITIERS",
+                "RENNES 2": r"RENNES 2", "RENNES 1": r"RENNES 1|DE RENNES", "ROUEN": r"ROUEN", "STRASBOURG": r"STRASBOURG", "TOULON": r"TOULON",
+                "TOURS": r"TOURS", "VERSAILLES": r"VERSAILLES", "POLYNESIE": r"POLYNESIE", "ANTILLES": r"ANTILLES", "LITTORAL": r"LITTORAL",
+                "NOUVELLE-CALEDONIE": r"CALEDONIE", "PSL": r"PARIS SCIENCES LETTRES"}
+    def univ_rows(sheet, cols):
+        t = table(ETAB, sheet)
+        t = t[t["Discipline en L1"].notna()]
+        t["Nom établissement en L1"] = t["Nom établissement en L1"].map(clean); t["Discipline en L1"] = t["Discipline en L1"].map(clean)
+        out = {}
+        for key, pat in SIES_KEY.items():
+            sel = t[t["Nom établissement en L1"].str.contains(pat, regex=True)]
+            for _, x in sel.iterrows():
+                vals = {k: num(x[c]) for k, c in cols.items()}
+                if vals.get("n") is None or vals.get("rate") is None:
+                    continue
+                out.setdefault(key, {})[x["Discipline en L1"]] = {k: (round(v) if v is not None else None) for k, v in vals.items()}
+        return out
+    u_l2 = univ_rows("Devenir cohorte 2023 VA", {"n": "Inscrits en L1", "rate": "Taux de passage en L2", "sim": "Taux de passage en L2 simulé",
+                                                "va": "Passage en L2 - Valeur Ajoutée (en points)"})
+    u_dip = univ_rows("Réussite 3ou4ans discip VA", {"n": "Inscrits en L1", "rate": "Réussite en 3 ou 4 ans (taux observé)",
+                                                    "va": "Valeur ajoutée réussite en 3 ou 4 ans (en points)"})
+    univ = {}
+    for key in set(u_l2) | set(u_dip):
+        for disc in set(u_l2.get(key, {})) | set(u_dip.get(key, {})):
+            a, b = u_l2.get(key, {}).get(disc), u_dip.get(key, {}).get(disc)
+            univ.setdefault(key, {})[disc] = {"l2": a and a["rate"], "l2va": a and a["va"], "l2n": a and a["n"],
+                                              "dip": b and b["rate"], "dipva": b and b["va"]}
+    js = open(DATAJS, encoding="utf-8").read()
+    Dd = json.loads(js[js.index("=") + 1: js.rstrip().rindex(";")])
+    etab_map, unmatched = {}, set()
+    for o in Dd["offers"]:
+        n = norm(o[1])
+        if "univ" not in n and not re.search(r"champollion|cy |urca|eisine|esireims|insset|uha|ecole universitaire|dauphine", n):
+            continue
+        key = next((k for pat, k in RULES_U if re.search(pat, n)), "?")
+        if key == "?":
+            unmatched.add(o[1])
+        elif key and key in univ:
+            etab_map[o[1]] = key
+    data["nat"] = {d: v for d, v in nat.items()}
+    data["disc"] = DISC; data["disc_fr"] = DISC_FR
+    data["univ"] = univ; data["etab"] = etab_map
+    data["meta"].update({"nat_l2": 2023, "nat_dip": 2020, "source_nat": "MESR-SIES, Note Flash 2025-29"})
+    with open(OUT, "w", encoding="utf-8") as fh:
+        fh.write("window.BOUSSOLE_REUSSITE=" + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + ";\n")
+    print("universities with data", len(univ), "| Parcoursup establishments matched", len(etab_map), "| unmatched university-like names", len(unmatched))
+    for n in sorted(unmatched):
+        print("   unmatched:", n)
+    for disc, v in nat.items():
+        print(disc, v.get("all"), {m: v["by_m"].get(m) for m in ["P", "TB"]}, len(v["by_d"]), "doublettes")
