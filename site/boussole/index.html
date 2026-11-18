@@ -40,7 +40,8 @@ p { margin: 0; }
 .src { font-size: 13px; color: var(--ink-3); }
 header { display: grid; gap: 12px; }
 .card { background: var(--card); border: 1px solid var(--rule); border-radius: 14px; padding: 18px; min-width: 0; display: grid; gap: 12px; }
-button, input { font: inherit; color: inherit; }
+button, input, select { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 a { color: var(--accent); }
 
@@ -76,7 +77,7 @@ table.t td.n, table.t th.n { text-align: right; font-variant-numeric: tabular-nu
 
 /* Family cards */
 .tools { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-.tools input { flex: 1 1 240px; min-width: 0; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--rule); background: var(--card); }
+.tools input, .tools select { flex: 1 1 240px; min-width: 0; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--rule); background: var(--card); }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 14px; color: var(--ink-2); }
 .legend span { display: inline-flex; align-items: center; gap: 6px; }
 .dot { width: 12px; height: 12px; border-radius: 4px; display: inline-block; }
@@ -116,8 +117,18 @@ details ul { padding-left: 20px; margin: 6px 0; }
     <h1>De la 3e au premier métier : les chiffres à chaque étape</h1>
     <p class="lead">À chaque étape, tu vois ce que font vraiment les élèves, combien réussissent, ce qu'ils gagnent après, et ce qu'une intelligence artificielle sait déjà faire de leur travail. Choisis ta voie, puis ton bac : la suite s'adapte.</p>
     <p class="small">Chiffres du ministère de l'Éducation nationale, du ministère de l'Enseignement supérieur et d'études publiées. Ils donnent une tendance, pas une certitude. Ce que tu aimes compte autant : parles-en avec ton professeur principal.</p>
+    <div class="choice" id="profil-box">
+      <h3>Où en es-tu ?</h3>
+      <div class="chips" id="profil">
+        <button class="chip big" type="button" data-p="college" aria-pressed="false">Au collège (4e, 3e)</button>
+        <button class="chip big" type="button" data-p="lycee" aria-pressed="false">Au lycée</button>
+        <button class="chip big" type="button" data-p="sup" aria-pressed="false">En licence, BUT ou BTS : continuer ou travailler ?</button>
+        <button class="chip big" type="button" data-p="tout" aria-pressed="false">Parent, professeur : tout voir</button>
+      </div>
+      <p class="small" id="profil-msg"></p>
+    </div>
     <nav class="steps" aria-label="Étapes">
-      <a href="#e1">1 · Fin de 3e</a><a href="#e2">2 · Le bac</a><a href="#e3">3 · Après le bac</a><a href="#e4">4 · Réussir</a><a href="#e5">5 · Le travail et l'IA</a>
+      <a href="#e1">1 · Fin de 3e</a><a href="#e2">2 · Le bac</a><a href="#e3">3 · Après le bac</a><a href="#e4">4 · Réussir</a><a href="#e45">5 · Master ou emploi</a><a href="#e5">6 · Le travail et l'IA</a>
     </nav>
   </header>
 
@@ -180,8 +191,25 @@ details ul { padding-left: 20px; margin: 6px 0; }
     <p class="small">Licence : bacheliers 2023 inscrits en L1 (passage) et bacheliers 2020 (diplôme), SIES, Note Flash 2025-29 ; avec une mention très bien, 70 % ont la licence en 3 ou 4 ans, avec une mention passable, 22 %. BTS : session 2024, RERS 2025 (8.10). BUT : bacheliers 2021, SIES. Prépa : SIES, novembre 2025. Médecine : réforme 2020, SIES. Les cartes de l'étape 3 donnent ces chiffres famille par famille, et selon tes spécialités.</p>
   </section>
 
+  <section class="card" id="e45" aria-labelledby="h45-">
+    <div class="step-h"><span class="step-n">5</span><h2 id="h45-">Après la licence : continuer en master ou travailler ?</h2></div>
+    <p>Aujourd'hui, presque tous les diplômés de licence générale continuent leurs études, et ceux qui s'arrêtent trouvent moins souvent un emploi qu'après un master. Mais une licence professionnelle ou un master en alternance font aussi bien, ou mieux, que la moyenne des masters.</p>
+    <div class="tiles" id="mtiles"></div>
+    <p class="small" id="mtiles-src"></p>
+    <h3>Ta licence : t'arrêter ou continuer ?</h3>
+    <div class="tools"><label for="lsel" hidden>Ta licence</label><select id="lsel"><option value="">Choisis ta licence…</option></select></div>
+    <div id="lres"></div>
+    <h3>Chaque master, ses débouchés</h3>
+    <p>Un master n'est pas une garantie : deux ans et demi après le diplôme, un master sur dix a moins de 49 % de diplômés en emploi salarié en France, et un sur dix plus de 86 % (médiane : 71 %). Avant de choisir, regarde le master précis, pas la moyenne.</p>
+    <div class="tools"><label for="mq" hidden>Master ou université</label><input id="mq" type="search" placeholder="Chercher un master ou une université : droit des affaires, Lyon, informatique…" style="flex:1;min-width:240px"></div>
+    <div class="twrap" id="mres"></div>
+    <p class="small" id="mnote"></p>
+    <h3>Chercher un premier emploi ou une alternance</h3>
+    <p class="small">Offres pour les jeunes, dont les emplois accessibles avec une licence : <a href="https://www.1jeune1solution.gouv.fr/">1jeune1solution</a> (État) ; masters et licences en alternance, payés et souvent suivis d'une embauche : <a href="https://labonnealternance.apprentissage.beta.gouv.fr/">La bonne alternance</a> ; offres de cadres débutants : <a href="https://www.apec.fr/">Apec</a> ; toutes les offres : <a href="https://candidat.francetravail.fr/offres/recherche">France Travail</a>.</p>
+  </section>
+
   <section class="card" id="e5" aria-labelledby="h5-">
-    <div class="step-h"><span class="step-n">5</span><h2 id="h5-">Trouver un travail, et ce que l'IA change</h2></div>
+    <div class="step-h"><span class="step-n">6</span><h2 id="h5-">Trouver un travail, et ce que l'IA change</h2></div>
     <div class="tiles">
       <div class="tile"><div class="num">27 · 43 · 59</div><div class="lab">% en emploi 6 mois après la sortie : CAP · bac pro · BTS (sortants 2023)</div></div>
       <div class="tile"><div class="num">76 %</div><div class="lab">des diplômés de licence professionnelle en emploi à 6 mois</div></div>
@@ -189,11 +217,6 @@ details ul { padding-left: 20px; margin: 6px 0; }
       <div class="tile"><div class="num">21,6 %</div><div class="lab">de chômage des 15-24 ans en France mi-2026, contre 7,5 % des 25-49 ans</div></div>
     </div>
     <p class="small">DEPP, InserJeunes (RERS 2025, 8.19) ; MESR, InserSup (RERS 2025) ; Insee, 2e trimestre 2026.</p>
-    <h3>Chaque master, ses débouchés</h3>
-    <p>Un master n'est pas une garantie : deux ans et demi après le diplôme, un master sur dix a moins de 49 % de diplômés en emploi salarié en France, et un sur dix plus de 86 % (médiane : 71 %). Avant de choisir, regarde le master précis, pas la moyenne.</p>
-    <div class="tools"><label for="mq" hidden>Master ou université</label><input id="mq" type="search" placeholder="Chercher un master ou une université : droit des affaires, Lyon, informatique…" style="flex:1;min-width:240px"></div>
-    <div class="twrap" id="mres"></div>
-    <p class="small" id="mnote"></p>
     <h3>Ce que l'IA change déjà</h3>
     <p>Depuis l'arrivée de ChatGPT fin 2022, les entreprises embauchent moins de jeunes de 21 à 29 ans en CDI dans les métiers où l'IA sait faire beaucoup de choses.</p>
     <div class="bars" id="bars"></div>
@@ -509,6 +532,52 @@ renderList();
   }
   $("mq").addEventListener("input", render);
   $("mnote").innerHTML = `${M.meta.n_programmes.toLocaleString("fr-FR")} masters d'université. Emploi salarié en France 30 mois après le diplôme, diplômés de 2023 (* : 2022 et 2023 réunis pour les petites formations) ; emploi stable : CDI ou fonctionnaire, parmi ceux qui travaillent ; salaire net médian en équivalent temps plein, diplômés de 2021 (seul chiffre publié). Un taux bas ne veut pas toujours dire un échec : l'emploi à l'étranger, à son compte ou la poursuite en thèse ne sont pas comptés (voir la dernière colonne). « nd » : non diffusé, trop peu de diplômés. Source : MESR, <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-insersup">InserSup</a>, version 2026_S1.`;
+})();
+
+// Où en es-tu ? (profil) : montre le parcours utile, du collège au premier emploi.
+(function () {
+  const PROFILS = {
+    college: { show: ["e1", "e2", "e3", "e4", "e45", "e5"], msg: "Tout le parcours, de la fin de 3e au premier emploi : commence par l'étape 1." },
+    lycee: { show: ["e2", "e3", "e4", "e45", "e5"], msg: "À partir du bac : choisis ton bac, puis une formation, et regarde ce qu'elle donne jusqu'au premier emploi." },
+    sup: { show: ["e45", "e5"], msg: "Continuer en master ou travailler : compare ta licence et chaque master, puis cherche un emploi ou une alternance." },
+    tout: { show: ["e1", "e2", "e3", "e4", "e45", "e5"], msg: "Tout le parcours." }
+  };
+  const ALL = ["e1", "e2", "e3", "e4", "e45", "e5"];
+  function setProfil(k, scroll) {
+    const P = PROFILS[k]; if (!P) return;
+    ALL.forEach((id) => { const el = $(id); if (el) el.hidden = !P.show.includes(id); });
+    document.querySelectorAll(".steps a").forEach((a) => { a.hidden = !P.show.includes(a.getAttribute("href").slice(1)); });
+    document.querySelectorAll("#profil .chip").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.p === k)));
+    $("profil-msg").textContent = P.msg;
+    try { history.replaceState(null, "", "?profil=" + k + location.hash); } catch (e) {}
+    if (scroll) $(P.show[0]).scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+  document.querySelectorAll("#profil .chip").forEach((b) => b.addEventListener("click", () => setProfil(b.dataset.p, true)));
+  const q = new URLSearchParams(location.search).get("profil");
+  if (q && PROFILS[q]) setProfil(q, false);
+})();
+
+// Après la licence : comparaison nationale licence / master (InserSup 2026_S1)
+(function () {
+  const M = window.BOUSSOLE_MASTERS;
+  if (!M || !M.totals || !$("mtiles")) return;
+  const T = M.totals, fr = (n) => n.toLocaleString("fr-FR");
+  const tile = (v, lab) => `<div class="tile"><div class="num">${v} %</div><div class="lab">${lab}</div></div>`;
+  $("mtiles").innerHTML = tile(T.lg.e, "après une licence générale") + tile(T.lp.e, "après une licence professionnelle") +
+    tile(T.m.e, "après un master") + tile(T.ma.e, "après un master en alternance");
+  $("mtiles-src").textContent = `Part des diplômés de 2023 en emploi salarié en France 30 mois après le diplôme, parmi ceux qui ont arrêté leurs études. Après une licence générale, ${fr(T.lg.n)} diplômés se sont arrêtés et ${fr(T.lg.q)} ont continué. Salaire net médian (diplômés de 2021) : ${fr(T.lg.w)} € après une licence générale, ${fr(T.lp.w)} € après une licence professionnelle, ${fr(T.m.w)} € après un master, ${fr(T.ma.w)} € après un master en alternance. MESR, InserSup 2026.`;
+  const cap = (s) => s.charAt(0) + s.slice(1).toLowerCase();
+  M.lic.forEach((r, i) => { const o = document.createElement("option"); o.value = i; o.textContent = cap(r.t); $("lsel").appendChild(o); });
+  $("lsel").addEventListener("change", () => {
+    const r = M.lic[$("lsel").value];
+    if (!r) { $("lres").innerHTML = ""; return; }
+    const w = (v) => v ? fr(v) + " €" : "non diffusé";
+    $("lres").innerHTML = `<div class="tiles">
+      <div class="tile"><div class="num">${r.le} %</div><div class="lab">en emploi 30 mois après, si tu t'arrêtes après la licence (salaire médian : ${w(r.lw)})</div></div>
+      <div class="tile"><div class="num">${r.me} %</div><div class="lab">après un master du même nom (salaire médian : ${w(r.mw)})</div></div>
+      <div class="tile"><div class="num">${fr(r.ln)} · ${r.lq === null ? "nd" : fr(r.lq)}</div><div class="lab">diplômés de cette licence qui s'arrêtent · qui continuent</div></div>
+    </div><p class="small">Ceux qui s'arrêtent après la licence sont peu nombreux et ne ressemblent pas forcément à ceux qui continuent : l'écart ne mesure pas seulement ce qu'apporte le master. Diplômés de 2023 (ou 2022 et 2023 réunis), salaires des diplômés de 2021 ; France entière.</p>`;
+  });
 })();
 </script>
 </body>
