@@ -189,6 +189,11 @@ details ul { padding-left: 20px; margin: 6px 0; }
       <div class="tile"><div class="num">21,6 %</div><div class="lab">de chômage des 15-24 ans en France mi-2026, contre 7,5 % des 25-49 ans</div></div>
     </div>
     <p class="small">DEPP, InserJeunes (RERS 2025, 8.19) ; MESR, InserSup (RERS 2025) ; Insee, 2e trimestre 2026.</p>
+    <h3>Chaque master, ses débouchés</h3>
+    <p>Un master n'est pas une garantie : deux ans et demi après le diplôme, un master sur dix a moins de 49 % de diplômés en emploi salarié en France, et un sur dix plus de 86 % (médiane : 71 %). Avant de choisir, regarde le master précis, pas la moyenne.</p>
+    <div class="tools"><label for="mq" hidden>Master ou université</label><input id="mq" type="search" placeholder="Chercher un master ou une université : droit des affaires, Lyon, informatique…" style="flex:1;min-width:240px"></div>
+    <div class="twrap" id="mres"></div>
+    <p class="small" id="mnote"></p>
     <h3>Ce que l'IA change déjà</h3>
     <p>Depuis l'arrivée de ChatGPT fin 2022, les entreprises embauchent moins de jeunes de 21 à 29 ans en CDI dans les métiers où l'IA sait faire beaucoup de choses.</p>
     <div class="bars" id="bars"></div>
@@ -218,6 +223,7 @@ details ul { padding-left: 20px; margin: 6px 0; }
       <li><strong>Qui y entre</strong> : Parcoursup 2025, propositions acceptées par paire de spécialités du bac général (MESR, jeu « enseignements de spécialité des bacheliers généraux »).</li>
       <li><strong>Réussite</strong> : SIES, Note Flash 2025-29 (passage en 2e année des bacheliers 2023, licence en 3 ou 4 ans des bacheliers 2020, par grand domaine et par paire de spécialités) et cohortes nationales par type de licence et de BUT ; pour les BTS, DEPP (voir étape 4). Les chiffres par paire décrivent qui réussit, pas l'effet d'une spécialité à elle seule.</li>
       <li><strong>Travail</strong> : InserSup 2026 (emploi salarié et salaire net médian 30 mois après le diplôme, au niveau indiqué) ; InserJeunes (bacs pros, emploi à 6 et 12 mois, moyenne des lycées 2021-2024) ; Métiers 2030 (France Stratégie et Dares, croissance de l'emploi des métiers de la famille).</li>
+      <li><strong>Mise à jour</strong> : les chiffres par formation (Parcoursup, InserSup, InserJeunes) sont publiés une fois par an : Parcoursup après chaque campagne, InserSup deux fois par an mais avec des diplômés suivis pendant deux ans et demi, donc des chiffres qui décrivent les promotions d'il y a deux à trois ans. Ils ne peuvent pas être suivis en direct. Les indicateurs nationaux (chômage des jeunes, offres d'emploi qui demandent de l'IA) changent chaque trimestre.</li>
       <li><strong>Formations</strong> : Parcoursup 2025, <span id="psup-count"></span> ; lycées professionnels 2023-2024.</li>
     </ul>
     <p>Limites : l'IA « peut faire » une tâche ne veut pas dire que le métier va disparaître. Au Danemark, on ne voit encore aucun effet sur les salaires. Le nombre d'années après le bac est indicatif.</p>
@@ -228,6 +234,7 @@ details ul { padding-left: 20px; margin: 6px 0; }
 <script src="data.js"></script>
 <script src="projections.js"></script>
 <script src="reussite.js"></script>
+<script src="masters.js"></script>
 <script>
 const D = window.BOUSSOLE;
 const RE = window.BOUSSOLE_REUSSITE || { adm: {}, succ: {}, spec_totals: {}, nat: {}, disc: {}, disc_fr: {}, meta: {} };
@@ -474,6 +481,35 @@ function renderOffers(f, q) {
 $("q").oninput = renderList;
 renderBac();
 renderList();
+
+// Chaque master, ses débouchés (InserSup 2026_S1, built by scripts/build_masters.py)
+(function () {
+  const M = window.BOUSSOLE_MASTERS;
+  if (!M || !$("mq")) return;
+  const norm = (s) => String(s).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+  const pct = (v) => v === null || v === undefined ? "nd" : v + " %";
+  const cap = (s) => s.charAt(0) + s.slice(1).toLowerCase();
+  M.p.forEach((r) => { r.k = norm(r.t + " " + r.u + " " + r.a + " " + r.d); });
+  function render() {
+    const words = norm($("mq").value).split(/\s+/).filter((w) => w.length > 1);
+    if (!words.length) { $("mres").innerHTML = ""; return; }
+    const hits = M.p.filter((r) => words.every((w) => r.k.includes(w)));
+    hits.sort((a, b) => b.e - a.e);
+    const shown = hits.slice(0, 40);
+    let h = `<p class="small">${hits.length.toLocaleString("fr-FR")} master${hits.length > 1 ? "s" : ""} trouvé${hits.length > 1 ? "s" : ""}${hits.length > 40 ? ", les 40 premiers par taux d'emploi" : ""}.</p>`;
+    if (shown.length) {
+      h += `<table class="t"><thead><tr><th>Master</th><th>Université</th><th class="n">En emploi salarié à 30 mois</th><th class="n">Moyenne nationale du même master</th><th class="n">Emploi stable</th><th class="n">Salaire net médian</th><th class="n">Diplômés suivis</th><th class="n">Encore en études</th></tr></thead><tbody>`;
+      shown.forEach((r) => {
+        const n = M.nat[r.t];
+        h += `<tr><td>${esc(cap(r.t))}</td><td>${esc(r.u)}</td><td class="n"><b>${pct(r.e)}</b></td><td class="n">${n ? pct(n.e) : "nd"}</td><td class="n">${pct(r.s)}</td><td class="n">${r.w ? euro(r.w) : "nd"}</td><td class="n">${r.n}${r.c !== "2023" ? " *" : ""}</td><td class="n">${r.q === null ? "nd" : r.q}</td></tr>`;
+      });
+      h += `</tbody></table>`;
+    }
+    $("mres").innerHTML = h;
+  }
+  $("mq").addEventListener("input", render);
+  $("mnote").innerHTML = `${M.meta.n_programmes.toLocaleString("fr-FR")} masters d'université. Emploi salarié en France 30 mois après le diplôme, diplômés de 2023 (* : 2022 et 2023 réunis pour les petites formations) ; emploi stable : CDI ou fonctionnaire, parmi ceux qui travaillent ; salaire net médian en équivalent temps plein, diplômés de 2021 (seul chiffre publié). Un taux bas ne veut pas toujours dire un échec : l'emploi à l'étranger, à son compte ou la poursuite en thèse ne sont pas comptés (voir la dernière colonne). « nd » : non diffusé, trop peu de diplômés. Source : MESR, <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-insersup">InserSup</a>, version 2026_S1.`;
+})();
 </script>
 </body>
 </html>
