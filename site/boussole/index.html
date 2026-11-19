@@ -342,7 +342,7 @@ details ul { padding-left: 20px; margin: 6px 0; }
       <div><b>La licence</b> : 3 ans à l'université. <b>Le master</b> : 2 ans de plus, donc 5 ans en tout.</div>
       <div><b>La prépa</b> : 2 ans très intenses après le bac pour entrer dans une grande école (ingénieur, commerce, lettres).</div>
       <div><b>Affelnet</b> : le logiciel qui t'affecte au lycée en fin de 3e. <b>Parcoursup</b> : le site où, en terminale, on demande ses formations.</div>
-      <div><b>« Trouvent un travail »</b> : la part des diplômés en emploi salarié en France 30 mois après le diplôme (InserSup 2026), ou 6 mois après pour les bacs pros (InserJeunes).</div>
+      <div><b>« Trouvent un travail »</b> : la part des diplômés en emploi salarié en France 30 mois après le diplôme (InserSup 2026, diplômés 2021), ou 6 mois après pour les bacs pros (InserJeunes).</div>
       <div><b>« L'IA peut faire »</b> : la part des tâches des premiers métiers qu'une IA sait faire presque seule aujourd'hui (Harvard, 2026).</div>
     </div>
   </section>
@@ -353,14 +353,15 @@ details ul { padding-left: 20px; margin: 6px 0; }
     <ul>
       <li><strong>Qui y entre</strong> : Parcoursup 2025, propositions acceptées par paire de spécialités du bac général (MESR, jeu « enseignements de spécialité des bacheliers généraux »).</li>
       <li><strong>Réussite</strong> : SIES, Note Flash 2025-29 (passage en 2e année des bacheliers 2023, licence en 3 ou 4 ans des bacheliers 2020, par grand domaine et par paire de spécialités) et cohortes nationales par type de licence et de BUT ; pour les BTS, DEPP (voir étape 5). Les chiffres par paire décrivent qui réussit, pas l'effet d'une spécialité à elle seule.</li>
-      <li><strong>Travail</strong> : InserSup 2026 (emploi salarié et salaire net médian 30 mois après le diplôme, au niveau indiqué) ; InserJeunes (bacs pros, emploi à 6 et 12 mois, moyenne des lycées 2021-2024) ; Métiers 2030 (France Stratégie et Dares, croissance de l'emploi des métiers de la famille).</li>
+      <li><strong>Travail</strong> : InserSup 2026_S1 (emploi salarié et salaire net médian 30 mois après le diplôme, au niveau indiqué, diplômés 2021 ; pas de chiffre par famille pour les BTS et BUT, qui n'ont pas de ligne nationale dans InserSup) ; InserJeunes (bacs pros, emploi à 6 et 12 mois, moyenne des lycées 2021-2024) ; Métiers 2030 (France Stratégie et Dares, croissance de l'emploi des métiers de la famille).</li>
       <li><strong>Concurrence chinoise</strong> (filières industrielles : industrie et mécanique, électricité et électronique en BTS et BUT, laboratoire, bacs pros maintenance industrielle, usinage et chaudronnerie, mode et textile, bois) : hausse des importations françaises depuis la Chine entre 2018 et 2024 dans les industries où travaillent ces diplômés, rapportée à l'emploi français de ces industries en 2017 (BACI, CEPII ; Urssaf ; Eurostat), comparée à la moyenne de l'industrie. Pour chaque lieu de formation, exposition de sa zone d'emploi selon la méthode d'Autor, Dorn et Hanson (2013), en rang parmi les 287 zones de métropole. C'est une mesure d'exposition, pas un effet prouvé sur l'emploi.</li>
+      <li><strong>Les métiers visés</strong> : salaire net médian des salariés de chaque métier, tous âges (Dares et France Travail, tensions 2024, tableau B ; Insee, enquête Emploi 2024), en moyenne pondérée par l'emploi quand la formation mène à plusieurs métiers ; embauches prévues hors saisonniers (France Travail, BMO 2026 ; les bassins de France Travail sont rattachés aux zones d'emploi par le nom de leur ville, sinon le chiffre est celui du département) ; postes à pourvoir et jeunes débutants par an, métier par métier (France Stratégie et Dares, Les métiers en 2030, projection 2019-2030 publiée en 2022) ; quartiles de salaire au début (InserSup 2026_S1, diplômés 2021) ; plus tard, revenu à 3 et 6 ans par niveau de diplôme (Céreq, Génération 2017). Les métiers de chaque famille sont choisis à la main ; ceux des spécialités de CAP et de bac pro viennent des fiches ROME. Détail : <code>scripts/build_marche.py</code>.</li>
       <li><strong>Mise à jour</strong> : les chiffres par formation (Parcoursup, InserSup, InserJeunes) sont publiés une fois par an : Parcoursup après chaque campagne, InserSup deux fois par an mais avec des diplômés suivis pendant deux ans et demi, donc des chiffres qui décrivent les promotions d'il y a deux à trois ans. Ils ne peuvent pas être suivis en direct. Les indicateurs nationaux (chômage des jeunes, offres d'emploi qui demandent de l'IA) changent chaque trimestre.</li>
       <li><strong>Formations</strong> : Parcoursup 2025, <span id="psup-count"></span> ; lycées professionnels 2023-2024.</li>
       <li><strong>Débouchés de chaque formation</strong> : InserSup 2026_S1 (licences et BUT par université et mention, écoles), InserJeunes cumul 2023-2024 (BTS, bacs pros et CAP par lycée et spécialité), masters par université (InserSup). Chaque carte dit à quel niveau le chiffre est mesuré : la formation, l'établissement, ou la France entière. Quand une formation a trop peu de sortants, les sources ne publient pas son chiffre : la carte montre alors le chiffre le plus proche, et le dit.</li>
     </ul>
     <p>Limites : l'IA « peut faire » une tâche ne veut pas dire que le métier va disparaître. Au Danemark, on ne voit encore aucun effet sur les salaires. Le nombre d'années après le bac est indicatif.</p>
-    <p class="src">Sources : Hosseini et Lichtinger (2026), <a href="https://github.com/s-mahdihosseini/GenAI_Expertise">GenAI and Expertise</a> ; Palladino et al. (2026), <a href="https://heclift.github.io/website/files/papers/LIFT_WP_2026-02.pdf">LIFT WP 2026-02</a> ; Deming (2017), <a href="https://scholar.harvard.edu/sites/scholar.harvard.edu/files/ddeming/files/deming_socialskills_qje.pdf">The Growing Importance of Social Skills</a> ; Deming (2025), <a href="https://forklightning.substack.com/p/shorting-the-ai-jobs-apocalypse">Shorting the AI jobs apocalypse</a> ; Garicano, Li et Wu (2026), Messy Jobs ; DEPP, notes 25.59, 26.05, 26.06, 26.33 et <a href="https://www.education.gouv.fr/sites/default/files/2025-09/rers2025-chapitre-8-version-corrig-e-le-25-septembre-2025-441735.pdf">RERS 2025, chapitre 8</a> ; SIES, <a href="https://www.enseignementsup-recherche.gouv.fr/sites/default/files/2025-11/nf-sies-2025-29-38293.pdf">Note Flash 2025-29</a> ; MESR, <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-insersup">InserSup</a>, <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-parcoursup">Parcoursup 2025</a> et <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-parcoursup-enseignements-de-specialite-bacheliers-generaux-2">spécialités</a> ; DEPP, <a href="https://data.education.gouv.fr/explore/dataset/fr-en-inserjeunes-lycee_pro">InserJeunes</a>. <a href="v1/">Version précédente de la boussole</a>.</p>
+    <p class="src">Sources : Hosseini, S. M. et G. Lichtinger (2026), « Generative AI and Occupational Entry Barriers: The Labor Supply Channel of Technological Change », Harvard University, <a href="https://papers.ssrn.com/abstract=6059674">SSRN 6059674</a>, données <a href="https://github.com/s-mahdihosseini/GenAI_Expertise">GenAI_Expertise</a> ; Palladino et al. (2026), <a href="https://heclift.github.io/website/files/papers/LIFT_WP_2026-02.pdf">LIFT WP 2026-02</a> ; Deming (2017), <a href="https://scholar.harvard.edu/sites/scholar.harvard.edu/files/ddeming/files/deming_socialskills_qje.pdf">The Growing Importance of Social Skills</a> ; Deming (2025), <a href="https://forklightning.substack.com/p/shorting-the-ai-jobs-apocalypse">Shorting the AI jobs apocalypse</a> ; Garicano, Li et Wu (2026), Messy Jobs ; DEPP, notes 25.59, 26.05, 26.06, 26.33 et <a href="https://www.education.gouv.fr/sites/default/files/2025-09/rers2025-chapitre-8-version-corrig-e-le-25-septembre-2025-441735.pdf">RERS 2025, chapitre 8</a> ; SIES, <a href="https://www.enseignementsup-recherche.gouv.fr/sites/default/files/2025-11/nf-sies-2025-29-38293.pdf">Note Flash 2025-29</a> ; MESR, <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-insersup">InserSup</a>, <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-parcoursup">Parcoursup 2025</a> et <a href="https://data.enseignementsup-recherche.gouv.fr/explore/dataset/fr-esr-parcoursup-enseignements-de-specialite-bacheliers-generaux-2">spécialités</a> ; DEPP, <a href="https://data.education.gouv.fr/explore/dataset/fr-en-inserjeunes-lycee_pro">InserJeunes</a>. <a href="v1/">Version précédente de la boussole</a>.</p>
   </details>
 </div>
 
@@ -372,10 +373,45 @@ details ul { padding-left: 20px; margin: 6px 0; }
 <script src="ze-geo.js"></script>
 <script src="lycees-pro.js"></script>
 <script src="debouches.js"></script>
+<script src="marche.js"></script>
 <script>
 const D = window.BOUSSOLE;
 const RE = window.BOUSSOLE_REUSSITE || { adm: {}, succ: {}, spec_totals: {}, nat: {}, disc: {}, disc_fr: {}, meta: {} };
 const P = window.BOUSSOLE_PROJ || { fams: {} };
+// Labour market (scripts/build_marche.py): salary of the occupation, BMO hiring, places vs openings, income later
+const MK = window.BOUSSOLE_MARCHE || { fam: {}, sp: {}, ze: {}, dep: {}, zdep: {}, later: {}, meta: {} };
+// BMO 2026 of a zone d'emploi, or of its département when no BMO bassin was matched to the zone (see build_marche.py)
+function mkArea(z, d) {
+  if (z && MK.ze[z]) return { a: MK.ze[z], zone: true };
+  const dd = d ? (/^\d$/.test(d) ? "0" + d : d) : MK.zdep[z];
+  return dd && MK.dep[dd] ? { a: MK.dep[dd], zone: false } : null;
+}
+function mkSpec(lab, z, d) {
+  const sp = MK.sp[lab]; if (!sp) return null;
+  const ar = mkArea(z, d);
+  let n = null, dif = 0;
+  if (ar) { n = 0; sp.f.forEach((fp) => { const v = ar.a.f[fp]; if (v) { n += v[0]; dif += v[1]; } }); }
+  return { sal: sp.sal, n, dif: n ? Math.round(100 * dif / n) : null, zone: ar ? ar.zone : null };
+}
+function mkDetail(f) {
+  const m = MK.fam[f.k]; if (!m) return "";
+  const nfr = (n) => n.toLocaleString("fr-FR");
+  let h = `<h3>Les métiers visés</h3>`;
+  if (m.sal) h += `<p>Salaire net médian dans ces métiers, <b>tous âges</b>, non converti en temps plein : <b>${euro(m.sal[0])}</b> par mois${m.sal[3] > 1 ? ` (de ${euro(m.sal[1])} à ${euro(m.sal[2])} selon le métier)` : ""}. C'est la médiane de tous les salariés du métier, débutants et anciens, quel que soit leur diplôme.</p>`;
+  if (m.q && m.q["30"]) { const q = m.q["30"]; h += `<p>Au début, 30 mois après le diplôme : la moitié des diplômés 2021 gagnent plus de <b>${euro(q[1])}</b> ; 1 sur 4 gagne moins d'environ <b>${euro(q[0])}</b>, 1 sur 4 plus d'environ <b>${euro(q[2])}</b> (net par mois, équivalent temps plein, ceux qui ont un emploi salarié en France).</p>`; }
+  const bm = m.bmo;
+  if (bm && bm[0] && !f.ij) h += `<p>En 2026, les employeurs prévoient <b>${nfr(bm[0])}</b> embauches dans ces métiers en France (hors emplois saisonniers), dont <b>${bm[1]} %</b> jugées difficiles.</p>`;
+  if (m.m30 && m.m30.length) {
+    const W = { plus: "plus de postes à pourvoir que de jeunes qui arrivent", moins: "moins de postes à pourvoir que de jeunes qui arrivent", autant: "à peu près autant de postes à pourvoir que de jeunes qui arrivent" };
+    h += `<p><b>Postes et jeunes qui arrivent</b>, chaque année de 2019 à 2030 (projection publiée en 2022) :</p><ul class="small">${m.m30.map(([t, b, d, v]) => `<li>${esc(t)} : ${W[v]} (${nfr(b)} postes pour ${nfr(d)} jeunes débutants)</li>`).join("")}</ul>
+      <p class="small">Postes à pourvoir : emplois créés et départs à la retraite, tous diplômes confondus. Jeunes débutants : jeunes qui entrent dans ces métiers en sortant de leurs études. Quand il y a plus de postes que de jeunes, les employeurs recrutent aussi des adultes qui changent de métier. Quand il y a moins de postes que de jeunes, beaucoup de jeunes y font leurs débuts puis changent de métier : on y entre plus difficilement, mais ce n'est pas une porte fermée.</p>`;
+  }
+  const c = MK.cq[m.cq], z = MK.cq["200"], g = MK.cq["340"];
+  if (c) h += `<p><b>Et plus tard ?</b> Les jeunes sortis des études en 2017 avec ${esc(c[0])} : 3 ans après (octobre 2020, pendant la crise sanitaire), <b>${c[1][1]} %</b> avaient un emploi, pour un revenu médian de <b>${euro(c[1][0])}</b> net par mois ; 6 ans après (automne 2023), <b>${c[2][1]} %</b> et <b>${euro(c[2][0])}</b>. À 6 ans, ${c[2][2]} % de ceux qui travaillaient étaient en CDI, fonctionnaires ou à leur compte.${z ? ` Pour comparer, sortis sans diplôme : ${euro(z[1][0])} puis ${euro(z[2][0])}${g && !f.bp ? ` ; avec seulement un bac général : ${euro(g[1][0])} puis ${euro(g[2][0])}` : ""}.` : ""}</p>
+    <p class="small">Revenu du travail net mensuel médian, primes incluses, de tous ceux qui ont un emploi, temps partiel compris (ce n'est pas un équivalent temps plein, à la différence du chiffre « au début »). Une génération passée, par niveau de diplôme et non par formation : pas une prévision.</p>`;
+  h += `<p class="small">Sources : salaire du métier, Dares et France Travail, tensions 2024, tableau B (Insee, enquête Emploi 2024 : salaire net mensuel, non converti en temps plein)${m.q ? " ; début de carrière, MESR, InserSup 2026_S1, diplômés 2021" : ""} ; embauches, France Travail, BMO 2026 ; postes et débutants, France Stratégie et Dares, Les métiers en 2030 (2022) ; plus tard, Céreq, enquête Génération 2017 (interrogations de 2020 et 2023). Métiers : familles professionnelles de la Dares reliées à la main aux premiers emplois de la formation.</p>`;
+  return h;
+}
 // Second source of exposure for technical programmes: Chinese import competition 2018-2024 (scripts/build_chinashock.py)
 const CN = window.BOUSSOLE_CHINE || { fam: {}, ze: {}, com: {}, meta: {} };
 const cnNorm = (t) => String(t).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/sainte-/g, "ste ").replace(/saint-/g, "st ").replace(/[-']/g, " ").replace(/\s+/g, " ").trim();
@@ -547,6 +583,7 @@ function tilesHtml(f) {
       <div class="tile"><div class="num">${f.ij.pe} %</div><div class="lab">continuent leurs études (BTS, autre bac pro)</div></div>
       <div class="tile"><div class="num">${f.ij.e6} %</div><div class="lab">en emploi 6 mois après (ceux qui arrêtent)</div></div>
       <div class="tile"><div class="num">${f.ij.e12} %</div><div class="lab">en emploi 12 mois après</div></div>
+      ${MK.fam[f.k] && MK.fam[f.k].sal ? `<div class="tile"><div class="num">${euro(MK.fam[f.k].sal[0])}</div><div class="lab">net par mois : médiane du métier, tous âges, non convertie en temps plein</div></div>` : ""}
       <div class="tile ia" style="--band:var(${f.band[2]})"><div class="num">${f.sur10} sur 10</div><div class="lab">tâches que l'IA peut faire</div></div>
       ${cnTile(f)}
     </div>`;
@@ -556,8 +593,8 @@ function tilesHtml(f) {
   return `<div class="tiles">
     <div class="tile"><div class="num">${YEARS[f.k] || "3 à 5"} ans</div><div class="lab">après le bac</div></div>
     <div class="tile"><div class="num">${r.dip || r.l2 || "?"}</div><div class="lab">${r.dip ? r.diplab : r.l2 ? r.l2lab : "réussite : pas de chiffre national"}</div></div>
-    <div class="tile"><div class="num">${f.ins ? Math.round(f.ins.emploi / 10) + " sur 10" : "?"}</div><div class="lab">${f.ins ? `trouvent un travail (30 mois ${esc(f.ins.niveau)})` : "emploi : pas encore de chiffre"}</div></div>
-    <div class="tile"><div class="num">${f.ins ? euro(f.ins.salaire) : "?"}</div><div class="lab">${f.ins ? "net par mois, au début" : "salaire : pas encore de chiffre"}</div></div>
+    <div class="tile"><div class="num">${f.ins ? Math.round(f.ins.emploi / 10) + " sur 10" : "?"}</div><div class="lab">${f.ins ? `trouvent un travail (30 mois ${esc(f.ins.niveau)}, diplômés 2021)` : f.g === "BTS / BUT" ? "emploi : pas de chiffre national par famille (voir chaque BTS plus bas)" : "emploi : pas encore de chiffre"}</div></div>
+    ${f.ins ? `<div class="tile"><div class="num">${euro(f.ins.salaire)}</div><div class="lab">net par mois, 30 mois après (diplômés 2021)${MK.fam[f.k] && MK.fam[f.k].sal ? `<br>${euro(MK.fam[f.k].sal[0])} : médiane du métier, tous âges, non convertie en temps plein` : ""}</div></div>` : MK.fam[f.k] && MK.fam[f.k].sal ? `<div class="tile"><div class="num">${euro(MK.fam[f.k].sal[0])}</div><div class="lab">salaire médian du métier, tous âges, non converti en temps plein (pas de chiffre au début)</div></div>` : `<div class="tile"><div class="num">?</div><div class="lab">salaire : pas encore de chiffre</div></div>`}
     <div class="tile ia" style="--band:var(${f.band[2]})"><div class="num">${f.sur10} sur 10</div><div class="lab">tâches que l'IA peut faire</div></div>
     ${cnTile(f)}
   </div>
@@ -618,8 +655,9 @@ function detailHtml(f) {
     h += `<h3>Selon tes spécialités au bac</h3><p class="small">Part des nouveaux bacheliers qui passent en 2e année, en licence de ${esc(f.sies.disc)} (SIES, bacheliers 2023) :</p>
       <div class="bars">${f.sies.bac.slice(0, 10).map(([lab, v, n, spe]) => `<div class="barrow"><div class="lab"><span>${esc(lab)}</span><b>${v} %</b></div><div class="track"><i style="width:${v}%;background:var(${spe ? "--b" : "--d"})"></i></div></div>`).join("")}</div>`;
   }
-  if (f.ins) h += `<h3>Le travail après</h3><p>${f.ins.emploi} % des diplômés sont en emploi salarié en France 30 mois ${esc(f.ins.niveau)}, pour un salaire net médian de ${euro(f.ins.salaire)} par mois (InserSup 2026, ${f.ins.n.toLocaleString("fr-FR")} diplômés suivis).</p>`;
-  if (f.ij) h += `<h3>Le travail après</h3><p>Parmi les élèves qui arrêtent après ce bac pro, ${f.ij.e6} % sont en emploi 6 mois après et ${f.ij.e12} % 12 mois après ; ${f.ij.pe} % continuent leurs études (DEPP, InserJeunes, sortants 2021 à 2024).${f.bmo ? ` En France, ${f.bmo.projets.toLocaleString("fr-FR")} projets d'embauche par an dans ces métiers, dont ${f.bmo.difficiles} % jugés difficiles par les employeurs (France Travail, BMO 2026).` : ""}</p>`;
+  if (f.ins) h += `<h3>Le travail après</h3><p>${f.ins.emploi} % des diplômés sont en emploi salarié en France 30 mois ${esc(f.ins.niveau)}, pour un salaire net médian de ${euro(f.ins.salaire)} par mois en équivalent temps plein (InserSup 2026_S1, diplômés 2021, ${f.ins.n.toLocaleString("fr-FR")} suivis).</p>`;
+  if (f.ij) h += `<h3>Le travail après</h3><p>Parmi les élèves qui arrêtent après ce bac pro, ${f.ij.e6} % sont en emploi 6 mois après et ${f.ij.e12} % 12 mois après ; ${f.ij.pe} % continuent leurs études (DEPP, InserJeunes, sortants 2021 à 2024).${MK.fam[f.k] && MK.fam[f.k].bmo[0] ? ` En France, ${MK.fam[f.k].bmo[0].toLocaleString("fr-FR")} projets d'embauche par an dans ces métiers, dont ${MK.fam[f.k].bmo[1]} % jugés difficiles par les employeurs (France Travail, BMO 2026).` : ""}</p>`;
+  h += mkDetail(f);
   h += cnDetail(f);
   h += f.ij ? `<h3>Où préparer ce bac pro (${f.nb.toLocaleString("fr-FR")} lycées × spécialités)</h3>
     <div class="offers-tools"><label for="oq" hidden>Ville ou département</label><input id="oq" type="search" placeholder="Ta ville ou ton département"></div><div class="offers" id="offers"></div>`
@@ -729,6 +767,8 @@ renderList();
     const z = L.ze[code]; if (!z) return "";
     return `<p><b>Zone d'emploi de ${esc2(z.n)}</b> · ${z.emp.toLocaleString("fr-FR")} salariés du privé${z.mfg != null ? `, dont ${z.mfg} % dans l'industrie (base 2017)` : ""}.</p>
       ${z.pct != null ? `<p>Concurrence chinoise sur l'industrie de la zone : <b>${z.pct >= 80 ? "parmi les 20 % de zones les plus exposées" : z.pct <= 20 ? "parmi les 20 % les moins exposées" : `rang ${z.pct} sur 100`}</b> (hausse des importations chinoises 2018-2024 dans ses industries, par salarié).</p>` : ""}
+      ${(() => { const ar = mkArea(code); if (!ar || !ar.a.p) return ""; const a = ar.a;
+        return `<p>Embauches prévues en 2026 ${ar.zone ? "dans la zone" : "dans le département (aucun bassin de France Travail n'est rattaché à cette zone)"} : <b>${a.p.toLocaleString("fr-FR")}</b> hors emplois saisonniers, dont <b>${a.d} %</b> jugées difficiles. Les plus nombreuses : ${a.top.slice(0, 4).map(([n, v]) => `${esc2(n.toLowerCase())} (${v.toLocaleString("fr-FR")})`).join(", ")}.</p>`; })()}
       ${z.ai != null ? `<p>IA : <b>${z.ai} %</b> des élèves de terminale pro de la zone sont dans une spécialité où l'IA sait faire au moins 4 tâches sur 10 des premiers métiers.</p>` : ""}
       ${z.ind.length ? `<table><tr><th>Industries de la zone (2024)</th><th>Salariés</th><th>Concurrence chinoise</th></tr>${z.ind.map(([n, e, r]) => `<tr><td>${esc2(cap(n))}</td><td>${e.toLocaleString("fr-FR")}</td><td><span class="pill" style="background:${cnCol(r)}">${cnWord(r)}</span>${r != null ? ` ×${String(r).replace(".", ",")}` : ""}</td></tr>`).join("")}</table>` : ""}`;
   }
@@ -741,10 +781,11 @@ renderList();
   function showLycee(i) {
     const l = L.l[i]; dots.forEach((d) => d.classList.remove("on")); dots[i].classList.add("on");
     Object.values(paths).forEach((p) => p.classList.remove("on")); if (paths[l.z]) paths[l.z].classList.add("on");
-    document.getElementById("lp-panel").innerHTML = `<p><b>${esc2(l.n)}</b><br><span class="small">${esc2(l.c)} (${esc2(l.d)}) · ${l.pub ? "public" : "privé"} · UAI ${esc2(l.u)}</span></p>
+    document.getElementById("lp-panel").innerHTML = `<p><b>${esc2(l.n)}</b><br><span class="small">${l.a ? esc2(l.a) : esc2(l.c) + " (" + esc2(l.d) + ")"} · ${l.pub ? "public" : "privé"} · UAI ${esc2(l.u)}</span></p>
       <p><b>${l.ai} %</b> de ses élèves de terminale sont dans une spécialité où l'IA sait faire au moins 4 tâches sur 10 ; <b>${l.cn} %</b> dans une spécialité industrielle très exposée à la concurrence chinoise.</p>
-      <table><tr><th>Spécialité</th><th title="Élèves de terminale, rentrée 2023">Élèves</th><th title="En emploi 6 mois après la sortie">Emploi à 6 mois</th><th title="Tâches des premiers métiers que l'IA sait faire, sur 10">IA /10</th><th title="Concurrence chinoise sur les usines où travaillent ces diplômés">Chine</th></tr>
-      ${l.s.map((s) => `<tr><td>${esc2(cap(s[0]))}</td><td>${s[1] || "—"}</td><td>${s[2] != null ? s[2] + " %" : "—"}</td><td><span class="pill" style="background:${aiCol(s[3])}">${s[3] != null ? String(s[3]).replace(".", ",") : "—"}</span></td><td>${s[4] != null ? `<span class="pill" style="background:${cnCol(s[4])}">${cnWord(s[4])}</span>` : '<span class="small">non industrielle</span>'}</td></tr>`).join("")}</table>` + zoneHtml(l.z);
+      <table><tr><th>Spécialité</th><th title="Élèves de terminale, rentrée 2023">Élèves</th><th title="En emploi 6 mois après la sortie">Emploi à 6 mois</th><th title="Tâches des premiers métiers que l'IA sait faire, sur 10">IA /10</th><th title="Concurrence chinoise sur les usines où travaillent ces diplômés">Chine</th><th title="Salaire net médian du métier, tous âges, non converti en temps plein (Dares, 2024) ; embauches prévues en 2026 dans la zone, hors saisonniers (France Travail, BMO)">Le métier</th></tr>
+      ${l.s.map((s) => `<tr><td>${esc2(cap(s[0]))}</td><td>${s[1] || "—"}</td><td>${s[2] != null ? s[2] + " %" : "—"}</td><td><span class="pill" style="background:${aiCol(s[3])}">${s[3] != null ? String(s[3]).replace(".", ",") : "—"}</span></td><td>${s[4] != null ? `<span class="pill" style="background:${cnCol(s[4])}">${cnWord(s[4])}</span>` : '<span class="small">non industrielle</span>'}</td><td>${(() => { const m = mkSpec(s[0], l.z, l.d); if (!m) return "—"; return `${m.sal ? euro(m.sal) : "—"}${m.n != null ? `<br><span class="small">${m.n.toLocaleString("fr-FR")} embauches${m.n && m.dif != null ? `, ${m.dif} % difficiles` : ""}</span>` : ""}`; })()}</td></tr>`).join("")}</table>
+      <p class="small">Le métier : salaire net médian des salariés du métier, tous âges, non converti en temps plein (Dares et Insee, 2024) ; embauches prévues en 2026 ${mkArea(l.z, l.d) && mkArea(l.z, l.d).zone ? "dans la zone d'emploi" : "dans le département"}, hors saisonniers (France Travail, BMO). Métiers visés par la spécialité selon les fiches ROME.</p>` + zoneHtml(l.z);
   }
   document.getElementById("lp-layer").onchange = (e) => { state.layer = e.target.value; render(); };
   spSel.onchange = (e) => { state.spec = e.target.value; render(); };
@@ -800,7 +841,7 @@ renderList();
     let lvl = v[0], body = "", src = "";
     if (r) { body = nums(r); src = (r.src === "IS" ? isSrc(r) : ijSrc(r)) + " · " + scope(r, lvl); if (c) src += ` · moyenne nationale du même diplôme : ${c.e} %`; }
     else if (/^BTS/.test(o[4])) { lvl = "t"; body = `<span><b>${BTS_NAT.e} %</b> en emploi 6 mois après la sortie, tous les BTS de France</span>`; src = BTS_NAT.src + " · chiffre non publié pour ce lycée (trop peu de sortants ou établissement hors InserJeunes)"; }
-    else if (f.ins) { body = `<span><b>${f.ins.emploi} %</b> en emploi salarié en France 30 mois ${esc(f.ins.niveau)}</span><span><b>${euro(f.ins.salaire)}</b> salaire net médian</span>`; src = `MESR, InserSup 2026, moyenne nationale de la famille « ${esc(f.s)} » (${nf(f.ins.n)} diplômés). Aucun chiffre publié pour cette formation précise.`; }
+    else if (f.ins) { body = `<span><b>${f.ins.emploi} %</b> en emploi salarié en France 30 mois ${esc(f.ins.niveau)}</span><span><b>${euro(f.ins.salaire)}</b> salaire net médian</span>`; src = `MESR, InserSup 2026, moyenne nationale de la famille « ${esc(f.s)} » (diplômés 2021, ${nf(f.ins.n)} suivis). Aucun chiffre publié pour cette formation précise.`; }
     else { lvl = "x"; body = `<span>Aucun chiffre d'insertion n'est publié pour cette formation ni pour sa famille.</span>`; src = "Ni InserSup ni InserJeunes ne couvrent ces formations (prépas, écoles paramédicales et sociales, formations d'établissement)."; }
     return `<div class="dcard"><div><a class="t" href="${psupLink(o[7])}" target="_blank" rel="noopener">${esc(o[4])}</a></div>
       <div class="meta">${esc(o[1])} · ${esc(o[2])} (${esc(o[3])}) · ${o[8] ? "public" : "privé"} · ${o[5]} places</div>
@@ -816,8 +857,8 @@ renderList();
     return `<div class="dcard"><div class="t">${esc(cap(sp[0]))}</div>
       <div class="meta">${esc(l.n)} · ${esc(l.c)} (${esc(/^\d$/.test(l.d) ? "0" + l.d : l.d)}) · ${l.pub ? "public" : "privé"}${sp[1] ? ` · ${sp[1]} élèves en terminale (rentrée 2023)` : ""}</div>
       <div><span class="lvl ${lvl}">${lvl === "e" ? "Chiffre du lycée, tous ses " + (/^cap/i.test(sp[0]) ? "CAP" : "bacs pros") : LVL[lvl]}</span></div>
-      <div class="nums">${r ? nums(r) : "<span>Chiffre non publié : trop peu de sortants dans cette spécialité et ce lycée.</span>"}</div>
-      <div class="src">DEPP, InserJeunes, sortants 2023 et 2024 (cumul), voie scolaire</div></div>`;
+      <div class="nums">${r ? nums(r) : "<span>Chiffre non publié : trop peu de sortants dans cette spécialité et ce lycée.</span>"}${(() => { const m = mkSpec(sp[0], l.z, l.d); if (!m) return ""; return (m.sal ? `<span><b>${euro(m.sal)}</b> salaire net médian du métier, tous âges, non converti en temps plein</span>` : "") + (m.n != null ? `<span><b>${m.n.toLocaleString("fr-FR")}</b> embauches prévues en 2026 ${m.zone ? "dans la zone d'emploi" : "dans le département"}${m.n && m.dif != null ? `, ${m.dif} % difficiles` : ""}</span>` : ""); })()}</div>
+      <div class="src">DEPP, InserJeunes, sortants 2023 et 2024 (cumul), voie scolaire${MK.sp[sp[0]] ? " · métier : Dares et Insee, 2024 ; France Travail, BMO 2026" : ""}</div></div>`;
   }
   const SECONDE = `<div class="dcard"><div class="t">Seconde générale et technologique</div>
     <div><span class="lvl x">Pas de débouchés directs</span></div>
